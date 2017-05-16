@@ -42,6 +42,10 @@ class PromisViewSet(viewsets.ReadOnlyModelViewSet):
 class SessionFilter(django_filters.rest_framework.FilterSet):
     time_begin = django_filters.NumberFilter(method='unix_time_filter')
     time_end = django_filters.NumberFilter(method='unix_time_filter')
+    project = django_filters.ModelChoiceFilter(name='space_project',
+                                               queryset = models.Space_project.objects.all())
+    satellite = django_filters.ModelChoiceFilter(name='space_project',
+                                                 queryset = models.Space_project.objects.all())
 
     # TODO: make a separate class?
     def unix_time_filter(self, queryset, name, value):
@@ -52,13 +56,13 @@ class SessionFilter(django_filters.rest_framework.FilterSet):
 
     class Meta:
         model = models.Session
-        fields = ( 'space_project', 'time_begin', 'time_end' )
+        fields = ['space_project', 'time_begin', 'time_end', 'project', 'satellite']
 
 class MeasurementsFilter(django_filters.rest_framework.FilterSet):
 
     class Meta:
         model = models.Measurement
-        fields = ( 'session', 'parameter' )
+        fields = ['session', 'parameter']
 
 class ProjectsView(PromisViewSet):
     queryset = models.Space_project.objects.all()
@@ -67,12 +71,11 @@ class ProjectsView(PromisViewSet):
 class ChannelsView(PromisViewSet):
     queryset = models.Channel.objects.all()
     serializer_class = serializer.ChannelsSerializer
-    filter_fields = ( 'device__space_project', )
 
 class ParametersView(PromisViewSet):
     queryset = models.Parameter.objects.all()
     serializer_class = serializer.ParametersSerializer
-    filter_fields = ( 'channel', 'channel__device__space_project', )
+    filter_fields = ('channel',)
 
 class DevicesView(PromisViewSet):
     queryset = models.Device.objects.all()

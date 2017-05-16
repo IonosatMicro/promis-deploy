@@ -84,7 +84,7 @@ paths:
         The Sattelite Devices endpoint returns a list of available devices
         installed on the specific satellite (used in particular space project).
       parameters:
-        - name: space_project
+        - name: project
           in: query
           description: Project ID to query its satellite devices for
           type: integer
@@ -142,10 +142,6 @@ paths:
         - name: project
           in: query
           description: Project ID to query its satellite channels for
-          type: integer
-        - name: space_project
-          in: query
-          description: Project ID to query its satellite devices for
           type: integer
       responses:
         200:
@@ -341,17 +337,11 @@ paths:
         Get list of parameters
       parameters:
         - name: channel
-          required: false
           description: Desired channel ID(s)
           type: array
           in: query
           items:
             type: integer
-        - name: space_project
-          in: query
-          description: Project ID to query its satellite devices for
-          type: integer
-        # TODO: not implemented
         - name: minfreq
           type: integer
           in: query
