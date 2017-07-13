@@ -68,7 +68,7 @@ export default class SearchForm extends Component {
     }
 
     render() {
-        let active = true;
+        let active = ! this.props.results.fetch;
         let ResetControl = null;
 
         /* TODO: hunt where this setting is coming from */

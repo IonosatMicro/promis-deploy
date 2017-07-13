@@ -82,6 +82,7 @@ class App extends Component {
                                 search = {this.props.searchActions}     /* for setting time back */
                                 selected = {this.props.selectionActions}    /* for flushing selection */
                                 selection = {this.props.selection}    /* selection array */
+                                results = {this.props.storage.measurements}
                             />
                         </Panel>
                     </Row>
