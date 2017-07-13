@@ -68,27 +68,21 @@ export default class SearchForm extends Component {
     }
 
     render() {
-        let active = true;
-        let Control = null;
+        let active = ! this.props.results.fetch;
+        let ResetControl = null;
 
         /* TODO: hunt where this setting is coming from */
         //let sessions = isActiveState(this.props.storage.sessions);
         let measurements = isActiveState(this.props.storage.measurements);
 
-        if(! measurements) {
-            Control = (
-                <Button onClick = {this.getData}>
-                    <Glyphicon glyph = 'search' />Search
-                </Button>
-            );
-        } else {
-            active = false;
-            Control = (
+        if(measurements) {
+            ResetControl = (
                 <Button onClick = {this.resetSearch}>
                     <Glyphicon glyph = 'trash' /> Reset search
                 </Button>
             );
         }
+
         /* TODO: "Measurements" word is too long and 3/9 ratio for the columns seems too sparse */
         return (
             <div>
@@ -122,8 +116,13 @@ export default class SearchForm extends Component {
                         </Col>
                     </FormGroup>
                     <FormGroup>
-                        <Col sm = {12}>
-                            { Control }
+                        <Col sm = {6}>
+                            <Button onClick = {this.getData}>
+                                <Glyphicon glyph = 'search' />Search
+                            </Button>
+                        </Col>
+                        <Col sm = {6}>
+                            { ResetControl }
                         </Col>
                     </FormGroup>
                 </Form>
