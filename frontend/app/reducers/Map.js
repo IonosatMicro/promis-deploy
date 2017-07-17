@@ -111,6 +111,36 @@ export default function MapReducer(state = State, action) {
             };
         break;
 
+        case Enum.MagGridRequested:
+            return {
+                ...state,
+                magGrid : {
+                    data : null,
+                    fetching : true
+                }
+            };
+        break;
+
+        case Enum.MagGridReady:
+            return {
+                ...state,
+                magGrid : {
+                    data : action.payload,
+                    fetching : false
+                }
+            };
+        break;
+
+        case Enum.MagGridRemove:
+            return {
+                ...state,
+                magGrid : {
+                    data : null,
+                    fetching : false
+                }
+            };
+        break;
+
         default:
             return state;
         break;

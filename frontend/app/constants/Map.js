@@ -12,7 +12,10 @@ export const Enum = {
     FlushGeolines    : 'MapFlushGeolines',
     SelectionUpdated : 'MapSelectionUpdated',
     UpdateTotal      : 'MapUpdateTotal',
-    UpdateLoaded     : 'MapUpdateLoaded'
+    UpdateLoaded     : 'MapUpdateLoaded',
+    MagGridRequested : 'MapMagGridRequested',
+    MagGridReady     : 'MapMagGridReady',
+    MagGridRemove    : 'MagGridRemove'
 };
 
 export const State = {
@@ -27,7 +30,12 @@ export const State = {
     geolines: new Array(), /* geolines to draw */
     total: 0,              /* total geolines expected */
     // TODO: remove this
-    loaded: 0          /* geolines currently downloaded */
+    loaded: 0,          /* geolines currently downloaded */
+    // TODO: allow multiple grids to be shown
+    magGrid: {
+      data: null,          /* isoline data */
+      fetching: false      /* if we are fetching the data from NASA site */
+    }
 };
 
 export const BingKey = 'AjsNBiX5Ely8chb5gH7nh6HLTjlQGVKOg2A6NLMZ30UhprYhSkg735u3YUkGFipk';

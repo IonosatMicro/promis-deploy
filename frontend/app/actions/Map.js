@@ -121,4 +121,31 @@ export default {
             })
         }
     },
+
+    magGridRequest : function() {
+      return function(dispatch) {
+          dispatch({
+              type: Enum.MagGridRequested,
+              payload: true
+          })
+      }
+    },
+
+    magGridUpdate : function(magData) {
+      return function(dispatch) {
+          dispatch({
+              type: Enum.MagGridReady,
+              payload: magData
+          })
+      }
+    },
+
+    magGridRemove : function() {
+      return function(dispatch) {
+          dispatch({
+              type: Enum.MagGridRemove,
+              payload: true
+          })
+      }
+    }
 };
