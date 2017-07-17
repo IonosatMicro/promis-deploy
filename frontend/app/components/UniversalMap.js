@@ -228,28 +228,29 @@ export default class UniversalMap extends Component {
             </div> ) : null ;
 
         /* TODO: temporary UI for picking various magnetic grid options */
-        let MagControl = options.magGrid.fetching ? (<ReactSpinner/>) : (
-          <div>
+        let disabled = options.magGrid.fetching;
+        let MagControl = (
+          <div style={ { position: 'relative' } }>
             <label>Grid step (°)</label>
-            <input type="number" id="magGridStep" defaultValue="5"/><br/>
+            <input disabled = {disabled} type="number" id="magGridStep" defaultValue="5"/><br/>
 
             <label>Isoline count</label>
-            <input type="number" id="magIsolineCount" defaultValue="20"/><br/>
+            <input disabled = {disabled} type="number" id="magIsolineCount" defaultValue="20"/><br/>
 
             <label>Altitude (kms, sea level)</label>
-            <input type="number" id="magAlt" defaultValue="600"/><br/>
+            <input disabled = {disabled} type="number" id="magAlt" defaultValue="600"/><br/>
 
             <label>Date</label>
-            <input type="date" id="magDate" defaultValue="2017-07-17"/><br/>
+            <input disabled = {disabled} type="date" id="magDate" defaultValue="2017-07-17"/><br/>
 
             <label>Model</label>
-            <select id="magModel">
+            <select id="magModel" disabled = {disabled}>
             <option>WMM</option>
             <option>IGRF</option>
             </select><br/>
 
             <label>Component</label>
-            <select id="magComponent">
+            <select id="magComponent" disabled = {disabled}>
             <option value="d">Declination</option>
             <option value="i">Inclination</option>
             <option value="x">X</option>
@@ -259,13 +260,15 @@ export default class UniversalMap extends Component {
             <option value="h">Horizontal intensity</option>
             </select><br/>
 
-            <button onClick = {this.setGrid} >
+            <button onClick = {this.setGrid} disabled = {disabled}>
             Set grid
             </button>
 
-            <button onClick = {this.removeGrid} >
+            <button onClick = {this.removeGrid} disabled = {disabled}>
             Remove grid
             </button>
+
+            { disabled ? (<ReactSpinner/>) : null }
           </div>
         );
 
