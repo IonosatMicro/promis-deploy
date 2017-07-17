@@ -22,6 +22,7 @@ export default class LeafletContainer extends Component {
         this.geolineHandles = new Array();
         this.previewHandles = null;
         this.latlngHandles = null;
+        this.magGridHandle = null;
 
         /* options */
         this.mapParams = { center: [31.5, 10.2], zoom: 1, zoomControl: false, minZoom: 1, worldCopyJump: true};
@@ -47,6 +48,7 @@ export default class LeafletContainer extends Component {
         this.makeGeoline = this.makeGeoline.bind(this);
         this.previewShape = this.previewShape.bind(this);
         this.makeSelectionPoint = this.makeSelectionPoint.bind(this);
+        this.makeIsolines = this.makeIsolines.bind(this);
     }
 
     /* update only for fullscreen toggling */
@@ -99,6 +101,30 @@ export default class LeafletContainer extends Component {
         this.map.off('mousedown',   this.startDrawEvent);
         this.map.off('mousemove',   this.moveDrawEvent);
         this.map.off('mouseup',     this.stopDrawEvent);
+    }
+
+    makeIsolines(isodata) {
+        let isolines = [];
+
+        isodata.forEach(function(isoline){
+            /* TODO: combine with makeGeoline or make global */
+            let shifter = function(s) {
+                return function(x) {
+                    return [ x[0], x[1] + s ];
+                };
+            }
+            let segs = [ isoline, isoline.map(shifter(360)), isoline.map(shifter(-360)) ];
+
+            segs.forEach(function(seg){
+                let line = Leaflet.polyline(seg, {opacity: 0.5, color: 'white', weight: 1});
+
+                isolines.push(line);
+                line.addTo(this.map);
+            }.bind(this));
+
+        }.bind(this));
+
+        return isolines;
     }
 
     makeGeoline(xcoords, style)
@@ -264,6 +290,16 @@ export default class LeafletContainer extends Component {
         let props = maybeProps !== undefined ? maybeProps : this.props;
 
         if(! props.selection.active) {
+            /* TODO: refactor */
+            if(Array.isArray(props.options.magGrid.data) && this.magGridHandle == null) {
+                this.magGridHandle = this.makeIsolines(props.options.magGrid.data);
+            } else if (props.options.magGrid.data == null && this.magGridHandle != null) {
+                this.magGridHandle.forEach(function(handle) {
+                    this.clearShape(handle);
+                }.bind(this));
+                this.magGridHandle = null;
+            }
+
             /* clear geolines */
             this.geolineHandles.forEach(function(handle) {
                 this.clearShape(handle);
