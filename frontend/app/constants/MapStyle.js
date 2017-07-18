@@ -6,6 +6,7 @@ export const Default = {
     fill:           false,      /* fill style */
     fillAlpha:      1,
     dashed:         false,      /* whether stroke needs to be dashed */
+    outline:        false,      /* whether to draw the outline in 3D */
     width:          4           /* stroke width in px(?) */
 
 };
@@ -43,17 +44,27 @@ export const SelectionHandle = {
     fillAlpha:      0.5,
 };
 
+/* grid lines and magnetic grid isolines */
+export const Grid = {
+    ...Default,
+    stroke:        "#ffffff",
+    strokeAlpha:   0.5,
+    width:         1
+};
+
 /* parts of the session that match selection criteria */
 export const Session = {
     ...Default,
-    stroke:         "#dd0000"
+    stroke:         "#dd0000",
+    outline:        true
 };
 
 /* highlighted session part (mouseover at measurements panel) */
 export const SessionHighlight = {
     ...Default,
     stroke:         "#ff0000",
-    width:          6
+    width:          6,
+    outline:        true
 };
 
 /* leftover parts of the session */

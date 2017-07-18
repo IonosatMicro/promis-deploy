@@ -116,7 +116,7 @@ export default class LeafletContainer extends Component {
             let segs = [ isoline, isoline.map(shifter(360)), isoline.map(shifter(-360)) ];
 
             segs.forEach(function(seg){
-                let line = Leaflet.polyline(seg, {opacity: 0.5, color: 'white', weight: 1});
+                let line = Leaflet.polyline(seg, this.getStyle(MapStyle.Grid));
 
                 isolines.push(line);
                 line.addTo(this.map);
