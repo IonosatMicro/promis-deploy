@@ -160,6 +160,7 @@ export default class UniversalMap extends Component {
 
           /* will be updated from the csv */
           let maxLat = 0, maxLon = 0;
+          let minLat = 0, minLon = 0;
 
           /* converting the csv to an array */
           results.data.forEach(function(i) {
@@ -176,6 +177,8 @@ export default class UniversalMap extends Component {
             /* update boundaries */
             if(maxLat < i[1]) { maxLat = i[1]; }
             if(maxLon < i[2]) { maxLon = i[2]; }
+            if(minLat > i[1]) { minLat = i[1]; }
+            if(minLon > i[2]) { minLon = i[2]; }
 
             /* append the values, update band limits */
             var data = i[4];
@@ -184,20 +187,24 @@ export default class UniversalMap extends Component {
             rowData.push(data);
           });
 
+          let rows = magData[0].length - 1;
+          let cols = magData.length - 1;
+
+          /* convert from grid coordinates to lat/lon */
+          let gridToGeo = function(point) {
+              return [
+                  point[1] * (minLat - maxLat) / cols + maxLat,
+                  point[0] * (maxLon - minLon) / rows + minLon
+                ];
+          };
+
           /* generating isolines */
           let isolines = [];
           for (let i = 0; i < isolineCount; i++) {
             /* value to put the isoline at */
             let threshold = minVal + i * (maxVal-minVal) / isolineCount;
             MarchingSquares.isoContours(magData, threshold).forEach(function(contour) {
-              isolines.push(contour.map(function (point) {
-                /* convert from grid coordinates to lat/lon */
-                /* TODO: double check the formula */
-                return [
-                  maxLat - point[1] * gridStep,
-                  point[0] * gridStep - maxLon
-                ]
-              }));
+              isolines.push(contour.map(gridToGeo));
             });
           }
 
