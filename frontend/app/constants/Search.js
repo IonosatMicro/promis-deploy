@@ -33,7 +33,7 @@ export const State = {
 
     /* altitude */
     altitude : {
-        begin: 0,
+        begin: 250,
         end: 800
     },
 

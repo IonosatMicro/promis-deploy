@@ -403,14 +403,14 @@ export default class TimeAndPositionInput extends Component {
                         <Col sm={5}>
                             <InputGroup>
                                 <InputGroup.Addon>From</InputGroup.Addon>
-                                <FormControl onChange = {this.altFromChange} value = {opts.altitude.begin} type="number" />
+                                <FormControl onChange = {this.altFromChange} value = {opts.altitude.begin} type="number" disabled />
                                 <InputGroup.Addon>km</InputGroup.Addon>
                             </InputGroup>
                         </Col>
                         <Col sm={5}>
                             <InputGroup>
                                 <InputGroup.Addon>To</InputGroup.Addon>
-                                <FormControl onChange = {this.altToChange} value = {opts.altitude.end} type="number" />
+                                <FormControl onChange = {this.altToChange} value = {opts.altitude.end} type="number" disabled />
                                 <InputGroup.Addon>km</InputGroup.Addon>
                             </InputGroup>
                         </Col>
