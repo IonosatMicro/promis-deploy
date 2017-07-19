@@ -29,6 +29,10 @@ ADD deploy/promis_api.yaml /usr/src/promis/public/api/
 #RUN chgrp nginx /etc/ssl/private
 #RUN chmod g+x,g+r /etc/ssl/private
 
+# Add the icons/images
+RUN mkdir /usr/src/promis/img
+ADD img /usr/src/promis/img/
+
 # Add the actual app
 ADD run_web_promis.sh /
 ADD app /usr/src/promis/app/
