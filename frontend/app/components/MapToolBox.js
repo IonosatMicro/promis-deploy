@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import { ButtonGroup } from 'react-bootstrap';
 
 import ToolboxButton from './ToolboxButton';
+import GridButton from './GridButton';
 
 import { Types } from '../constants/Selection';
+import { GridTypes } from '../constants/Map';
 
 export default class MapToolBox extends Component {
     constructor(props) {
@@ -111,7 +113,20 @@ export default class MapToolBox extends Component {
                         <ToolboxButton key = {1} onClick = {this.togglePoly.bind(null, ! opts.poly)} active = {opts.poly} icon = 'screenshot' help = 'Select polygonal area' />
                     ]) }
                     <ToolboxButton key = {2} onClick = {this.toggleRound.bind(null, ! opts.round)} active = {opts.round} icon = 'record' help = 'Select circular area' />
-                    <ToolboxButton onClick = {this.toggleGrid} active = {opts.grid} icon = 'th' help = 'Toggle grid' />
+
+                    <GridButton
+                        grid = {opts.grid[GridTypes.Geographic]}
+                        icon = 'th'
+                        help = 'Toggle geographic grid' />
+                    <GridButton
+                        grid = {opts.grid[GridTypes.Inclination]}
+                        icon = 'dashboard'
+                        help = 'Toggle magnetic inclination grid' />
+                    <GridButton
+                        grid = {opts.grid[GridTypes.Intensity]}
+                        icon = 'magnet'
+                        help = 'Toggle magnetic intensity grid' />
+
                     <ToolboxButton onClick = {this.toggleFull} icon = {opts.full ? 'resize-small' : 'resize-full'} help = {opts.full ? 'Minimize' : 'Fullscreen'} />
                     { this.props.hasSelection ? ([
                         <ToolboxButton onClick = {this.toggleClean} key = {2} icon = 'ban-circle' style = 'danger' help = 'Clear all selection' />
