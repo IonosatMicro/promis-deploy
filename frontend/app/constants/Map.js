@@ -3,7 +3,6 @@ export const Enum = {
     SizeChanged      : 'MapSizeChanged',
     DimsChanged      : 'MapDimsChanged',
     ModeChanged      : 'MapModeChanged',
-    GridChanged      : 'MapGridToggled',
     RectChanged      : 'MapRectToggled',
     PolyChanged      : 'MapPolyChanged',
     RoundChanged     : 'MapRoundChanged',
@@ -13,9 +12,10 @@ export const Enum = {
     SelectionUpdated : 'MapSelectionUpdated',
     UpdateTotal      : 'MapUpdateTotal',
     UpdateLoaded     : 'MapUpdateLoaded',
-    MagGridRequested : 'MapMagGridRequested',
-    MagGridReady     : 'MapMagGridReady',
-    MagGridRemove    : 'MagGridRemove'
+    GridChanged      : 'MapGridChanged',
+    GridDataCleared  : 'MapGridDataCleared',
+    GridDataSet      : 'MapGridDataSet',
+    GridDataFetch    : 'MapGridDataFetch'
 };
 
 export const GridTypes = {
