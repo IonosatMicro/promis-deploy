@@ -48,9 +48,23 @@ export const SelectionHandle = {
 export const Grid = {
     ...Default,
     stroke:        "#ffffff",
-    strokeAlpha:   0.5,
-    width:         1
+    strokeAlpha:   0.4,
+    width:         0.5
 };
+
+/* equator line for grid */
+export const GridEquator = {
+    ...Grid,
+    strokeAlpha:   0.6,
+    width: 2
+};
+
+/* thicker style for each 5th isoline */
+export const GridEven = {
+    ...Grid,
+    stroke:        "#ffff00",
+};
+
 
 /* parts of the session that match selection criteria */
 export const Session = {

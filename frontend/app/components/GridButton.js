@@ -28,7 +28,7 @@ import * as MapStyle from '../constants/MapStyle';
 
 /* you can set up some magnetic grid parameters here */
 const GridIsolineCount = 40;        /* amount of isolines to draw [Intensity] */
-const GridIsolineStep = 10;         /* step for isolines in degrees [Inclination] */
+const GridIsolineStep = 5;          /* step for isolines in degrees [Inclination] */
 const GridStep = 5;                 /* input resolution in degrees */
 const GridAltitude = 600;           /* sea level kms */
 const GridModel = 'IGRF';           /* 'IGRF' or 'WMM' */
@@ -45,10 +45,16 @@ const GridLines = {
      * equator is painted differently */
     [GridTypes.Inclination] :  function(minVal, maxVal) {
         let vals = [];
+        let even = false;
         for(let angle = -90; angle <= 90; angle += GridIsolineStep) {
+            /* equator is at 0°, for the rest, use even-odd pattern */
+            let equator = (angle == 0);
+            if(!equator) { even = !even; }
+            let style = equator? MapStyle.GridEquator : (even? MapStyle.GridEven : MapStyle.Grid);
+
             vals.push({
                 value: angle,
-                style: MapStyle.Grid /* TODO */
+                style: style
             });
         }
         return vals;
@@ -61,7 +67,7 @@ const GridLines = {
         for (let i = 0; i < GridIsolineCount; i++) {
             vals.push({
                 value: Math.floor(minVal + i * (maxVal - minVal) / GridIsolineCount),
-                style: MapStyle.Grid
+                style: (i%2 == 0)? MapStyle.GridEven : MapStyle.Grid
             });
         }
         return vals;
