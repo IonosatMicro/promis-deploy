@@ -23,8 +23,6 @@ export default class UniversalMap extends Component {
         this.determineStyle = this.determineStyle.bind(this);
         this.getCurrentType = this.getCurrentType.bind(this);
         this.getCurrentIndex = this.getCurrentIndex.bind(this);
-        this.setGrid = this.setGrid.bind(this);
-        this.removeGrid = this.removeGrid.bind(this);
 
         /* make local copy of selection actions */
         this.selectionActions = this.props.selectionActions;

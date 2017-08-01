@@ -24,6 +24,7 @@ import React, { Component } from 'react';
 
 import ToolboxButton from './ToolboxButton';
 import { GridTypes } from '../constants/Map';
+import * as MapStyle from '../constants/MapStyle';
 
 /* you can set up some magnetic grid parameters here */
 const GridIsolineCount = 40;        /* amount of isolines to draw [Intensity] */
@@ -47,7 +48,7 @@ const GridLines = {
         for(let angle = -90; angle <= 90; angle += GridIsolineStep) {
             vals.push({
                 value: angle,
-                style: null /* TODO */
+                style: MapStyle.Grid /* TODO */
             });
         }
         return vals;
@@ -60,7 +61,7 @@ const GridLines = {
         for (let i = 0; i < GridIsolineCount; i++) {
             vals.push({
                 value: Math.floor(minVal + i * (maxVal - minVal) / GridIsolineCount),
-                style: null
+                style: MapStyle.Grid
             });
         }
         return vals;

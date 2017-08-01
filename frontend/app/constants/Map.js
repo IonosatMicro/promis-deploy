@@ -38,11 +38,6 @@ export const State = {
     // TODO: remove this
     loaded: 0,          /* geolines currently downloaded */
 
-    magGrid: {
-        fetching: false,
-        data: null
-    },
-
     grid: {                /* grid status */
         inclination: {
             type: GridTypes.Inclination,    /* for polymorphism, pls don't alter */

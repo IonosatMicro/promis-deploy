@@ -5,7 +5,7 @@ import LeafletBing from 'leaflet-bing-layer';
 import LeafletGeodesy from 'leaflet-geodesy';
 
 import { Types, latlngRectangle } from '../constants/Selection';
-import { BingKey } from '../constants/Map';
+import { BingKey, GridTypes } from '../constants/Map';
 
 import * as MapStyle from '../constants/MapStyle';
 
@@ -22,7 +22,7 @@ export default class LeafletContainer extends Component {
         this.geolineHandles = new Array();
         this.previewHandles = null;
         this.latlngHandles = null;
-        this.magGridHandle = null;
+        this.magGridHandle = {};
 
         /* options */
         this.mapParams = { center: [31.5, 10.2], zoom: 1, zoomControl: false, minZoom: 1, worldCopyJump: true};
@@ -113,13 +113,12 @@ export default class LeafletContainer extends Component {
                     return [ x[0], x[1] + s ];
                 };
             }
-            let segs = [ isoline, isoline.map(shifter(360)), isoline.map(shifter(-360)) ];
+            let segs = [ isoline.coords, isoline.coords.map(shifter(360)), isoline.coords.map(shifter(-360)) ];
 
             segs.forEach(function(seg){
-                let line = Leaflet.polyline(seg, this.getStyle(MapStyle.Grid));
+                let line = Leaflet.polyline(seg, this.getStyle(isoline.style));
 
                 isolines.push(line);
-                line.addTo(this.map);
             }.bind(this));
 
         }.bind(this));
@@ -290,14 +289,33 @@ export default class LeafletContainer extends Component {
         let props = maybeProps !== undefined ? maybeProps : this.props;
 
         if(! props.selection.active) {
-            /* TODO: refactor */
-            if(Array.isArray(props.options.magGrid.data) && this.magGridHandle == null) {
-                this.magGridHandle = this.makeIsolines(props.options.magGrid.data);
-            } else if (props.options.magGrid.data == null && this.magGridHandle != null) {
-                this.magGridHandle.forEach(function(handle) {
-                    this.clearShape(handle);
-                }.bind(this));
-                this.magGridHandle = null;
+            for (let gridkey in GridTypes) {
+                let gridtype = GridTypes[gridkey];
+                let grid = props.options.grid[gridtype];
+
+                /* TODO: refactor */
+                if(Array.isArray(grid.data) && this.magGridHandle[gridtype] == null) {
+                    this.magGridHandle[gridtype] = this.makeIsolines(grid.data);
+                } else if (grid.data == null && this.magGridHandle[gridtype] != null) {
+                    this.magGridHandle[gridtype].forEach(function(handle) {
+                        this.clearShape(handle);
+                    }.bind(this));
+                    this.magGridHandle[gridtype] = null;
+                }
+
+                /* visibility control */
+                // TODO: constantly adding/removing might be excessive, general fix coming in #244
+                if(this.magGridHandle[gridtype]) {
+                    if(grid.visible) {
+                        this.magGridHandle[gridtype].forEach(function(shape) {
+                            shape.addTo(this.map);
+                        }.bind(this));
+                    } else {
+                        this.magGridHandle[gridtype].forEach(function(shape) {
+                            shape.removeFrom(this.map);
+                        }.bind(this));
+                    }
+                }
             }
 
             /* clear geolines */
