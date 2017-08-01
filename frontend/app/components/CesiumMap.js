@@ -26,7 +26,7 @@ import EllipsoidSurfaceAppearance from 'cesium/Source/Scene/EllipsoidSurfaceAppe
 import PolylineOutlineMaterialProperty from 'cesium/Source/DataSources/PolylineOutlineMaterialProperty';
 import PolylineDashMaterialProperty from 'cesium/Source/DataSources/PolylineDashMaterialProperty';
 
-import { BingKey } from '../constants/Map';
+import { BingKey, GridTypes } from '../constants/Map';
 import { Types, latlngRectangle } from '../constants/Selection';
 import * as MapStyle from '../constants/MapStyle';
 
@@ -63,7 +63,7 @@ export default class CesiumContainer extends Component {
         this.geolineHandles = new Array();
         this.previewHandle = null;
         this.latlngHandle = null;
-        this.magGridHandle = null;
+        this.magGridHandle = {}; window.magGridHandle = this.magGridHandle;
 
         /* for render suspension */
         this.lastmove = Date.now();
@@ -463,14 +463,15 @@ export default class CesiumContainer extends Component {
             let cartesians = new Array();
 
             /* data is [lat, lon, hgt] */
-            isoline.forEach(function(point) {
+            isoline.coords.forEach(function(point) {
                 cartesians.push(Cartesian3.fromDegrees(point[1], point[0], 0));
             });
+
 
             let line = this.viewer.entities.add({
                 polyline : {
                     positions : cartesians,
-                    ...this.getStyle(MapStyle.Grid)
+                    ...this.getStyle(isoline.style)
                 }
             });
 
@@ -500,14 +501,33 @@ export default class CesiumContainer extends Component {
         let props = maybeProps !== undefined ? maybeProps : this.props;
 
         if(! props.selection.active) {
-            /* TODO: refactor */
-            if(Array.isArray(props.options.magGrid.data) && this.magGridHandle == null) {
-                this.magGridHandle = this.makeIsolines(props.options.magGrid.data);
-            } else if (props.options.magGrid.data == null && this.magGridHandle != null) {
-                this.magGridHandle.forEach(function(handle) {
-                    this.clearShape(handle);
-                }.bind(this));
-                this.magGridHandle = null;
+            for (let gridkey in GridTypes) {
+                let gridtype = GridTypes[gridkey];
+                let grid = props.options.grid[gridtype];
+
+                /* TODO: refactor */
+                if(Array.isArray(grid.data) && this.magGridHandle[gridtype] == null) {
+                    this.magGridHandle[gridtype] = this.makeIsolines(grid.data);
+                } else if (grid.data == null && this.magGridHandle[gridtype] != null) {
+                    this.magGridHandle[gridtype].forEach(function(handle) {
+                        this.clearShape(handle);
+                    }.bind(this));
+                    this.magGridHandle[gridtype] = null;
+                }
+
+                /* visibility control */
+                // TODO: constantly adding/removing might be excessive, general fix coming in #244
+                if(this.magGridHandle[gridtype]) {
+                    if(grid.visible) {
+                        this.magGridHandle[gridtype].forEach(function(shape) {
+                            shape.show = true;
+                        }.bind(this));
+                    } else {
+                        this.magGridHandle[gridtype].forEach(function(shape) {
+                            shape.show = false;
+                        }.bind(this));
+                    }
+                }
             }
 
             /* clear preview */
