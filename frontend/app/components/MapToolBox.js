@@ -116,14 +116,17 @@ export default class MapToolBox extends Component {
 
                     <GridButton
                         grid = {opts.grid[GridTypes.Geographic]}
+                        actions = {this.actions}
                         icon = 'th'
                         help = 'Toggle geographic grid' />
                     <GridButton
                         grid = {opts.grid[GridTypes.Inclination]}
+                        actions = {this.actions}
                         icon = 'dashboard'
                         help = 'Toggle magnetic inclination grid' />
                     <GridButton
                         grid = {opts.grid[GridTypes.Intensity]}
+                        actions = {this.actions}
                         icon = 'magnet'
                         help = 'Toggle magnetic intensity grid' />
 
