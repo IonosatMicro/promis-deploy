@@ -183,6 +183,15 @@ export default class LeafletContainer extends BaseContainer {
         handle.remove();
     }
 
+    /* change visibility of a marker */
+    setVisible(handle, visible) {
+        if(visible) {
+            handle.addTo(this.map);
+        } else {
+            handle.removeFrom(this.map);
+        }
+    }
+
     /* remove given shape from map */
     // TODO: death mark
     /* TODO: is assigning to null necessary? */

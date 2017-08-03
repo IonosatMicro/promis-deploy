@@ -124,7 +124,8 @@ export default function MapReducer(state = State, action) {
                     ...state.grid,
                     [action.payload.type]: {
                         ...state.grid[action.payload.type],
-                        data: null
+                        data: null,
+                        visible: false
                     }
                 }
             };

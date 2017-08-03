@@ -20,6 +20,7 @@
 //
 import React, { Component } from 'react';
 
+import { GridTypes } from '../constants/Map';
 import * as MapStyle from '../constants/MapStyle';
 
 export default class BaseContainer extends Component {
@@ -27,6 +28,7 @@ export default class BaseContainer extends Component {
      * - getStyle(style) -- convert the style template into a native one
      * - makeGeoline(geoline, style) -- make a geoline object onscreen
      * - clearHandle(handle) -- remove a marker by handle
+     * - setVisible(handle, bool) -- change visiblity of a marker
      */
 
     constructor(props) {
@@ -39,6 +41,19 @@ export default class BaseContainer extends Component {
             keys: [],
             handles: []
         };
+
+        /* state and handles of grids */
+        this.gridMapping = {};
+        for (let gridkey in GridTypes) {
+            let gridtype = GridTypes[gridkey];
+
+            this.gridMapping[gridtype] = {
+                handles: null,
+                data: null,
+                visible: false
+            };
+        }
+
     }
 
     /* creates an array of handles for a geoline and its dashed sections */
@@ -83,7 +98,9 @@ export default class BaseContainer extends Component {
     }
 
     componentWillReceiveProps(newProps) {
-        /* check if the state has geolines that the map doesn't know */
+        /* check if the state has stuff that the map doesn't know */
+
+        /* new geolines */
         newProps.options.geolines.forEach(function(geoline) {
             /* indexOf compares by reference (===) */
             if(this.geolineMapping.keys.indexOf(geoline) < 0) {
@@ -105,6 +122,43 @@ export default class BaseContainer extends Component {
 
                 /* retry the same position since the array has shifted */
                 i--;
+            }
+        }
+
+        /* grid isolines and visibility */
+        for (let gridkey in GridTypes) {
+            let gridtype = GridTypes[gridkey];
+            let grid = newProps.options.grid[gridtype];
+
+            /* create/remove the handle if data changed */
+            if(grid.data != this.gridMapping[gridtype].data) {
+                /* if we have something currently, we need to remove it */
+                if(this.gridMapping[gridtype].data != null) {
+                    this.cascade(this.gridMapping[gridtype].handles, this.clearHandle);
+                    this.gridMapping[gridtype].handles = null;
+                    this.gridMapping[gridtype].visible = false;
+                }
+
+                /* if the new data is real, create isolines */
+                if(grid.data != null) {
+                    /* TODO: regular non-isoline grid */
+                    this.gridMapping[gridtype].handles = this.makeIsolines(grid.data);
+                }
+
+                this.gridMapping[gridtype].data = grid.data;
+            }
+
+            /* hide/show */
+            if(grid.visible != this.gridMapping[gridtype].visible) {
+                /* only change visibility if we have anything to show */
+                if(this.gridMapping[gridtype].handles) {
+                    this.cascade(this.gridMapping[gridtype].handles, function(handles) {
+                        this.setVisible(handles, grid.visible);
+                    }.bind(this));
+                }
+
+                /* update internal state anyway */
+                this.gridMapping[gridtype].visible = grid.visible;
             }
         }
     }
