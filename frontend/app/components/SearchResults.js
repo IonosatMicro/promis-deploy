@@ -128,11 +128,9 @@ export default class SearchResults extends Component {
                 this.props.actions.getSingle(measurement.session, null, function(data) {
                     geolines.push({ geo_line: data.geo_line, selection: measurement.selection, offset: data.timelapse.start });
                     let now = this.props.map.loaded + 1;
-                    this.props.mapped.updateLoaded(now);
 
-                    if(now == total || now == Math.floor(total/2)) {
-                        this.props.mapped.pushGeolines(geolines);
-                    }
+                    this.props.mapped.pushGeolines(geolines);
+                    this.props.mapped.updateLoaded(now);
                 }.bind(this));
             }.bind(this));
         }

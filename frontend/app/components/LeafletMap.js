@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 import Leaflet from 'leaflet';
 import LeafletBing from 'leaflet-bing-layer';
@@ -6,12 +6,13 @@ import LeafletGeodesy from 'leaflet-geodesy';
 
 import { Types, latlngRectangle } from '../constants/Selection';
 import { BingKey, GridTypes } from '../constants/Map';
-
 import * as MapStyle from '../constants/MapStyle';
+
+import BaseContainer from './BaseMap';
 
 import 'leaflet/dist/leaflet.css';
 
-export default class LeafletContainer extends Component {
+export default class LeafletContainer extends BaseContainer {
     constructor(props) {
         super(props);
 
@@ -64,7 +65,7 @@ export default class LeafletContainer extends Component {
         }
     }
 
-    componentWillReceiveProps(nextProps) {
+    componentWillReceivePropsZZ(nextProps) {
         //console.log('new propz');
         this.updateMap(nextProps);
         this.repaint();

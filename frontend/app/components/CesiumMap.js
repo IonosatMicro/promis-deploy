@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 import { toDegrees } from 'cesium/Source/Core/Math';
 import Viewer from 'cesium/Source/Widgets/Viewer/Viewer';
@@ -30,9 +30,11 @@ import { BingKey, GridTypes } from '../constants/Map';
 import { Types, latlngRectangle } from '../constants/Selection';
 import * as MapStyle from '../constants/MapStyle';
 
+import BaseContainer from './BaseMap';
+
 import 'cesium/Source/Widgets/widgets.css';
 
-export default class CesiumContainer extends Component {
+export default class CesiumContainer extends BaseContainer {
     constructor(props) {
         super(props);
 
