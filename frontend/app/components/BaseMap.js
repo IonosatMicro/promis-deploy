@@ -23,6 +23,12 @@ import React, { Component } from 'react';
 import * as MapStyle from '../constants/MapStyle';
 
 export default class BaseContainer extends Component {
+    /* derived classes are expected to implement:
+     * - getStyle(style) -- convert the style template into a native one
+     * - makeGeoline(geoline, style) -- make a geoline object onscreen
+     * - clearHandle(handle) -- remove a marker by handle
+     */
+
     constructor(props) {
         super(props);
 
@@ -40,6 +46,7 @@ export default class BaseContainer extends Component {
         let last = 0;
         let res = [];
 
+        /* data inside segments are painted solidly, the rest is dashed */
         geoline.selection.forEach(function(segment) {
             let seg = { start: segment.start - geoline.offset,
                         end: segment.end - geoline.offset };
@@ -56,19 +63,22 @@ export default class BaseContainer extends Component {
             last = seg.end;
         }.bind(this));
 
+        /* we may have left with something after the end of the last segment */
         if(geoline.geo_line.length - 1 - last > 0) {
             res.push(this.makeGeoline(geoline.geo_line.slice(last), MapStyle.SessionLeftovers));
         }
+
+        return res;
     }
 
-    /* recursively clear the handles */
-    clearHandles(handles) {
-        if(handles instanceof Array) {
-            handles.forEach(function(handle) {
-                this.clearHandles(handle);
+    /* traverse an array/tree/etc and apply function to each of the non-array elements */
+    cascade(v,f) {
+        if(v instanceof Array) {
+            v.forEach(function(x) {
+                this.cascade(x,f);
             }.bind(this));
-        } else { /* call the derived method if not an array */
-            //this.clearHandle(handles);
+        } else { /* call the function if not an array */
+            f(v);
         }
     }
 
@@ -88,8 +98,9 @@ export default class BaseContainer extends Component {
             let geoline = this.geolineMapping.keys[i];
 
             if(newProps.options.geolines.indexOf(geoline) < 0) {
+                this.cascade(this.geolineMapping.handles[i], this.clearHandle);
+
                 this.geolineMapping.keys.splice(i, 1);
-                this.clearHandles(this.geolineMapping.handles[i]);
                 this.geolineMapping.handles.splice(i, 1);
 
                 /* retry the same position since the array has shifted */
@@ -97,10 +108,4 @@ export default class BaseContainer extends Component {
             }
         }
     }
-
-    /* derived classes are expected to implement:
-     * - getStyle(style) -- convert the style template into a native one
-     * - setVisibility(handle, bool) -- show/hide a map marker
-     * - createGeoline(geoline) -- make a geoline object onscreen
-     */
 };

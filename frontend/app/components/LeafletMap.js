@@ -178,7 +178,13 @@ export default class LeafletContainer extends BaseContainer {
         return lines;
     }
 
+    /* remove the marker by handle */
+    clearHandle(handle) {
+        handle.remove();
+    }
+
     /* remove given shape from map */
+    // TODO: death mark
     /* TODO: is assigning to null necessary? */
     clearShape(shape) {
         if(shape && 'remove' in shape) {
@@ -188,6 +194,7 @@ export default class LeafletContainer extends BaseContainer {
     }
 
     /* recursively clear an array */
+    // TODO: death mark
     clearShapes(shapes) {
         if(shapes && 'length' in shapes) {
             while(shapes.length > 0) {
