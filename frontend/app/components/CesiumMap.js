@@ -80,6 +80,7 @@ export default class CesiumContainer extends BaseContainer {
         this.previewShape = this.previewShape.bind(this);
         this.pointToRadius = this.pointToRadius.bind(this);
         this.makeSelectionPoint = this.makeSelectionPoint.bind(this);
+        this.clearHandle = this.clearHandle.bind(this);
 
         /* enable render on this events */
         this.eventHandler = null;
@@ -104,6 +105,8 @@ export default class CesiumContainer extends BaseContainer {
 
         /* materials */
         this.previewMaterial = Material.fromType('Stripe');
+
+        window.cesium = this;
     }
 
     /* update only for fullscreen toggling */
@@ -113,7 +116,7 @@ export default class CesiumContainer extends BaseContainer {
                 this.props.options.dims.height !== nextProps.options.dims.height);
     }
 
-    componentWillReceiveProps(nextProps) {
+    componentWillReceivePropsXXX(nextProps) {
         this.updateMap(nextProps);
         this.repaint();
     }
@@ -499,39 +502,20 @@ export default class CesiumContainer extends BaseContainer {
         });
     }
 
+    /* remove the marker by handle */
+    clearHandle(handle) {
+        this.viewer.entities.remove(handle);
+    }
+
+    /* change visibility of a marker */
+    setVisible(handle, visible) {
+        handle.show = visible;
+    }
+
     updateMap(maybeProps) {
         let props = maybeProps !== undefined ? maybeProps : this.props;
 
         if(! props.selection.active) {
-            for (let gridkey in GridTypes) {
-                let gridtype = GridTypes[gridkey];
-                let grid = props.options.grid[gridtype];
-
-                /* TODO: refactor */
-                if(Array.isArray(grid.data) && this.magGridHandle[gridtype] == null) {
-                    this.magGridHandle[gridtype] = this.makeIsolines(grid.data);
-                } else if (grid.data == null && this.magGridHandle[gridtype] != null) {
-                    this.magGridHandle[gridtype].forEach(function(handle) {
-                        this.clearShape(handle);
-                    }.bind(this));
-                    this.magGridHandle[gridtype] = null;
-                }
-
-                /* visibility control */
-                // TODO: constantly adding/removing might be excessive, general fix coming in #244
-                if(this.magGridHandle[gridtype]) {
-                    if(grid.visible) {
-                        this.magGridHandle[gridtype].forEach(function(shape) {
-                            shape.show = true;
-                        }.bind(this));
-                    } else {
-                        this.magGridHandle[gridtype].forEach(function(shape) {
-                            shape.show = false;
-                        }.bind(this));
-                    }
-                }
-            }
-
             /* clear preview */
             this.previewHandle && this.viewer.scene.primitives.remove(this.previewHandle);
 
@@ -578,37 +562,6 @@ export default class CesiumContainer extends BaseContainer {
             this.geolineHandles.forEach(function(handle) {
                 this.clearShape(handle);
             }.bind(this));
-
-            /* draw new geolines if they're present */
-            if(Array.isArray(props.options.geolines) && props.options.geolines.length > 0) {
-                this.geolineHandles = new Array();
-
-                props.options.geolines.forEach(function(geoline){
-                    // TODO generalise to UniversalMap
-                    // TODO stub code
-                    let last = 0;
-                    geoline.selection.forEach(function(segment) {
-                        let seg = { start: segment.start - geoline.offset,
-                                    end: segment.end - geoline.offset };
-
-                        // +1 to include seg.start and seg.end
-                        if(seg.start - last > 0) {
-                            this.geolineHandles.push(this.makeGeoline(geoline.geo_line.slice(last, seg.start + 1), MapStyle.SessionLeftovers));
-                        }
-
-                        if(seg.end - seg.start > 0) {
-                            this.geolineHandles.push(this.makeGeoline(geoline.geo_line.slice(seg.start, seg.end + 1), MapStyle.Session));
-                        }
-
-                        last = seg.end;
-                    }.bind(this));
-
-                    if(geoline.geo_line.length - 1 - last > 0) {
-                        this.geolineHandles.push(this.makeGeoline(geoline.geo_line.slice(last), MapStyle.SessionLeftovers));
-                    }
-                // TODO end of stub code
-                }.bind(this));
-            }
         }
     }
 

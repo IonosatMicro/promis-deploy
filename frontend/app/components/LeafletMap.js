@@ -59,11 +59,11 @@ export default class LeafletContainer extends BaseContainer {
                 this.props.options.dims.height !== nextProps.options.dims.height);
     }
 
-    repaint() {
-        if(this.map) {
-            this.map.invalidateSize();
-        }
-    }
+//     repaint() {
+//         if(this.map) {
+//             this.map.invalidateSize();
+//         }
+//     }
 
     componentWillReceivePropsZZ(nextProps) {
         //console.log('new propz');
@@ -192,6 +192,10 @@ export default class LeafletContainer extends BaseContainer {
         }
     }
 
+    /* leaflet auto-updates, so no need to do anything */
+    repaint() {
+    }
+
     /* remove given shape from map */
     // TODO: death mark
     /* TODO: is assigning to null necessary? */
@@ -306,77 +310,6 @@ export default class LeafletContainer extends BaseContainer {
         let props = maybeProps !== undefined ? maybeProps : this.props;
 
         if(! props.selection.active) {
-            for (let gridkey in GridTypes) {
-                let gridtype = GridTypes[gridkey];
-                let grid = props.options.grid[gridtype];
-
-                /* TODO: refactor */
-                if(Array.isArray(grid.data) && this.magGridHandle[gridtype] == null) {
-                    this.magGridHandle[gridtype] = this.makeIsolines(grid.data);
-                } else if (grid.data == null && this.magGridHandle[gridtype] != null) {
-                    this.magGridHandle[gridtype].forEach(function(handle) {
-                        this.clearShape(handle);
-                    }.bind(this));
-                    this.magGridHandle[gridtype] = null;
-                }
-
-                /* visibility control */
-                // TODO: constantly adding/removing might be excessive, general fix coming in #244
-                if(this.magGridHandle[gridtype]) {
-                    if(grid.visible) {
-                        this.magGridHandle[gridtype].forEach(function(shape) {
-                            shape.addTo(this.map);
-                        }.bind(this));
-                    } else {
-                        this.magGridHandle[gridtype].forEach(function(shape) {
-                            shape.removeFrom(this.map);
-                        }.bind(this));
-                    }
-                }
-            }
-
-            /* clear geolines */
-            this.geolineHandles.forEach(function(handle) {
-                this.clearShape(handle);
-            }.bind(this));
-
-            /* draw new geolines if they're present */
-            if(Array.isArray(props.options.geolines) && props.options.geolines.length > 0) {
-                this.geolineHandles = new Array();
-
-                props.options.geolines.forEach(function(geoline) {
-                    // TODO generalise to UniversalMap
-                    // TODO stub code
-                    let last = 0;
-                    geoline.selection.forEach(function(segment) {
-                        let seg = { start: segment.start - geoline.offset,
-                                    end: segment.end - geoline.offset };
-
-                        // +1 to include seg.start and seg.end
-                        if(seg.start - last > 0) {
-                            this.makeGeoline(geoline.geo_line.slice(last, seg.start + 1), MapStyle.SessionLeftovers).forEach(function(handle) {
-                                this.geolineHandles.push(handle);
-                            }.bind(this));
-                        }
-
-                        if(seg.end - seg.start > 0) {
-                            this.makeGeoline(geoline.geo_line.slice(seg.start, seg.end + 1), MapStyle.Session).forEach(function(handle) {
-                                this.geolineHandles.push(handle);
-                            }.bind(this));
-                        }
-
-                        last = seg.end;
-                    }.bind(this));
-
-                    if(geoline.geo_line.length - 1 - last > 0) {
-                        this.makeGeoline(geoline.geo_line.slice(last), MapStyle.SessionLeftovers).forEach(function(handle) {
-                            this.geolineHandles.push(handle);
-                        }.bind(this));
-                    }
-                }.bind(this));
-                // TODO end of stub code
-            }
-
             /* clear old shapes */
             this.clearShapes(this.previewHandles);
 

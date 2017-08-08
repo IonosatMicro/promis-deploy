@@ -53,6 +53,7 @@ export default class BaseContainer extends Component {
                 visible: false
             };
         }
+        window.geolines = this.geolineMapping.handles;
 
     }
 
@@ -99,6 +100,7 @@ export default class BaseContainer extends Component {
 
     componentWillReceiveProps(newProps) {
         /* check if the state has stuff that the map doesn't know */
+        let needsRepaint = false;
 
         /* new geolines */
         newProps.options.geolines.forEach(function(geoline) {
@@ -106,6 +108,8 @@ export default class BaseContainer extends Component {
             if(this.geolineMapping.keys.indexOf(geoline) < 0) {
                 this.geolineMapping.keys.push(geoline);
                 this.geolineMapping.handles.push(this.makeGeolineSet(geoline));
+
+                needsRepaint = true;
             }
         }.bind(this));
 
@@ -115,6 +119,7 @@ export default class BaseContainer extends Component {
             let geoline = this.geolineMapping.keys[i];
 
             if(newProps.options.geolines.indexOf(geoline) < 0) {
+                /* #272: 3D geolines are messed up and don't clear up correctly */
                 this.cascade(this.geolineMapping.handles[i], this.clearHandle);
 
                 this.geolineMapping.keys.splice(i, 1);
@@ -122,6 +127,8 @@ export default class BaseContainer extends Component {
 
                 /* retry the same position since the array has shifted */
                 i--;
+
+                needsRepaint = true;
             }
         }
 
@@ -129,6 +136,7 @@ export default class BaseContainer extends Component {
         for (let gridkey in GridTypes) {
             let gridtype = GridTypes[gridkey];
             let grid = newProps.options.grid[gridtype];
+            let forceVisibilityChange = false;
 
             /* create/remove the handle if data changed */
             if(grid.data != this.gridMapping[gridtype].data) {
@@ -137,29 +145,42 @@ export default class BaseContainer extends Component {
                     this.cascade(this.gridMapping[gridtype].handles, this.clearHandle);
                     this.gridMapping[gridtype].handles = null;
                     this.gridMapping[gridtype].visible = false;
+
+                    needsRepaint = true;
                 }
 
                 /* if the new data is real, create isolines */
                 if(grid.data != null) {
                     /* TODO: regular non-isoline grid */
                     this.gridMapping[gridtype].handles = this.makeIsolines(grid.data);
+                    /* make sure the visibility state matches what the grid expects */
+                    forceVisibilityChange = true;
+
+                    needsRepaint = true;
                 }
 
                 this.gridMapping[gridtype].data = grid.data;
             }
 
             /* hide/show */
-            if(grid.visible != this.gridMapping[gridtype].visible) {
+            if(grid.visible != this.gridMapping[gridtype].visible || forceVisibilityChange) {
                 /* only change visibility if we have anything to show */
                 if(this.gridMapping[gridtype].handles) {
                     this.cascade(this.gridMapping[gridtype].handles, function(handles) {
                         this.setVisible(handles, grid.visible);
                     }.bind(this));
+
+                    needsRepaint = true;
                 }
 
                 /* update internal state anyway */
                 this.gridMapping[gridtype].visible = grid.visible;
             }
+        }
+
+        /* If anything visibly changed, update the view */
+        if(needsRepaint) {
+            this.repaint();
         }
     }
 };
