@@ -98,6 +98,15 @@ export default class BaseContainer extends Component {
         }
     }
 
+    componentDidMount() {
+        /* call derived methods */
+        this.postMount();
+
+        /* update everything */
+        this.componentWillReceiveProps(this.props);
+        this.repaint();
+    }
+
     componentWillReceiveProps(newProps) {
         /* check if the state has stuff that the map doesn't know */
         let needsRepaint = false;

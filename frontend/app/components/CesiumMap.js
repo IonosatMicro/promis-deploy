@@ -131,7 +131,7 @@ export default class CesiumContainer extends BaseContainer {
         this.map = null;
     }
 
-    componentDidMount() {
+    postMount() {
         /* mount to div */
         if(! this.viewer) {
             this.viewer = new Viewer(this.mapNode, this.options);
@@ -154,9 +154,6 @@ export default class CesiumContainer extends BaseContainer {
 
             this.initEvents();
         }
-
-        this.repaint();
-        this.updateMap();
     }
 
     repaint() {

@@ -75,7 +75,7 @@ export default class LeafletContainer extends BaseContainer {
         this.repaint();
     }
 
-    componentDidMount() {
+    postMount() {
         /* mount to div */
         if(! this.map) {
             this.map = Leaflet.map(this.mapNode, this.mapParams);
@@ -83,7 +83,6 @@ export default class LeafletContainer extends BaseContainer {
         }
 
         this.initEvents();
-        this.updateMap();
     }
 
     componentWillUnmount() {
