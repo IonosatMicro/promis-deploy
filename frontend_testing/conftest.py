@@ -11,15 +11,14 @@ def app(request):
     else:
         if not fixture.is_valid():
             fixture = Application()
-    fixture.session.ensure_login(username="promis", password="swordfish")
+    fixture.session_helper.ensure_login(username="promis", password="swordfish")
     return fixture
 
 
 @pytest.fixture(scope="session", autouse=True)
 def stop(request):
     def fin():
-        fixture.session.ensure_logout()
+        fixture.session_helper.ensure_logout()
         fixture.kill_browser()
     request.addfinalizer(fin)
     return fixture
-

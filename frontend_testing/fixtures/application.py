@@ -1,21 +1,20 @@
 from selenium import webdriver
-from fixtures.session import SessionHelper
-from fixtures.coordinates import CoordinatesHelper
-from fixtures.map_fixture import MapHelper
-from fixtures.interval_fixture import IntervalHelper
-from fixtures.project import MeasurementsHelper
+from fixtures.session_helper import SessionHelper
+from fixtures.map_helper import MapHelper
+from fixtures.search_helper import SearchWindowHelper
+from fixtures.time_position_helper import TimePositionHelper
+from fixtures.url import url
 
 
 class Application:
 
     def __init__(self):
-        self.wd = webdriver.Chrome("/usr/lib/chromium-browser/chromedriver")
+        self.wd = webdriver.Firefox()
         self.wd.implicitly_wait(5)
-        self.session = SessionHelper(self)
-        self.map_fixture = MapHelper(self)
-        self.interval_fixture = IntervalHelper(self)
-        self.coordinates = CoordinatesHelper(self)
-        self.project = MeasurementsHelper(self)
+        self.session_helper = SessionHelper(self)
+        self.map_helper = MapHelper(self)
+        self.search_helper = SearchWindowHelper(self)
+        self.time_position_helper = TimePositionHelper(self)
 
     def is_valid(self):
         try:
@@ -26,8 +25,9 @@ class Application:
 
     def open_home_page(self):
         wd = self.wd
-        wd.get("http://www.promis.erint.io/")
+        wd.get(url)
         wd.maximize_window()
 
     def kill_browser(self):
-        self.wd.close()
+        self.wd.quit()
+
