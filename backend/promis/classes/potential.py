@@ -53,7 +53,7 @@ class Potential(BaseProject):
                         "knap20120130.rar"
                         }
 
-        with ftp_helper.FTPChecker("Potential/DECODED/", "promis.ikd.kiev.ua") as ftp:
+        with ftp_helper.FTPChecker("Potential/DECODED/", "ftp.promis.ikd.kiev.ua") as ftp:
             ftp.exceptions = exceptions
 
             # TODO: check that directory exists properly
@@ -63,7 +63,7 @@ class Potential(BaseProject):
 
     def fetch(self, daydir):
         # TODO: create an FTP object ahead of time and reuse
-        with ftp_helper.FTPChecker("Potential/DECODED/{0}/pdata{0}".format(daydir), "promis.ikd.kiev.ua") as ftp:
+        with ftp_helper.FTPChecker("Potential/DECODED/{0}/pdata{0}".format(daydir), "ftp.promis.ikd.kiev.ua") as ftp:
             # Fetching orbit telemetry data
             orbit_path = {}
             for fname in ftp.xlist("^tm.*\.txt$"):
