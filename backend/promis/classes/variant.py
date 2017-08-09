@@ -32,4 +32,5 @@ class Variant(BaseProject):
     [uk]: Супутниковий експеримент ВАРІАНТ
     '''
 
-    pass
+    def check(*args, **kwargs):
+        return []
