@@ -1,3 +1,6 @@
+import yaml
+
+
 def _get_origin():
     with open("deploy/promis_api.yaml") as fp:
         origin =  yaml.load(fp)["host"].split(":")
