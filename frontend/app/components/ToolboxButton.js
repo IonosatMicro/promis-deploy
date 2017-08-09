@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Tooltip, Glyphicon, ButtonGroup, OverlayTrigger } from 'react-bootstrap';
+import ReactSpinner from 'react-spinjs';
 
 export default class ToolboxButton extends Component {
     constructor(props) {
@@ -18,6 +19,7 @@ export default class ToolboxButton extends Component {
                     bsStyle = {this.props.style}
                     bsSize = 'small'
                 >
+                    { this.props.loading ? (<ReactSpinner config = { {scale: 0.65} }/>) : (null) }
                     <Glyphicon glyph = {this.props.icon} />
                 </Button>
             </OverlayTrigger>
@@ -30,5 +32,6 @@ ToolboxButton.defaultProps = {
     icon : 'star',
     style: 'default',
     placement: 'bottom',
+    loading: false,
     onClick : function() { ; }
 }

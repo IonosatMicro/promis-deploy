@@ -5,7 +5,7 @@ import LeafletBing from 'leaflet-bing-layer';
 import LeafletGeodesy from 'leaflet-geodesy';
 
 import { Types, latlngRectangle } from '../constants/Selection';
-import { BingKey } from '../constants/Map';
+import { BingKey, GridTypes } from '../constants/Map';
 
 import * as MapStyle from '../constants/MapStyle';
 
@@ -28,6 +28,7 @@ export default class LeafletContainer extends Component {
         this.geolineHandles = new Array();
         this.previewHandles = null;
         this.latlngHandles = null;
+        this.magGridHandle = {};
 
         /* options */
         this.mapParams = { center: [31.5, 10.2], zoom: 1, zoomControl: false, minZoom: 1, worldCopyJump: true};
@@ -53,6 +54,7 @@ export default class LeafletContainer extends Component {
         this.makeGeoline = this.makeGeoline.bind(this);
         this.previewShape = this.previewShape.bind(this);
         this.makeSelectionPoint = this.makeSelectionPoint.bind(this);
+        this.makeIsolines = this.makeIsolines.bind(this);
     }
 
     /* update only for fullscreen toggling */
@@ -105,6 +107,29 @@ export default class LeafletContainer extends Component {
         this.map.off('mousedown',   this.startDrawEvent);
         this.map.off('mousemove',   this.moveDrawEvent);
         this.map.off('mouseup',     this.stopDrawEvent);
+    }
+
+    makeIsolines(isodata) {
+        let isolines = [];
+
+        isodata.forEach(function(isoline){
+            /* TODO: combine with makeGeoline or make global */
+            let shifter = function(s) {
+                return function(x) {
+                    return [ x[0], x[1] + s ];
+                };
+            }
+            let segs = [ isoline.coords, isoline.coords.map(shifter(360)), isoline.coords.map(shifter(-360)) ];
+
+            segs.forEach(function(seg){
+                let line = Leaflet.polyline(seg, this.getStyle(isoline.style));
+
+                isolines.push(line);
+            }.bind(this));
+
+        }.bind(this));
+
+        return isolines;
     }
 
     makeGeoline(xcoords, style)
@@ -270,6 +295,35 @@ export default class LeafletContainer extends Component {
         let props = maybeProps !== undefined ? maybeProps : this.props;
 
         if(! props.selection.active) {
+            for (let gridkey in GridTypes) {
+                let gridtype = GridTypes[gridkey];
+                let grid = props.options.grid[gridtype];
+
+                /* TODO: refactor */
+                if(Array.isArray(grid.data) && this.magGridHandle[gridtype] == null) {
+                    this.magGridHandle[gridtype] = this.makeIsolines(grid.data);
+                } else if (grid.data == null && this.magGridHandle[gridtype] != null) {
+                    this.magGridHandle[gridtype].forEach(function(handle) {
+                        this.clearShape(handle);
+                    }.bind(this));
+                    this.magGridHandle[gridtype] = null;
+                }
+
+                /* visibility control */
+                // TODO: constantly adding/removing might be excessive, general fix coming in #244
+                if(this.magGridHandle[gridtype]) {
+                    if(grid.visible) {
+                        this.magGridHandle[gridtype].forEach(function(shape) {
+                            shape.addTo(this.map);
+                        }.bind(this));
+                    } else {
+                        this.magGridHandle[gridtype].forEach(function(shape) {
+                            shape.removeFrom(this.map);
+                        }.bind(this));
+                    }
+                }
+            }
+
             /* clear geolines */
             this.geolineHandles.forEach(function(handle) {
                 this.clearShape(handle);

@@ -33,13 +33,6 @@ export default function MapReducer(state = State, action) {
             };
         break;
 
-        case Enum.GridChanged:
-            return {
-                ...state,
-                grid: action.payload
-            };
-        break;
-
         case Enum.RectChanged:
             return {
                 ...state,
@@ -108,6 +101,58 @@ export default function MapReducer(state = State, action) {
             return {
                 ...state,
                 loaded: action.payload
+            };
+        break;
+
+        case Enum.GridChanged:
+            return {
+                ...state,
+                grid: {
+                    ...state.grid,
+                    [action.payload.type]: {
+                        ...state.grid[action.payload.type],
+                        visible: action.payload.state
+                    }
+                }
+            };
+        break;
+
+        case Enum.GridDataCleared:
+            return {
+                ...state,
+                grid: {
+                    ...state.grid,
+                    [action.payload.type]: {
+                        ...state.grid[action.payload.type],
+                        data: null
+                    }
+                }
+            };
+        break;
+
+        case Enum.GridDataSet:
+            return {
+                ...state,
+                grid: {
+                    ...state.grid,
+                    [action.payload.type]: {
+                        ...state.grid[action.payload.type],
+                        data: action.payload.data
+                    }
+                }
+            };
+        break;
+
+        case Enum.GridDataFetch:
+            return {
+                ...state,
+                grid: {
+                    ...state.grid,
+                    [action.payload.type]: {
+                        ...state.grid[action.payload.type],
+                        fetching: action.payload.state
+                    }
+                }
             };
         break;
 

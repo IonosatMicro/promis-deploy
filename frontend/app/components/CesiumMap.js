@@ -26,7 +26,7 @@ import EllipsoidSurfaceAppearance from 'cesium/Source/Scene/EllipsoidSurfaceAppe
 import PolylineOutlineMaterialProperty from 'cesium/Source/DataSources/PolylineOutlineMaterialProperty';
 import PolylineDashMaterialProperty from 'cesium/Source/DataSources/PolylineDashMaterialProperty';
 
-import { BingKey } from '../constants/Map';
+import { BingKey, GridTypes } from '../constants/Map';
 import { Types, latlngRectangle } from '../constants/Selection';
 import * as MapStyle from '../constants/MapStyle';
 
@@ -63,6 +63,7 @@ export default class CesiumContainer extends Component {
         this.geolineHandles = new Array();
         this.previewHandle = null;
         this.latlngHandle = null;
+        this.magGridHandle = {}; window.magGridHandle = this.magGridHandle;
 
         /* for render suspension */
         this.lastmove = Date.now();
@@ -73,6 +74,7 @@ export default class CesiumContainer extends Component {
         this.makeShape = this.makeShape.bind(this);
         this.clearShape = this.clearShape.bind(this);
         this.makeGeoline = this.makeGeoline.bind(this);
+        this.makeIsolines = this.makeIsolines.bind(this);
         this.previewShape = this.previewShape.bind(this);
         this.pointToRadius = this.pointToRadius.bind(this);
         this.makeSelectionPoint = this.makeSelectionPoint.bind(this);
@@ -454,6 +456,31 @@ export default class CesiumContainer extends Component {
         });
     }
 
+    makeIsolines(isodata) {
+        let isolines = [];
+
+        isodata.forEach(function(isoline){
+            let cartesians = new Array();
+
+            /* data is [lat, lon, hgt] */
+            isoline.coords.forEach(function(point) {
+                cartesians.push(Cartesian3.fromDegrees(point[1], point[0], 0));
+            });
+
+
+            let line = this.viewer.entities.add({
+                polyline : {
+                    positions : cartesians,
+                    ...this.getStyle(isoline.style)
+                }
+            });
+
+            isolines.push(line);
+        }.bind(this));
+
+        return isolines;
+    }
+
     makeGeoline(data, style) {
         let cartesians = new Array();
 
@@ -474,6 +501,35 @@ export default class CesiumContainer extends Component {
         let props = maybeProps !== undefined ? maybeProps : this.props;
 
         if(! props.selection.active) {
+            for (let gridkey in GridTypes) {
+                let gridtype = GridTypes[gridkey];
+                let grid = props.options.grid[gridtype];
+
+                /* TODO: refactor */
+                if(Array.isArray(grid.data) && this.magGridHandle[gridtype] == null) {
+                    this.magGridHandle[gridtype] = this.makeIsolines(grid.data);
+                } else if (grid.data == null && this.magGridHandle[gridtype] != null) {
+                    this.magGridHandle[gridtype].forEach(function(handle) {
+                        this.clearShape(handle);
+                    }.bind(this));
+                    this.magGridHandle[gridtype] = null;
+                }
+
+                /* visibility control */
+                // TODO: constantly adding/removing might be excessive, general fix coming in #244
+                if(this.magGridHandle[gridtype]) {
+                    if(grid.visible) {
+                        this.magGridHandle[gridtype].forEach(function(shape) {
+                            shape.show = true;
+                        }.bind(this));
+                    } else {
+                        this.magGridHandle[gridtype].forEach(function(shape) {
+                            shape.show = false;
+                        }.bind(this));
+                    }
+                }
+            }
+
             /* clear preview */
             this.previewHandle && this.viewer.scene.primitives.remove(this.previewHandle);
 
@@ -572,15 +628,19 @@ export default class CesiumContainer extends Component {
         if(!style.fill) {
             let stroke = Color.fromCssColorString(style.stroke).withAlpha(style.strokeAlpha);
 
-            st.material = style.dashed ?
-                new PolylineDashMaterialProperty({
+            if(style.dashed) {
+                st.material = new PolylineDashMaterialProperty({
                     color : stroke,
                     dashLength: 10,
-                }) :
-                new PolylineOutlineMaterialProperty({
+                });
+            } else if(style.outline) {
+                st.material = new PolylineOutlineMaterialProperty({
                     color : stroke,
                     outlineWidth : 2,
                     outlineColor : Color.BLACK });
+            } else {
+                st.material = stroke;
+            }
 
             st.width = style.width;
         }

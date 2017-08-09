@@ -40,15 +40,6 @@ export default {
         }
     },
 
-    toggleGrid : function(newGridState) {
-        return function(dispatch) {
-            dispatch({
-                type: Enum.GridChanged,
-                payload: newGridState
-            })
-        }
-    },
-
     toggleRect : function(newRectState) {
         return function(dispatch) {
             dispatch({
@@ -121,4 +112,51 @@ export default {
             })
         }
     },
+
+    changeGridState : function(gridtype, state) {
+        return function(dispatch) {
+            dispatch({
+                type: Enum.GridChanged,
+                payload: {
+                    state: state,
+                    type: gridtype
+                }
+            })
+        }
+    },
+
+    clearGridData : function(gridtype) {
+        return function(dispatch) {
+            dispatch({
+                type: Enum.GridDataCleared,
+                payload: {
+                    type: gridtype
+                }
+            })
+        }
+    },
+
+    setGridData : function(gridtype, data) {
+        return function(dispatch) {
+            dispatch({
+                type: Enum.GridDataSet,
+                payload: {
+                    type: gridtype,
+                    data: data
+                }
+            })
+        }
+    },
+
+    changeGridFetchState : function(gridtype, state) {
+        return function(dispatch) {
+            dispatch({
+                type: Enum.GridDataFetch,
+                payload: {
+                    state: state,
+                    type: gridtype
+                }
+            })
+        }
+    }
 };
