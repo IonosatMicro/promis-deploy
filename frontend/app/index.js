@@ -11,6 +11,7 @@ import RootReducer from './reducers/Root';
 /* bootstrap */
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
+import './styles/bootstrap_override.css';
 
 /* bootstrap toggle */
 import 'react-bootstrap-toggle/dist/bootstrap2-toggle.css';

@@ -1,0 +1,11 @@
+/*Style for Top Panel for uniform height*/
+.navbar-nav {
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+.navbar-nav > li > a {
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
