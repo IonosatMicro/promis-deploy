@@ -92,7 +92,7 @@ class Potential(BaseProject):
                 # TODO: maybe do this before everything?
                 # TODO: really bad code here
                 ez_chan_txt = { "lf": "EZ low-frequency channel" , "hf": "EZ high-frequency channel" }
-                ez_par_txt = { "lf": "Low-frequency potential measurement", "hf": "High-frequency potential measurement" }
+                ez_par_txt = { "lf": "Electric potential LF (Fs = 1 Hz)", "hf": "Electric potential HF (Fs = 1 kHz)" }
 
                 # TODO: check for existence etc, etc
                 ez_chan = { k: model.Channel.objects.language('en').filter(name = v)[0] for k,v in ez_chan_txt.items() }

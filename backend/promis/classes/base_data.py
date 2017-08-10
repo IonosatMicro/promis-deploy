@@ -132,3 +132,28 @@ class SingleVarTimeSeries(BaseData):
 
         for i in range(points):
             yield avg_float(v, int(span * i), span)
+
+
+# TODO: realize
+class ObliqueThreeVarTimeSeriesHF(BaseData):
+    """
+    [en]: Three high frequency components in oblique coordinate system
+    [uk]: Три високочастотні компоненти вектора величини в косоугольній системі координат
+    """
+
+
+# TODO: realize
+class OrthogonalThreeVarTimeSeriesHF(BaseData):
+    """
+    [en]: Three high frequency components in orthogonal coordinate system
+    [uk]: Три високочастотні компоненти вектора величини в ортогональній системі координат
+    """
+
+
+# TODO: realize
+class OrthogonalTwoVarTimeSeriesHF(BaseData):
+    """
+    [en]: Two high frequency components in orthogonal coordinate system
+    [uk]: Дві високочастотні компоненти вектора величини в ортогональній системі координат
+    """
+    pass

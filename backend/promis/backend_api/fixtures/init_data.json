@@ -4,7 +4,7 @@
     "pk": 1,
     "fields": {
         "name": "Potential",
-        "description": "The space scientific experiment on the ionosphere aboard the Ukrainian Sich-2 micro-satellite",
+        "description": "The space scientific experiment \"Potential\" on the ionosphere aboard the Ukrainian Sich-2 microsatellite (2011-2012)",
         "language_code": "en",
         "master": 1
     }
@@ -14,18 +14,51 @@
     "pk": 2,
     "fields": {
         "name": "\u041f\u043e\u0442\u0435\u043d\u0446\u0456\u0430\u043b",
-        "description": "\u041d\u0430\u0443\u043a\u043e\u0432\u0438\u0439 \u0456\u043e\u043d\u043e\u0441\u0444\u0435\u0440\u043d\u0438\u0439 \u043a\u043e\u0441\u043c\u0456\u0447\u043d\u0438\u0439 \u0435\u043a\u0441\u043f\u0435\u0440\u0438\u043c\u0435\u043d\u0442 \u043d\u0430 \u0431\u043e\u0440\u0442\u0443 \u0443\u043a\u0440\u0430\u0457\u043d\u0441\u044c\u043a\u043e\u0433\u043e \u043c\u0456\u043a\u0440\u043e\u0441\u0443\u043f\u0443\u0442\u043d\u0438\u043a\u0430 \"\u0421\u0456\u0447-2\"",
+        "description": "\u041d\u0430\u0443\u043a\u043e\u0432\u0438\u0439 \u0456\u043e\u043d\u043e\u0441\u0444\u0435\u0440\u043d\u0438\u0439 \u043a\u043e\u0441\u043c\u0456\u0447\u043d\u0438\u0439 \u0435\u043a\u0441\u043f\u0435\u0440\u0438\u043c\u0435\u043d\u0442 \"\u041f\u043e\u0442\u0435\u043d\u0446\u0456\u0430\u043b\" \u043d\u0430 \u0431\u043e\u0440\u0442\u0443 \u0443\u043a\u0440\u0430\u0457\u043d\u0441\u044c\u043a\u043e\u0433\u043e \u043c\u0456\u043a\u0440\u043e\u0441\u0443\u043f\u0443\u0442\u043d\u0438\u043a\u0430 \"\u0421\u0456\u0447-2\" (2011-2012)",
         "language_code": "uk",
         "master": 1
+    }
+},
+{
+    "model": "backend_api.space_projecttranslation",
+    "pk": 3,
+    "fields": {
+        "name": "Variant",
+        "description": "The space scientific experiment \"Variant\" on the ionosphere aboard the Ukrainian Sich-1M satellite (2004-2005)",
+        "language_code": "en",
+        "master": 2
+    }
+},
+{
+    "model": "backend_api.space_projecttranslation",
+    "pk": 4,
+    "fields": {
+        "name": "\u0412\u0430\u0440\u0456\u0430\u043d\u0442",
+        "description": "\u041d\u0430\u0443\u043a\u043e\u0432\u0438\u0439 \u0456\u043e\u043d\u043e\u0441\u0444\u0435\u0440\u043d\u0438\u0439 \u043a\u043e\u0441\u043c\u0456\u0447\u043d\u0438\u0439 \u0435\u043a\u0441\u043f\u0435\u0440\u0438\u043c\u0435\u043d\u0442 \"\u0412\u0430\u0440\u0456\u0430\u043d\u0442\" \u043d\u0430 \u0431\u043e\u0440\u0442\u0443 \u0443\u043a\u0440\u0430\u0457\u043d\u0441\u044c\u043a\u043e\u0433\u043e \u0441\u0443\u043f\u0443\u0442\u043d\u0438\u043a\u0430 \"\u0421\u0456\u0447-1\u041c\" (2004-2005)",
+        "language_code": "uk",
+        "master": 2
     }
 },
 {
     "model": "backend_api.space_project",
     "pk": 1,
     "fields": {
+        "klass": [
+            "classes.potential.Potential"
+        ],
         "date_start": "2011-08-30",
-        "date_end": "2012-11-01",
-        "klass":  [ "classes.potential.Potential" ]
+        "date_end": "2012-11-01"
+    }
+},
+{
+    "model": "backend_api.space_project",
+    "pk": 2,
+    "fields": {
+        "klass": [
+            "classes.variant.Variant"
+        ],
+        "date_start": "2005-02-01",
+        "date_end": "2005-03-25"
     }
 },
 {
@@ -89,6 +122,46 @@
     }
 },
 {
+    "model": "backend_api.devicetranslation",
+    "pk": 7,
+    "fields": {
+        "name": "Set of 4 Electric probes (EZ1, EZ2, EZ3, EZ4)",
+        "description": "",
+        "language_code": "en",
+        "master": 4
+    }
+},
+{
+    "model": "backend_api.devicetranslation",
+    "pk": 8,
+    "fields": {
+        "name": "\u041a\u043e\u043c\u043f\u043b\u0435\u043a\u0441 \u0437 4 \u0435\u043b\u0435\u043a\u0442\u0440\u0438\u0447\u043d\u0438\u0445 \u0437\u043e\u043d\u0434\u0456\u0432 (EZ1, EZ2, EZ3, EZ4)",
+        "description": "",
+        "language_code": "uk",
+        "master": 4
+    }
+},
+{
+    "model": "backend_api.devicetranslation",
+    "pk": 9,
+    "fields": {
+        "name": "\u041a\u043e\u043c\u043f\u043b\u0435\u043a\u0441 \u0437 \u0434\u0432\u043e\u0445 \u0445\u0432\u0438\u043b\u044c\u043e\u0432\u0438\u0445 \u0437\u043e\u043d\u0434\u0456\u0432 (WZ1, WZ2)",
+        "description": "\u041a\u043e\u043c\u043f\u043b\u0435\u043a\u0441 \u0437 \u0434\u0432\u043e\u0445 \u0445\u0432\u0438\u043b\u044c\u043e\u0432\u0438\u0445 \u0437\u043e\u043d\u0434\u0456\u0432 (WZ1, WZ2), \u0449\u043e \u0432\u0438\u043c\u0456\u0440\u044e\u044e\u0442\u044c \u0434\u0432\u0456 \u043e\u0440\u0442\u043e\u0433\u043e\u043d\u0430\u043b\u044c\u043d\u0456 \u043a\u043e\u043c\u043f\u043e\u043d\u0435\u043d\u0442\u0438 \u0437\u043c\u0456\u043d\u043d\u043e\u0433\u043e \u043c\u0430\u0433\u043d\u0456\u0442\u043d\u043e\u0433\u043e \u043f\u043e\u043b\u044f (Bx, By) \u0442\u0430 \u0434\u0432\u0456 \u043a\u043e\u043c\u043f\u043e\u043d\u0435\u043d\u0442\u0438 \u0433\u0443\u0441\u0442\u0438\u043d\u0438 \u0437\u043c\u0456\u043d\u043d\u043e\u0433\u043e \u0435\u043b\u0435\u043a\u0442\u0440\u0438\u0447\u043d\u043e\u0433\u043e \u0441\u0442\u0440\u0443\u043c\u0443 (Jxz, Jyz)",
+        "language_code": "uk",
+        "master": 5
+    }
+},
+{
+    "model": "backend_api.devicetranslation",
+    "pk": 10,
+    "fields": {
+        "name": "Set of 2 Wave probes (WZ1, WZ2)",
+        "description": "A complex of two wave probes (WZ1, WZ2) measuring two orthogonal variable components of the magnetic field (Bx, By) and two variable components of the current electric density (Jxz, Jyz)",
+        "language_code": "en",
+        "master": 5
+    }
+},
+{
     "model": "backend_api.device",
     "pk": 1,
     "fields": {
@@ -107,6 +180,250 @@
     "pk": 3,
     "fields": {
         "space_project": 1
+    }
+},
+{
+    "model": "backend_api.device",
+    "pk": 4,
+    "fields": {
+        "space_project": 2
+    }
+},
+{
+    "model": "backend_api.device",
+    "pk": 5,
+    "fields": {
+        "space_project": 2
+    }
+},
+{
+    "model": "backend_api.unittranslation",
+    "pk": 1,
+    "fields": {
+        "short_name": "V",
+        "long_name": "Volts",
+        "language_code": "en",
+        "master": 1
+    }
+},
+{
+    "model": "backend_api.unittranslation",
+    "pk": 2,
+    "fields": {
+        "short_name": "\u0412",
+        "long_name": "\u0412\u043e\u043b\u044c\u0442\u0438",
+        "language_code": "uk",
+        "master": 1
+    }
+},
+{
+    "model": "backend_api.unittranslation",
+    "pk": 3,
+    "fields": {
+        "short_name": "V\u22c5m\u22121",
+        "long_name": "Volts per metre",
+        "language_code": "en",
+        "master": 2
+    }
+},
+{
+    "model": "backend_api.unittranslation",
+    "pk": 4,
+    "fields": {
+        "short_name": "\u0412\u22c5\u043c\u22121",
+        "long_name": "\u0412\u043e\u043b\u044c\u0442 \u043d\u0430 \u043c\u0435\u0442\u0440",
+        "language_code": "uk",
+        "master": 2
+    }
+},
+{
+    "model": "backend_api.unittranslation",
+    "pk": 5,
+    "fields": {
+        "short_name": "nT",
+        "long_name": "Nanotesla",
+        "language_code": "en",
+        "master": 3
+    }
+},
+{
+    "model": "backend_api.unittranslation",
+    "pk": 6,
+    "fields": {
+        "short_name": "\u043d\u0422\u043b",
+        "long_name": "\u041d\u0430\u043d\u043e\u0442\u0435\u0441\u043b\u0430",
+        "language_code": "uk",
+        "master": 3
+    }
+},
+{
+    "model": "backend_api.unittranslation",
+    "pk": 7,
+    "fields": {
+        "short_name": "A\u22c5cm\u22122",
+        "long_name": "Amper per square centimetre",
+        "language_code": "en",
+        "master": 4
+    }
+},
+{
+    "model": "backend_api.unittranslation",
+    "pk": 8,
+    "fields": {
+        "short_name": "\u0410\u22c5\u0441\u043c\u22122",
+        "long_name": "\u0410\u043c\u043f\u0435\u0440 \u043d\u0430 \u0441\u0430\u043d\u0442\u0438\u043c\u0435\u0442\u0440 \u043a\u0432\u0430\u0434\u0440\u0430\u0442\u043d\u0438\u0439",
+        "language_code": "uk",
+        "master": 4
+    }
+},
+{
+    "model": "backend_api.unit",
+    "pk": 1,
+    "fields": {}
+},
+{
+    "model": "backend_api.unit",
+    "pk": 2,
+    "fields": {}
+},
+{
+    "model": "backend_api.unit",
+    "pk": 3,
+    "fields": {}
+},
+{
+    "model": "backend_api.unit",
+    "pk": 4,
+    "fields": {}
+},
+{
+    "model": "backend_api.valuetranslation",
+    "pk": 1,
+    "fields": {
+        "name": "Electric potential",
+        "description": "Electric field potential",
+        "language_code": "en",
+        "master": 1
+    }
+},
+{
+    "model": "backend_api.valuetranslation",
+    "pk": 2,
+    "fields": {
+        "name": "\u041f\u043e\u0442\u0435\u043d\u0446\u0456\u0430\u043b \u0435\u043b\u0435\u043a\u0442\u0440\u0438\u0447\u043d\u043e\u0433\u043e \u043f\u043e\u043b\u044f",
+        "description": "\u041f\u043e\u0442\u0435\u043d\u0446\u0456\u0430\u043b \u0435\u043b\u0435\u043a\u0442\u0440\u0438\u0447\u043d\u043e\u0433\u043e \u043f\u043e\u043b\u044f (\u0435\u043b\u0435\u043a\u0442\u0440\u043e\u0441\u0442\u0430\u0442\u0438\u0447\u043d\u0438\u0439 \u043f\u043e\u0442\u0435\u043d\u0446\u0456\u0430\u043b)",
+        "language_code": "uk",
+        "master": 1
+    }
+},
+{
+    "model": "backend_api.valuetranslation",
+    "pk": 3,
+    "fields": {
+        "name": "Electric potential difference",
+        "description": "",
+        "language_code": "en",
+        "master": 2
+    }
+},
+{
+    "model": "backend_api.valuetranslation",
+    "pk": 4,
+    "fields": {
+        "name": "\u0420\u0456\u0437\u043d\u0438\u0446\u044f \u0435\u043b\u0435\u043a\u0442\u0440\u0438\u0447\u043d\u0438\u0445 \u043f\u043e\u0442\u0435\u043d\u0446\u0456\u0430\u043b\u0456\u0432",
+        "description": "",
+        "language_code": "uk",
+        "master": 2
+    }
+},
+{
+    "model": "backend_api.valuetranslation",
+    "pk": 5,
+    "fields": {
+        "name": "Electric field",
+        "description": "",
+        "language_code": "en",
+        "master": 3
+    }
+},
+{
+    "model": "backend_api.valuetranslation",
+    "pk": 6,
+    "fields": {
+        "name": "\u0412\u0435\u043a\u0442\u043e\u0440 \u043d\u0430\u043f\u0440\u0443\u0436\u0435\u043d\u043d\u043e\u0441\u0442\u0456 \u0435\u043b\u0435\u043a\u0442\u0440\u0438\u0447\u043d\u043e\u0433\u043e \u043f\u043e\u043b\u044f",
+        "description": "",
+        "language_code": "uk",
+        "master": 3
+    }
+},
+{
+    "model": "backend_api.valuetranslation",
+    "pk": 7,
+    "fields": {
+        "name": "Magnetic field",
+        "description": "",
+        "language_code": "en",
+        "master": 4
+    }
+},
+{
+    "model": "backend_api.valuetranslation",
+    "pk": 8,
+    "fields": {
+        "name": "\u0412\u0435\u043a\u0442\u043e\u0440 \u0456\u043d\u0434\u0443\u043a\u0446\u0456\u0457 \u043c\u0430\u0433\u043d\u0456\u0442\u043d\u043e\u0433\u043e \u043f\u043e\u043b\u044f",
+        "description": "",
+        "language_code": "uk",
+        "master": 4
+    }
+},
+{
+    "model": "backend_api.valuetranslation",
+    "pk": 9,
+    "fields": {
+        "name": "Current density",
+        "description": "Electric current density",
+        "language_code": "en",
+        "master": 5
+    }
+},
+{
+    "model": "backend_api.value",
+    "pk": 1,
+    "fields": {
+        "short_name": "Ve",
+        "units": 1
+    }
+},
+{
+    "model": "backend_api.value",
+    "pk": 2,
+    "fields": {
+        "short_name": "\u0394Ve",
+        "units": 1
+    }
+},
+{
+    "model": "backend_api.value",
+    "pk": 3,
+    "fields": {
+        "short_name": "E",
+        "units": 2
+    }
+},
+{
+    "model": "backend_api.value",
+    "pk": 4,
+    "fields": {
+        "short_name": "B",
+        "units": 3
+    }
+},
+{
+    "model": "backend_api.value",
+    "pk": 5,
+    "fields": {
+        "short_name": "j",
+        "units": 4
     }
 },
 {
@@ -150,13 +467,75 @@
     }
 },
 {
+    "model": "backend_api.channeltranslation",
+    "pk": 5,
+    "fields": {
+        "name": "\u0394E1, \u0394E2, \u0394E3",
+        "description": "\u0394E1 = EZ1 - EZ4 \r\n\u0394E2 = EZ1 - EZ3\r\n\u0394E3 = EZ1 - EZ3",
+        "language_code": "en",
+        "master": 3
+    }
+},
+{
+    "model": "backend_api.channeltranslation",
+    "pk": 6,
+    "fields": {
+        "name": "Bx~, By~ (not calibrated)",
+        "description": "",
+        "language_code": "en",
+        "master": 4
+    }
+},
+{
+    "model": "backend_api.channeltranslation",
+    "pk": 7,
+    "fields": {
+        "name": "Jxz~, Jyz~ (not calibrated)",
+        "description": "",
+        "language_code": "en",
+        "master": 5
+    }
+},
+{
+    "model": "backend_api.channeltranslation",
+    "pk": 8,
+    "fields": {
+        "name": "\u0394E1, \u0394E2, \u0394E3",
+        "description": "\u0394E1 = EZ1 - EZ4 \r\n\u0394E2 = EZ1 - EZ3\r\n\u0394E3 = EZ1 - EZ3",
+        "language_code": "uk",
+        "master": 3
+    }
+},
+{
+    "model": "backend_api.channeltranslation",
+    "pk": 9,
+    "fields": {
+        "name": "Bx~, By~ (\u043d\u0435 \u0442\u0430\u0440\u0438\u0440\u043e\u0432\u0430\u043d\u0456)",
+        "description": "",
+        "language_code": "uk",
+        "master": 4
+    }
+},
+{
+    "model": "backend_api.channeltranslation",
+    "pk": 10,
+    "fields": {
+        "name": "Jxz~, Jyz~ (\u043d\u0435 \u0442\u0430\u0440\u0438\u0440\u043e\u0432\u0430\u043d\u0456)",
+        "description": "",
+        "language_code": "uk",
+        "master": 5
+    }
+},
+{
     "model": "backend_api.channel",
     "pk": 1,
     "fields": {
         "value": 1,
         "exponent": -3,
         "device": 1,
-        "klass": [ "classes.base_data.SingleVarTimeSeries" ]
+        "klass": [
+            "classes.base_data.SingleVarTimeSeries"
+        ]
     }
 },
 {
@@ -166,67 +545,52 @@
         "value": 1,
         "exponent": -3,
         "device": 1,
-        "klass": [ "classes.base_data.SingleVarTimeSeries" ]
+        "klass": [
+            "classes.base_data.ObliqueThreeVarTimeSeriesHF"
+        ]
     }
 },
 {
-    "model": "backend_api.unittranslation",
-    "pk": 1,
+    "model": "backend_api.channel",
+    "pk": 3,
     "fields": {
-        "short_name": "V",
-        "long_name": "Volts",
-        "language_code": "en",
-        "master": 1
+        "value": 2,
+        "exponent": 0,
+        "device": 4,
+        "klass": [
+            "classes.base_data.ObliqueThreeVarTimeSeriesHF"
+        ]
     }
 },
 {
-    "model": "backend_api.unittranslation",
-    "pk": 2,
+    "model": "backend_api.channel",
+    "pk": 4,
     "fields": {
-        "short_name": "\u0412",
-        "long_name": "\u0412\u043e\u043b\u044c\u0442\u0438",
-        "language_code": "uk",
-        "master": 1
+        "value": 1,
+        "exponent": 0,
+        "device": 5,
+        "klass": [
+            "classes.base_data.OrthogonalTwoVarTimeSeriesHF"
+        ]
     }
 },
 {
-    "model": "backend_api.unit",
-    "pk": 1,
-    "fields": {}
-},
-{
-    "model": "backend_api.valuetranslation",
-    "pk": 1,
+    "model": "backend_api.channel",
+    "pk": 5,
     "fields": {
-        "name": "Electric potential",
-        "description": "Electric field potential",
-        "language_code": "en",
-        "master": 1
-    }
-},
-{
-    "model": "backend_api.valuetranslation",
-    "pk": 2,
-    "fields": {
-        "name": "\u041f\u043e\u0442\u0435\u043d\u0446\u0456\u0430\u043b \u0435\u043b\u0435\u043a\u0442\u0440\u0438\u0447\u043d\u043e\u0433\u043e \u043f\u043e\u043b\u044f",
-        "description": "\u041f\u043e\u0442\u0435\u043d\u0446\u0456\u0430\u043b \u0435\u043b\u0435\u043a\u0442\u0440\u0438\u0447\u043d\u043e\u0433\u043e \u043f\u043e\u043b\u044f (\u0435\u043b\u0435\u043a\u0442\u0440\u043e\u0441\u0442\u0430\u0442\u0438\u0447\u043d\u0438\u0439 \u043f\u043e\u0442\u0435\u043d\u0446\u0456\u0430\u043b)",
-        "language_code": "uk",
-        "master": 1
-    }
-},
-{
-    "model": "backend_api.value",
-    "pk": 1,
-    "fields": {
-        "short_name": "Ve",
-        "units": 1
+        "value": 1,
+        "exponent": 0,
+        "device": 5,
+        "klass": [
+            "classes.base_data.OrthogonalTwoVarTimeSeriesHF"
+        ]
     }
 },
 {
     "model": "backend_api.parametertranslation",
     "pk": 1,
     "fields": {
-        "name": "Low-frequency potential measurement",
+        "name": "Electric potential LF (Fs = 1 Hz)",
         "description": "Electric potential measured in low frequency (Fs = 1 Hz)",
         "language_code": "en",
         "master": 1
@@ -236,7 +600,7 @@
     "model": "backend_api.parametertranslation",
     "pk": 2,
     "fields": {
-        "name": "\u041d\u0438\u0437\u044c\u043a\u043e\u0447\u0430\u0441\u0442\u043e\u0442\u043d\u0456 \u0432\u0438\u043c\u0456\u0440\u044e\u0432\u0430\u043d\u043d\u044f \u0435\u043b\u0435\u043a\u0442\u0438\u0447\u043d\u043e\u0433\u043e \u043f\u043e\u0442\u0435\u043d\u0446\u0456\u0430\u043b\u0443",
+        "name": "\u0415\u043b\u0435\u043a\u0442\u0438\u0447\u043d\u0438\u0439 \u043f\u043e\u0442\u0435\u043d\u0446\u0456\u0430\u043b LF (Fs = 1 \u0413\u0446)",
         "description": "\u041d\u0438\u0437\u044c\u043a\u043e\u0447\u0430\u0441\u0442\u043e\u0442\u043d\u0456 \u0432\u0438\u043c\u0456\u0440\u044e\u0432\u0430\u043d\u043d\u044f \u0435\u043b\u0435\u043a\u0442\u0438\u0447\u043d\u043e\u0433\u043e \u043f\u043e\u0442\u0435\u043d\u0446\u0456\u0430\u043b\u0443 (Fs = 1 \u0413\u0446)",
         "language_code": "uk",
         "master": 1
@@ -246,7 +610,7 @@
     "model": "backend_api.parametertranslation",
     "pk": 3,
     "fields": {
-        "name": "\u0412\u0438\u0441\u043e\u043a\u043e\u0447\u0430\u0441\u0442\u043e\u0442\u043d\u0456 \u0432\u0438\u043c\u0456\u0440\u044e\u0432\u0430\u043d\u043d\u044f \u0435\u043b\u0435\u043a\u0442\u0438\u0447\u043d\u043e\u0433\u043e \u043f\u043e\u0442\u0435\u043d\u0446\u0456\u0430\u043b\u0443",
+        "name": "\u0415\u043b\u0435\u043a\u0442\u0438\u0447\u043d\u0438\u0439 \u043f\u043e\u0442\u0435\u043d\u0446\u0456\u0430\u043b HF (Fs = 1 \u043a\u0413\u0446)",
         "description": "\u0412\u0438\u0441\u043e\u043a\u043e\u0447\u0430\u0441\u0442\u043e\u0442\u043d\u0456 \u0432\u0438\u043c\u0456\u0440\u044e\u0432\u0430\u043d\u043d\u044f \u0435\u043b\u0435\u043a\u0442\u0438\u0447\u043d\u043e\u0433\u043e \u043f\u043e\u0442\u0435\u043d\u0446\u0456\u0430\u043b\u0443 (Fs = 1 \u043a\u0413\u0446)",
         "language_code": "uk",
         "master": 2
@@ -256,10 +620,70 @@
     "model": "backend_api.parametertranslation",
     "pk": 4,
     "fields": {
-        "name": "High-frequency potential measurement",
+        "name": "Electric potential HF (Fs = 1 kHz)",
         "description": "Electric potential measured in high frequency (Fs = 1 kHz)",
         "language_code": "en",
         "master": 2
+    }
+},
+{
+    "model": "backend_api.parametertranslation",
+    "pk": 5,
+    "fields": {
+        "name": "Three components of electric field HF (Ex, Ey, Ez) Fs = 31.25 kHz",
+        "description": "",
+        "language_code": "en",
+        "master": 3
+    }
+},
+{
+    "model": "backend_api.parametertranslation",
+    "pk": 6,
+    "fields": {
+        "name": "\u0422\u0440\u0438 \u043a\u043e\u043c\u043f\u043e\u043d\u0435\u043d\u0442\u0438 \u0432\u0435\u043a\u0442\u043e\u0440\u0443 \u043d\u0430\u043f\u0440\u0443\u0436\u0435\u043d\u043d\u043e\u0441\u0442\u0456 \u0435\u043b\u0435\u043a\u0442\u0440\u0438\u0447\u043d\u043e\u0433\u043e \u043f\u043e\u043b\u044f HF (Ex, Ey, Ez) Fs = 31.25 \u043a\u0413\u0446",
+        "description": "",
+        "language_code": "uk",
+        "master": 3
+    }
+},
+{
+    "model": "backend_api.parametertranslation",
+    "pk": 7,
+    "fields": {
+        "name": "Two components of magnetic field HF (Bx, By) Fs = 31,25 kHz",
+        "description": "",
+        "language_code": "en",
+        "master": 4
+    }
+},
+{
+    "model": "backend_api.parametertranslation",
+    "pk": 8,
+    "fields": {
+        "name": "\u0414\u0432\u0456 \u043a\u043e\u043c\u043f\u043e\u043d\u0435\u043d\u0442\u0438 \u043c\u0430\u0433\u043d\u0456\u0442\u043d\u043e\u0433\u043e \u043f\u043e\u043b\u044f HF (Bx, By) Fs = 31,25 \u043a\u0413\u0446",
+        "description": "",
+        "language_code": "uk",
+        "master": 4
+    }
+},
+{
+    "model": "backend_api.parametertranslation",
+    "pk": 9,
+    "fields": {
+        "name": "Two components of current density (Jxz, Jyz) Fs = 31.25 kHz",
+        "description": "",
+        "language_code": "en",
+        "master": 5
+    }
+},
+{
+    "model": "backend_api.parametertranslation",
+    "pk": 10,
+    "fields": {
+        "name": "\u0414\u0432\u0456 \u043a\u043e\u043c\u043f\u043e\u043d\u0435\u043d\u0442\u0438 \u0433\u0443\u0441\u0442\u0438\u043d\u0438 \u0435\u043b\u0435\u043a\u0442\u0440\u0438\u0447\u043d\u043e\u0433\u043e \u0441\u0442\u0440\u0443\u043c\u0443 (Jxz, Jyz) Fs = 31.25 kHz",
+        "description": "",
+        "language_code": "uk",
+        "master": 5
     }
 },
 {
@@ -269,7 +693,9 @@
         "value": 1,
         "exponent": -3,
         "channel": 1,
-        "klass": [ "classes.base_data.SingleVarTimeSeries" ]
+        "klass": [
+            "classes.base_data.SingleVarTimeSeries"
+        ]
     }
 },
 {
@@ -279,7 +705,45 @@
         "value": 1,
         "exponent": -3,
         "channel": 2,
-        "klass": [ "classes.base_data.SingleVarTimeSeries" ]
+        "klass": [
+            "classes.base_data.SingleVarTimeSeries"
+        ]
+    }
+},
+{
+    "model": "backend_api.parameter",
+    "pk": 3,
+    "fields": {
+        "value": 3,
+        "exponent": 0,
+        "channel": 3,
+        "klass": [
+            "classes.base_data.OrthogonalThreeVarTimeSeriesHF"
+        ]
+    }
+},
+{
+    "model": "backend_api.parameter",
+    "pk": 4,
+    "fields": {
+        "value": 4,
+        "exponent": 0,
+        "channel": 4,
+        "klass": [
+            "classes.base_data.OrthogonalTwoVarTimeSeriesHF"
+        ]
+    }
+},
+{
+    "model": "backend_api.parameter",
+    "pk": 5,
+    "fields": {
+        "value": 5,
+        "exponent": 0,
+        "channel": 5,
+        "klass": [
+            "classes.base_data.OrthogonalTwoVarTimeSeriesHF"
+        ]
     }
 }
 ]
