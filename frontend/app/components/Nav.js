@@ -4,6 +4,19 @@ import { Nav, Navbar, NavItem, NavDropdown, MenuItem, Button, ButtonToolbar } fr
 import LoginWindow from './LoginWindow';
 import RegisterWindow from './RegisterWindow';
 
+// Temporary solution before https://github.com/react-bootstrap/react-bootstrap/pull/2711
+class ExternalNavItem extends NavItem {
+    handleClick(e) {
+        if (this.props.disabled) {
+            e.preventDefault();
+        } else {
+            if (this.props.onSelect) {
+                this.props.onSelect(this.props.eventKey, e);
+            }
+        }
+    }
+}
+
 export default class PromisNavbar extends Component {
     constructor(props) {
         super(props);
@@ -41,7 +54,7 @@ export default class PromisNavbar extends Component {
             <Navbar inverse collapseOnSelect>
                 <Navbar.Header>
                     <Navbar.Brand>
-                        <a href="#">IONOSAT PROMIS</a>
+                        <a href="#">PROMIS</a>
                     </Navbar.Brand>
                     <Navbar.Toggle />
                 </Navbar.Header>
@@ -53,7 +66,12 @@ export default class PromisNavbar extends Component {
                         </NavDropdown>
                     </Nav> */ }
                     <Nav pullRight>
+                        <ExternalNavItem href="http://ionosat-micro.ikd.kiev.ua/" target="_blank">
+                                <img src="/img/favicon-128.png" style={{width:"41px", marginTop: -7}} />
+                                Ionosat-Micro
+                        </ExternalNavItem>
                         <NavItem>
+                            <div></div>
                         { data.user ? (
                         <div>
                             <span className = 'welcome'>Hello, {data.user.name} </span>
