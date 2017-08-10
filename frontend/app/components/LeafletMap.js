@@ -11,12 +11,6 @@ import * as MapStyle from '../constants/MapStyle';
 
 import 'leaflet/dist/leaflet.css';
 
-/* hotfix before digidem/leaflet-bing-layer#22
- * # 38
- */
-Leaflet.TileLayer.Bing.METADATA_URL += '&uriScheme=https';
-Leaflet.TileLayer.Bing.POINT_METADATA_URL += '&uriScheme=https';
-
 export default class LeafletContainer extends Component {
     constructor(props) {
         super(props);
