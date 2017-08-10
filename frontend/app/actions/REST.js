@@ -24,6 +24,11 @@ function makeQuery(dispatch, name, path, params) {
 export default {
     /* rework this */
     getSingle : function(path, params, callback) {
+        /* manually fixing http: links to https: see #38 */
+        if(window.location.protocol == "https:" && path.startsWith("http:")) {
+            path = "https:" + path.slice(5);
+        }
+
         return function(dispatch) {
             dispatch({
                 type: RESTState.pending,
