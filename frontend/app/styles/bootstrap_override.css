@@ -9,3 +9,11 @@
   padding-bottom: 8px;
 }
 
+
+@media (min-width: 768px){
+  .container {
+    width: 100%;
+    padding-left: 35px;
+    padding-right: 35px;
+  }
+}
