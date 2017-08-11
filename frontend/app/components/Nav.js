@@ -68,7 +68,7 @@ export default class PromisNavbar extends Component {
                     <Nav pullRight>
                         <ExternalNavItem href="http://ionosat-micro.ikd.kiev.ua/" target="_blank">
                                 <img src="/img/favicon-128.png" style={{width:"41px", marginTop: -7}} />
-                                Ionosat-Micro
+                                <b>Ionosat-Micro</b>
                         </ExternalNavItem>
                         <NavItem>
                             <div></div>

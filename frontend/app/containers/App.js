@@ -5,6 +5,7 @@ import { Row } from 'react-bootstrap';
 
 import Nav from '../components/Nav';
 import Panel from '../components/Panel';
+import Footer from '../components/Footer';
 
 import mapActionsCreators from '../actions/Map';
 import userActionsCreators from '../actions/User';
@@ -55,7 +56,8 @@ class App extends Component {
     render() {
         var style = {
             width: '95%',
-            margin: '0 auto'
+            margin: '0 auto',
+            ['padding-bottom']: '50px'
         };
 
         /* hide possible scrollbar when resizing to ultralow dimensions in fullscreen mode */
@@ -108,6 +110,7 @@ class App extends Component {
                         </Panel>
                     </Row>
                 </div>
+                <Footer/>
             </div>
         )
     }

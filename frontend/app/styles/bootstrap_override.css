@@ -13,7 +13,33 @@
 @media (min-width: 768px){
   .container {
     width: 100%;
-    padding-left: 35px;
-    padding-right: 35px;
+    padding-left: 40px;
+    padding-right: 40px;
   }
+
+}
+
+/*For footer always in the bottom of page*/
+html, body {
+    margin:0; padding:0;
+    height:100%;
+}
+
+#app {
+  min-height:100%;
+  position:relative;
+}
+
+.footer {
+  position:absolute;
+  bottom:0; display:block;
+  width:100%;
+  /*z-index:1000;*/
+}
+.footer > div {
+    /*background-color:#000000; color:#FFFFFF;*/
+  padding-top:10px;
+  /*height:20px;*/
+  position:relative;
+  margin:0 auto;
 }
