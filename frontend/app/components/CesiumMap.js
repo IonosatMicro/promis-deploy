@@ -497,6 +497,38 @@ export default class CesiumContainer extends Component {
         });
     }
 
+    makeRegularGrid() {
+        let grid = [];
+        for (let lat = -90, even = false; lat <= 90; lat+=10, even = !even) {
+            /* we need to do steps on the horizonal grid because otherwise Cesium
+             * draws a straight line */
+            let positions = [];
+            for (let lon = -180; lon <= 180; lon+=10) {
+                positions.push(Cartesian3.fromDegrees(lon, lat, 0));
+            }
+
+            grid.push(this.viewer.entities.add({
+                polyline : {
+                    positions : positions,
+                    ...this.getStyle(even ? MapStyle.GridEven : MapStyle.Grid)
+                }
+            }));
+        }
+
+        for (let lon = -180, even = false; lon <= 180; lon+=10, even = !even) {
+            grid.push(this.viewer.entities.add({
+                polyline : {
+                    positions : [
+                        Cartesian3.fromDegrees(lon, -90, 0),
+                        Cartesian3.fromDegrees(lon, 90, 0)
+                    ],
+                    ...this.getStyle(even ? MapStyle.GridEven : MapStyle.Grid)
+                }
+            }));
+        }
+        return grid;
+    }
+
     updateMap(maybeProps) {
         let props = maybeProps !== undefined ? maybeProps : this.props;
 
@@ -506,13 +538,19 @@ export default class CesiumContainer extends Component {
                 let grid = props.options.grid[gridtype];
 
                 /* TODO: refactor */
-                if(Array.isArray(grid.data) && this.magGridHandle[gridtype] == null) {
-                    this.magGridHandle[gridtype] = this.makeIsolines(grid.data);
-                } else if (grid.data == null && this.magGridHandle[gridtype] != null) {
-                    this.magGridHandle[gridtype].forEach(function(handle) {
-                        this.clearShape(handle);
-                    }.bind(this));
-                    this.magGridHandle[gridtype] = null;
+                if (gridtype == GridTypes.Geographic) {
+                    if (this.magGridHandle[gridtype] == null) {
+                        this.magGridHandle[gridtype] = this.makeRegularGrid();
+                    }
+                } else {
+                    if(Array.isArray(grid.data) && this.magGridHandle[gridtype] == null) {
+                        this.magGridHandle[gridtype] = this.makeIsolines(grid.data);
+                    } else if (grid.data == null && this.magGridHandle[gridtype] != null) {
+                        this.magGridHandle[gridtype].forEach(function(handle) {
+                            this.clearShape(handle);
+                        }.bind(this));
+                        this.magGridHandle[gridtype] = null;
+                    }
                 }
 
                 /* visibility control */

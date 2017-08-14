@@ -282,6 +282,19 @@ export default class LeafletContainer extends Component {
         return null;
     }
 
+    /* TODO: generalize, see #244 */
+    makeRegularGrid() {
+        let grid = [];
+        for (let lat = -90, even = false; lat <= 90; lat+=10, even = !even) {
+            grid.push(Leaflet.polyline([[lat, -540],[lat, 540]], this.getStyle(even ? MapStyle.GridEven : MapStyle.Grid)));
+        }
+
+        for (let lon = -540, even = false; lon <= 540; lon+=10, even = !even) {
+            grid.push(Leaflet.polyline([[-90, lon],[90, lon]], this.getStyle(even ? MapStyle.GridEven : MapStyle.Grid)));
+        }
+        return grid;
+    }
+
     /* update visible areas according to current state */
     updateMap(maybeProps) {
         // TODO: rewrite this mess, use setLatLng to update existing elements rather than adding and deleting
@@ -294,13 +307,19 @@ export default class LeafletContainer extends Component {
                 let grid = props.options.grid[gridtype];
 
                 /* TODO: refactor */
-                if(Array.isArray(grid.data) && this.magGridHandle[gridtype] == null) {
-                    this.magGridHandle[gridtype] = this.makeIsolines(grid.data);
-                } else if (grid.data == null && this.magGridHandle[gridtype] != null) {
-                    this.magGridHandle[gridtype].forEach(function(handle) {
-                        this.clearShape(handle);
-                    }.bind(this));
-                    this.magGridHandle[gridtype] = null;
+                if (gridtype == GridTypes.Geographic) {
+                    if (this.magGridHandle[gridtype] == null) {
+                        this.magGridHandle[gridtype] = this.makeRegularGrid();
+                    }
+                } else {
+                    if(Array.isArray(grid.data) && this.magGridHandle[gridtype] == null) {
+                        this.magGridHandle[gridtype] = this.makeIsolines(grid.data);
+                    } else if (grid.data == null && this.magGridHandle[gridtype] != null) {
+                        this.magGridHandle[gridtype].forEach(function(handle) {
+                            this.clearShape(handle);
+                        }.bind(this));
+                        this.magGridHandle[gridtype] = null;
+                    }
                 }
 
                 /* visibility control */
