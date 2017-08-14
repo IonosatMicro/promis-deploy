@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import Grid from 'react-bootstrap/lib/Grid';
+import { Grid, Col } from 'react-bootstrap';
+
 
 
 export default class PromisFooter extends Component {
@@ -7,13 +8,31 @@ export default class PromisFooter extends Component {
         super(props);
         }
 
+        // TODO: text of first Col is too long on mobile devices
         render() {
             return (
-                <div className="footer">
-                    <div>
-                        <hr />
-                        <p>© Company 2017</p>
-                    </div>
+                <div className="footer navbar-inverse">
+                    <Grid>
+                        <Col xs={12} md={7}>
+                            <a href="http://ionosat-micro.ikd.kiev.ua/" target="_blank">
+                                    <img src="/img/LabMiniLogo.gif" />
+                                    <b>©&nbsp;Space&nbsp;Research&nbsp;Institute&nbsp;of&nbsp;Ukraine,
+                                    Laboratory&nbsp;for&nbsp;Satellite&nbsp;Near&nbsp;Space&nbsp;Exploration </b>
+                            </a>
+                        </Col>
+                        <Col xs={4} md={2}>
+                            <a href="https://github.com/IonosatMicro" target="_blank">
+                                <img src="/img/github-20x20.png" />
+                                <b>Visit us on GitHub</b>
+                            </a>
+                        </Col>
+                        <Col xs={8} md={3} style = {{"text-align": "right"}}>
+                                <a href="https://ecognize.me" target="_blank">
+                                    <img src="/img/ecognize-20x20.png" />
+                                    <b>Developement assisted by Ecognize.me&nbsp;OÜ</b>
+                                </a>
+                        </Col>
+                    </Grid>
                 </div>
             )
 

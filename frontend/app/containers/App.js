@@ -54,11 +54,6 @@ class App extends Component {
     }
 
     render() {
-        var style = {
-            width: '95%',
-            margin: '0 auto',
-            ['padding-bottom']: '50px'
-        };
 
         /* hide possible scrollbar when resizing to ultralow dimensions in fullscreen mode */
         document.body.style.overflow = (this.props.mapOptions.full ? 'hidden' : null);
@@ -66,7 +61,7 @@ class App extends Component {
         return (
             <div>
                 <Nav actions = {this.props.userActions} userData = {this.props.userData} />
-                <div style = {style}>
+                <div className="main-part">
                     <Row>
                         <TimeAndPositionPanel
                             ee = {this.ee}
