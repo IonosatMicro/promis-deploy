@@ -29,7 +29,7 @@ export default class PromisFooter extends Component {
                         <Col xs={8} md={3} style={{textAlign: "right"}}>
                                 <a href="https://ecognize.me" target="_blank">
                                     <img src="/img/ecognize-20x20.png" />
-                                    <b>Developement assisted by Ecognize.me&nbsp;OÜ</b>
+                                    <b>Development assisted by Ecognize.me&nbsp;OÜ</b>
                                 </a>
                         </Col>
                     </Grid>

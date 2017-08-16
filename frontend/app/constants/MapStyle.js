@@ -39,9 +39,10 @@ export const SelectionHighlight = {
 export const SelectionHandle = {
     ...Default,
     stroke:         "#ffff00",
-    strokeAlpha:    1,
+    strokeAlpha:    0.5,
     fill:           "#ffff00",
-    fillAlpha:      0.5,
+    fillAlpha:      0.3,
+    radius: 1,
 };
 
 /* grid lines and magnetic grid isolines */

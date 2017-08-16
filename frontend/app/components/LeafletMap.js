@@ -273,7 +273,7 @@ export default class LeafletContainer extends Component {
         if(location) {
             let point = Leaflet.circleMarker(location, this.getStyle(MapStyle.SelectionHandle));
 
-            point.setRadius(4);
+            point.setRadius(MapStyle.SelectionHandle.radius);
             point.addTo(this.map);
 
             return point;

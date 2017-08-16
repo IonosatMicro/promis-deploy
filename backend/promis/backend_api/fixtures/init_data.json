@@ -590,7 +590,7 @@
     "model": "backend_api.parametertranslation",
     "pk": 1,
     "fields": {
-        "name": "Electric potential LF (Fs = 1 Hz)",
+        "name": "V (electric potential LF Fs = 1 Hz)",
         "description": "Electric potential measured in low frequency (Fs = 1 Hz)",
         "language_code": "en",
         "master": 1
@@ -600,7 +600,7 @@
     "model": "backend_api.parametertranslation",
     "pk": 2,
     "fields": {
-        "name": "\u0415\u043b\u0435\u043a\u0442\u0438\u0447\u043d\u0438\u0439 \u043f\u043e\u0442\u0435\u043d\u0446\u0456\u0430\u043b LF (Fs = 1 \u0413\u0446)",
+        "name": "V (\u0435\u043b\u0435\u043a\u0442\u0438\u0447\u043d\u0438\u0439 \u043f\u043e\u0442\u0435\u043d\u0446\u0456\u0430\u043b LF Fs = 1 \u0413\u0446)",
         "description": "\u041d\u0438\u0437\u044c\u043a\u043e\u0447\u0430\u0441\u0442\u043e\u0442\u043d\u0456 \u0432\u0438\u043c\u0456\u0440\u044e\u0432\u0430\u043d\u043d\u044f \u0435\u043b\u0435\u043a\u0442\u0438\u0447\u043d\u043e\u0433\u043e \u043f\u043e\u0442\u0435\u043d\u0446\u0456\u0430\u043b\u0443 (Fs = 1 \u0413\u0446)",
         "language_code": "uk",
         "master": 1
@@ -610,7 +610,7 @@
     "model": "backend_api.parametertranslation",
     "pk": 3,
     "fields": {
-        "name": "\u0415\u043b\u0435\u043a\u0442\u0438\u0447\u043d\u0438\u0439 \u043f\u043e\u0442\u0435\u043d\u0446\u0456\u0430\u043b HF (Fs = 1 \u043a\u0413\u0446)",
+        "name": "V (\u0435\u043b\u0435\u043a\u0442\u0438\u0447\u043d\u0438\u0439 \u043f\u043e\u0442\u0435\u043d\u0446\u0456\u0430\u043b HF Fs = 1 \u043a\u0413\u0446)",
         "description": "\u0412\u0438\u0441\u043e\u043a\u043e\u0447\u0430\u0441\u0442\u043e\u0442\u043d\u0456 \u0432\u0438\u043c\u0456\u0440\u044e\u0432\u0430\u043d\u043d\u044f \u0435\u043b\u0435\u043a\u0442\u0438\u0447\u043d\u043e\u0433\u043e \u043f\u043e\u0442\u0435\u043d\u0446\u0456\u0430\u043b\u0443 (Fs = 1 \u043a\u0413\u0446)",
         "language_code": "uk",
         "master": 2
@@ -620,7 +620,7 @@
     "model": "backend_api.parametertranslation",
     "pk": 4,
     "fields": {
-        "name": "Electric potential HF (Fs = 1 kHz)",
+        "name": "V (electric potential HF Fs = 1 kHz)",
         "description": "Electric potential measured in high frequency (Fs = 1 kHz)",
         "language_code": "en",
         "master": 2
@@ -630,7 +630,7 @@
     "model": "backend_api.parametertranslation",
     "pk": 5,
     "fields": {
-        "name": "Three components of electric field HF (Ex, Ey, Ez) Fs = 31.25 kHz",
+        "name": "Ex, Ey, Ez (three components of electric field HF Fs = 31.25 kHz)",
         "description": "",
         "language_code": "en",
         "master": 3
@@ -640,7 +640,7 @@
     "model": "backend_api.parametertranslation",
     "pk": 6,
     "fields": {
-        "name": "\u0422\u0440\u0438 \u043a\u043e\u043c\u043f\u043e\u043d\u0435\u043d\u0442\u0438 \u0432\u0435\u043a\u0442\u043e\u0440\u0443 \u043d\u0430\u043f\u0440\u0443\u0436\u0435\u043d\u043d\u043e\u0441\u0442\u0456 \u0435\u043b\u0435\u043a\u0442\u0440\u0438\u0447\u043d\u043e\u0433\u043e \u043f\u043e\u043b\u044f HF (Ex, Ey, Ez) Fs = 31.25 \u043a\u0413\u0446",
+        "name": "Ex, Ey, Ez (\u0442\u0440\u0438 \u043a\u043e\u043c\u043f\u043e\u043d\u0435\u043d\u0442\u0438 \u0432\u0435\u043a\u0442\u043e\u0440\u0443 \u043d\u0430\u043f\u0440\u0443\u0436\u0435\u043d\u043d\u043e\u0441\u0442\u0456 \u0435\u043b\u0435\u043a\u0442\u0440\u0438\u0447\u043d\u043e\u0433\u043e \u043f\u043e\u043b\u044f HF Fs = 31.25 \u043a\u0413\u0446)",
         "description": "",
         "language_code": "uk",
         "master": 3
@@ -650,7 +650,7 @@
     "model": "backend_api.parametertranslation",
     "pk": 7,
     "fields": {
-        "name": "Two components of magnetic field HF (Bx, By) Fs = 31,25 kHz",
+        "name": "Bx, By (two components of magnetic field HF Fs = 31,25 kHz)",
         "description": "",
         "language_code": "en",
         "master": 4
@@ -660,7 +660,7 @@
     "model": "backend_api.parametertranslation",
     "pk": 8,
     "fields": {
-        "name": "\u0414\u0432\u0456 \u043a\u043e\u043c\u043f\u043e\u043d\u0435\u043d\u0442\u0438 \u043c\u0430\u0433\u043d\u0456\u0442\u043d\u043e\u0433\u043e \u043f\u043e\u043b\u044f HF (Bx, By) Fs = 31,25 \u043a\u0413\u0446",
+        "name": "Bx, By (\u0434\u0432\u0456 \u043a\u043e\u043c\u043f\u043e\u043d\u0435\u043d\u0442\u0438 \u043c\u0430\u0433\u043d\u0456\u0442\u043d\u043e\u0433\u043e \u043f\u043e\u043b\u044f HF Fs = 31,25 \u043a\u0413\u0446)",
         "description": "",
         "language_code": "uk",
         "master": 4
@@ -670,7 +670,7 @@
     "model": "backend_api.parametertranslation",
     "pk": 9,
     "fields": {
-        "name": "Two components of current density (Jxz, Jyz) Fs = 31.25 kHz",
+        "name": "Jxz, Jyz (two components of current density Fs = 31.25 kHz)",
         "description": "",
         "language_code": "en",
         "master": 5
@@ -680,7 +680,7 @@
     "model": "backend_api.parametertranslation",
     "pk": 10,
     "fields": {
-        "name": "\u0414\u0432\u0456 \u043a\u043e\u043c\u043f\u043e\u043d\u0435\u043d\u0442\u0438 \u0433\u0443\u0441\u0442\u0438\u043d\u0438 \u0435\u043b\u0435\u043a\u0442\u0440\u0438\u0447\u043d\u043e\u0433\u043e \u0441\u0442\u0440\u0443\u043c\u0443 (Jxz, Jyz) Fs = 31.25 kHz",
+        "name": "Jxz, Jyz (\u0434\u0432\u0456 \u043a\u043e\u043c\u043f\u043e\u043d\u0435\u043d\u0442\u0438 \u0433\u0443\u0441\u0442\u0438\u043d\u0438 \u0435\u043b\u0435\u043a\u0442\u0440\u0438\u0447\u043d\u043e\u0433\u043e \u0441\u0442\u0440\u0443\u043c\u0443 Fs = 31.25 \u043a\u0413\u0446)",
         "description": "",
         "language_code": "uk",
         "master": 5
