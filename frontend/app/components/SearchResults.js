@@ -123,18 +123,39 @@ export default class SearchResults extends Component {
             let total = results.data.length;
 
             this.props.mapped.updateTotal(total);
-            let geolines = new Array();
-            results.data.forEach(function(measurement, index) {
-                this.props.actions.getSingle(measurement.session, null, function(data) {
-                    geolines.push({ geo_line: data.geo_line, selection: measurement.selection, offset: data.timelapse.start });
-                    let now = this.props.map.loaded + 1;
-                    this.props.mapped.updateLoaded(now);
 
-                    if(now == total || now == Math.floor(total/2)) {
-                        this.props.mapped.pushGeolines(geolines);
-                    }
-                }.bind(this));
-            }.bind(this));
+            /* step function, requests a session, updates loaded count, updates display
+             * and requests another one
+             * this results in slightly slower loading, but more responsive user experience
+             * TODO: make sure we handle error conditions correctly too
+             */
+
+            let index = 0;
+            let geolines = new Array();
+            function step_func(data) {
+                /* null parameter means first run */
+                if(data!=null) {
+                    geolines.push({
+                        geo_line: data.geo_line,
+                        selection: results.data[index].selection,
+                        offset: data.timelapse.start});
+
+                    /* update progress bar */
+                    index ++;
+                    this.props.mapped.updateLoaded(index);
+
+                    /* update display */
+                    this.props.mapped.pushGeolines(geolines);
+                }
+
+                /* if the list is not exhausted, ask a new session */
+                this.props.actions.getSingle(results.data[index].session, null, step_func);
+            };
+
+            step_func = step_func.bind(this);
+
+            /* ready, steady, go! */
+            step_func(null);
         }
     }
 
