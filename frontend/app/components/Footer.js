@@ -11,7 +11,7 @@ export default class PromisFooter extends Component {
         // TODO: text of first Col is too long on mobile devices
         render() {
             return (
-                <footer className="navbar-inverse">
+                <div className="footer navbar-inverse">
                     <Grid>
                         <Col xs={12} md={7}>
                             <a href="http://ionosat-micro.ikd.kiev.ua/" target="_blank">
@@ -33,7 +33,7 @@ export default class PromisFooter extends Component {
                                 </a>
                         </Col>
                     </Grid>
-                </footer>
+                </div>
             )
 
         }
