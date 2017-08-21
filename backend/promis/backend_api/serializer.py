@@ -83,7 +83,9 @@ class SessionsSerializer(serializers.ModelSerializer):
         #return obj.geo_line.wkb.hex()
 
         # TODO: study whether pre-building the list or JSON would speed up things
-        return parsers.wkb(obj.geo_line.wkb) # <- Generator
+        # TODO: ugly hack before #256
+        # geo_line.wkb calls a generator implicitly
+        return ( (*geo[:2], alt) for alt, geo in zip(obj.altitude, parsers.wkb(obj.geo_line.wkb)) )   
 
     def get_timelapse(self, obj):
         # TODO: change to time_start in model for consistency

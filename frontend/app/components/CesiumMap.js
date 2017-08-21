@@ -486,7 +486,7 @@ export default class CesiumContainer extends Component {
 
         /* data is [lat, lon, hgt] */
         data.forEach(function(point) { // TODO temporary disabling altitude because it stores time temporarily
-            cartesians.push(Cartesian3.fromDegrees(point[1], point[0], /*point[2] ? point[2] :*/ 250000));
+            cartesians.push(Cartesian3.fromDegrees(point[1], point[0], point[2] ? point[2] *1000 : 250000));
         });
 
         return this.viewer.entities.add({
