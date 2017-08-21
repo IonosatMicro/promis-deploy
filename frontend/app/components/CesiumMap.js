@@ -296,7 +296,8 @@ export default class CesiumContainer extends Component {
 
     clearShape(shape) {
         if(defined(shape))
-            this.viewer.entities.remove(shape);
+            shape.show = false; // TODO: very ugly, fix scheduled in #272
+            //this.viewer.entities.remove(shape);
     }
 
     /* distance between latlon and cartesian */
