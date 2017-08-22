@@ -19,10 +19,10 @@
 # permissions and limitations under the Licence.
 #
 
-
+from django.contrib.gis.geos import LineString
 from classes.base_project import BaseProject
 
-import ftp_helper, parsers, unix_time
+import ftp_helper, parsers, unix_time, orbit
 import backend_api.models as model
 
 
@@ -38,35 +38,55 @@ class Variant(BaseProject):
     def fetch(self, daydir):
         with ftp_helper.FTPChecker("Variant/", "ftp.promis.ikd.kiev.ua") as ftp: 
             ftp.cwd("telemetry")
+            # TODO: timezone hack
+            Δ = 1111714367 - 1111703568
+
             # TODO: lots of pre-conference half-measures here
             with ftp.xopen("var{0}.tm".format(daydir)) as fp:
-                orbit_path = { t: pt for t, pt in parsers.telemetry(fp, cartesian=False) }
+                orbit_path = { (t + Δ): pt for t, pt in parsers.telemetry(fp, cartesian=False) }
 
             # TODO: hardcode
-            time_start = unix_time.maketime(1111714367) # 25-03-2005 01:32:47
-            time_end = unix_time.maketime(1111714367 + 56)
-            time_dur = time_end - time_start
-            print("\tSession: [ %s, %s ] (%s)." % (time_start.isoformat(), time_end.isoformat(), str(time_dur)))
+            time_start = 1111714367 # 25-03-2005 01:32:47
+            time_end = time_start + 56
 
             # TODO: assuming there was only one session
+            path = [ (y.lon, y.lat, y.alt, t) for t, y, _ in orbit.generate_orbit(orbit_path, time_start, time_end) ]
+            line_gen = [ (x, y, t) for x, y, _, t in path ]
+            alt_gen = [ alt for _, _, alt, _ in path ]
 
+            time_start = unix_time.maketime(time_start)
+            time_end = unix_time.maketime(time_end)
+            time_dur = time_end - time_start
+            print("\tSession: [ %s, %s ] (%s)." % (time_start.isoformat(), time_end.isoformat(), str(time_dur)) )
+
+            sess_obj = model.Session.objects.create(time_begin = time_start, time_end = time_end, altitude = alt_gen,
+                geo_line = LineString(*line_gen, srid = 4326), space_project = self.project_obj )
 
             ftp.cwd("..")
             ftp.cwd("Data_Release1/{0}".format(daydir))
             # Per-channel dicts of filename and JSON name
             data = {
                 'ΔE1, ΔE2, ΔE3': {
-                    'E1~': 'e1',
-                    'E2~': 'e2',
-                    'E3~': 'e3'
+                    'param': 'Ex, Ey, Ez (three components of electric field HF Fs = 31.25 kHz)',
+                    'comps' : {
+                        'E1~': 'e1',
+                        'E2~': 'e2',
+                        'E3~': 'e3'
+                    }
                 },
                 'Bx~, By~ (not calibrated)': {
-                    'Bx~': 'bx',
-                    'By~': 'by'
+                    'param': 'Bx, By (two components of magnetic field HF Fs = 31,25 kHz)',
+                    'comps': {
+                        'Bx~': 'bx',
+                        'By~': 'by'
+                    }
                 },
                 'Jxz~, Jyz~ (not calibrated)': {
-                    'Jxz~': 'jxz',
-                    'Jyz~': 'jyz'
+                    'param': 'Jxz, Jyz (two components of current density Fs = 31.25 kHz)',
+                    'comps': {
+                        'Jxz~': 'jxz',
+                        'Jyz~': 'jyz'
+                    }
                 }
             }
 
@@ -76,6 +96,11 @@ class Variant(BaseProject):
 
             for chan_name, chan_files in data.items():
                 chan_obj = model.Channel.objects.language('en').filter(name = chan_name)[0]
-                json_data = { key: get_file(name) for name, key in chan_files.items() }
+                par_obj = model.Parameter.objects.language('en').filter(name = chan_files['param'])[0]
+                json_data = { key: get_file(name) for name, key in chan_files['comps'].items() }
+                doc_obj = model.Document.objects.create(json_data = json_data )
+                model.Measurement.objects.create(session = sess_obj, parameter = par_obj, channel = chan_obj, channel_doc = doc_obj, parameter_doc = doc_obj, sampling_frequency = 31250, max_frequency = 31250, min_frequency = 31250)
+
+
 
 
