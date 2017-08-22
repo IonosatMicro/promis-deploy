@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { findDOMNode } from 'react-dom';
-import { LineChart } from 'rd3';
+import {XYPlot, XAxis, YAxis, HorizontalGridLines, LineMarkSeries} from 'react-vis';
 import { Button } from 'react-bootstrap';
 import { saveAs } from 'file-saver';
 import { dataURLToBlob } from 'blob-util';
@@ -89,13 +89,6 @@ export default class Quicklook extends Component {
     }
 
     formatData(data, time) {
-        var dataObj = [
-        {
-            name: 'series3',
-            values: null,
-            strokeWidth: 3,
-        } ];
-
         var formatted = new Array();
 
         if(Array.isArray(data)) {
@@ -109,33 +102,24 @@ export default class Quicklook extends Component {
             })
         } else formatted = [{ x: 0, y: 20 }, { x: 1, y: 30 }, { x: 2, y: 10 }, { x: 3, y: 5 }, { x: 4, y: 8 }, { x: 5, y: 15 }, { x: 6, y: 10 }];
 
-        dataObj[0].values = formatted;
-
-        return dataObj;
+        return formatted;
     }
 
     render() {
         return (
             <Modal show = {this.props.show} title = {this.props.timelapse} onClose = {this.props.onClose}>
-                <LineChart
-                    ref = { function(node) { this.el = node; }.bind(this) }
-                    legend = {false}
-                    data = {this.data}
-                    width = {this.width}
-                    height = {this.height}
-                    title = {this.props.title}
-                    hoverAnimation = {false}
-                    yAxisLabel = {this.props.ylabel}
-                    xAxisLabel = {this.props.xlabel}
-                    viewBoxObject={{
-                        x: 0,
-                        y: 0,
-                        width: this.props.graphWidth,
-                        height: this.props.graphHeight
-                    }}
-                    gridHorizontal = {this.props.grid}
-                    gridVerical = {this.props.grid}
-                />
+                <h4>{this.props.title}</h4>
+                <XYPlot 
+                    width = { this.props.graphWidth } 
+                    height = { this.props.graphHeight }
+                    margin = { { left: 60, right: 10, top: 10, bottom: 40} }
+                    ref = { function(node) { this.el = node; }.bind(this) }>
+                    <XAxis title={this.props.xlabel}/>
+                    <YAxis title={this.props.ylabel}/>
+                    <HorizontalGridLines/>
+                    <LineMarkSeries data={this.data} size={3}/>
+                </XYPlot>
+                
                 <Button onClick = {this.saveMe}>
                     Save
                 </Button>
@@ -150,7 +134,7 @@ Quicklook.defaultProps = {
     width: '100%',
     height: '100%',
     onClose: function() {;},
-    graphWidth: 640,
+    graphWidth: 560, //640,
     graphHeight: 480,
     watermarkText: 'https://promis.ikd.kiev.ua',
     title: 'Quicklook description',
