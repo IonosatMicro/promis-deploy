@@ -22,8 +22,8 @@
 
 from classes.base_project import BaseProject
 
-
-# TODO: implement obtaining of Variant data
+import ftp_helper
+import backend_api.models as model
 
 
 class Variant(BaseProject):
@@ -33,4 +33,33 @@ class Variant(BaseProject):
     '''
 
     def check(*args, **kwargs):
-        return []
+        return [ "1394" ] # TODO: properly check the FTP
+
+    def fetch(self, daydir):
+    	with ftp_helper.FTPChecker("Variant/Data_Release1/{0}".format(daydir), "ftp.promis.ikd.kiev.ua") as ftp: 
+    		# Per-channel dicts of filename and JSON name
+    		data = {
+    			'ΔE1, ΔE2, ΔE3': {
+    				'E1~': 'e1',
+    				'E2~': 'e2',
+    				'E3~': 'e3'
+    			},
+    			'Bx~, By~ (not calibrated)': {
+    				'Bx~': 'bx',
+    				'By~': 'by'
+    			},
+    			'Jxz~, Jyz~ (not calibrated)': {
+    				'Jxz~': 'jxz',
+    				'Jyz~': 'jyz'
+    			}
+    		}
+
+    		def get_file(name):
+    			with ftp.xopen(name) as fp:
+    				return [ float(ln) for ln in fp ]
+
+    		for chan_name, chan_files in data.items():
+    			chan_obj = model.Channel.objects.language('en').filter(name = chan_name)[0]
+    			json_data = { key: get_file(name) for name, key in chan_files.items() }
+
+    			
