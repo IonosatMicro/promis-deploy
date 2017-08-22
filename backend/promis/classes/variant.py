@@ -22,7 +22,7 @@
 
 from classes.base_project import BaseProject
 
-import ftp_helper
+import ftp_helper, parsers
 import backend_api.models as model
 
 
@@ -36,7 +36,15 @@ class Variant(BaseProject):
         return [ "1394" ] # TODO: properly check the FTP
 
     def fetch(self, daydir):
-    	with ftp_helper.FTPChecker("Variant/Data_Release1/{0}".format(daydir), "ftp.promis.ikd.kiev.ua") as ftp: 
+    	with ftp_helper.FTPChecker("Variant/", "ftp.promis.ikd.kiev.ua") as ftp: 
+    		ftp.cwd("telemetry")
+    		# TODO: lots of pre-conference hardcode here
+    		with ftp.xopen("var{0}.tm".format(daydir)) as fp:
+    			for p in parsers.telemetry(fp, cartesian=False):
+    				print(p)
+
+    		ftp.cwd("..")
+    		ftp.cwd("Data_Release1/{0}".format(daydir))
     		# Per-channel dicts of filename and JSON name
     		data = {
     			'ΔE1, ΔE2, ΔE3': {
@@ -62,4 +70,4 @@ class Variant(BaseProject):
     			chan_obj = model.Channel.objects.language('en').filter(name = chan_name)[0]
     			json_data = { key: get_file(name) for name, key in chan_files.items() }
 
-    			
+
