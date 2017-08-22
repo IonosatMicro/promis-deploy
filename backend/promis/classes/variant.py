@@ -22,7 +22,7 @@
 
 from classes.base_project import BaseProject
 
-import ftp_helper, parsers
+import ftp_helper, parsers, unix_time
 import backend_api.models as model
 
 
@@ -36,38 +36,46 @@ class Variant(BaseProject):
         return [ "1394" ] # TODO: properly check the FTP
 
     def fetch(self, daydir):
-    	with ftp_helper.FTPChecker("Variant/", "ftp.promis.ikd.kiev.ua") as ftp: 
-    		ftp.cwd("telemetry")
-    		# TODO: lots of pre-conference hardcode here
-    		with ftp.xopen("var{0}.tm".format(daydir)) as fp:
-    			for p in parsers.telemetry(fp, cartesian=False):
-    				print(p)
+        with ftp_helper.FTPChecker("Variant/", "ftp.promis.ikd.kiev.ua") as ftp: 
+            ftp.cwd("telemetry")
+            # TODO: lots of pre-conference half-measures here
+            with ftp.xopen("var{0}.tm".format(daydir)) as fp:
+                orbit_path = { t: pt for t, pt in parsers.telemetry(fp, cartesian=False) }
 
-    		ftp.cwd("..")
-    		ftp.cwd("Data_Release1/{0}".format(daydir))
-    		# Per-channel dicts of filename and JSON name
-    		data = {
-    			'ΔE1, ΔE2, ΔE3': {
-    				'E1~': 'e1',
-    				'E2~': 'e2',
-    				'E3~': 'e3'
-    			},
-    			'Bx~, By~ (not calibrated)': {
-    				'Bx~': 'bx',
-    				'By~': 'by'
-    			},
-    			'Jxz~, Jyz~ (not calibrated)': {
-    				'Jxz~': 'jxz',
-    				'Jyz~': 'jyz'
-    			}
-    		}
+            # TODO: hardcode
+            time_start = unix_time.maketime(1111714367) # 25-03-2005 01:32:47
+            time_end = unix_time.maketime(1111714367 + 56)
+            time_dur = time_end - time_start
+            print("\tSession: [ %s, %s ] (%s)." % (time_start.isoformat(), time_end.isoformat(), str(time_dur)))
 
-    		def get_file(name):
-    			with ftp.xopen(name) as fp:
-    				return [ float(ln) for ln in fp ]
+            # TODO: assuming there was only one session
 
-    		for chan_name, chan_files in data.items():
-    			chan_obj = model.Channel.objects.language('en').filter(name = chan_name)[0]
-    			json_data = { key: get_file(name) for name, key in chan_files.items() }
+
+            ftp.cwd("..")
+            ftp.cwd("Data_Release1/{0}".format(daydir))
+            # Per-channel dicts of filename and JSON name
+            data = {
+                'ΔE1, ΔE2, ΔE3': {
+                    'E1~': 'e1',
+                    'E2~': 'e2',
+                    'E3~': 'e3'
+                },
+                'Bx~, By~ (not calibrated)': {
+                    'Bx~': 'bx',
+                    'By~': 'by'
+                },
+                'Jxz~, Jyz~ (not calibrated)': {
+                    'Jxz~': 'jxz',
+                    'Jyz~': 'jyz'
+                }
+            }
+
+            def get_file(name):
+                with ftp.xopen(name) as fp:
+                    return [ float(ln) for ln in fp ]
+
+            for chan_name, chan_files in data.items():
+                chan_obj = model.Channel.objects.language('en').filter(name = chan_name)[0]
+                json_data = { key: get_file(name) for name, key in chan_files.items() }
 
 
