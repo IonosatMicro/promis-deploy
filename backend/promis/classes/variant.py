@@ -104,7 +104,4 @@ class Variant(BaseProject):
                 json_data = get_file(chan_files['file'])
                 doc_obj = model.Document.objects.create(json_data = json_data )
                 meas = model.Measurement.objects.create(session = sess_obj, parameter = par_obj, channel = chan_obj, channel_doc = doc_obj, parameter_doc = doc_obj, sampling_frequency = 31250, max_frequency = 31250, min_frequency = 31250)
-            
-
-
 

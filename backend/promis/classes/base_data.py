@@ -21,6 +21,7 @@
 '''Base functionality for object-oriented data model'''
 
 import unix_time
+from numpy import fft
 
 class BaseData:
     '''
@@ -86,8 +87,14 @@ class SingleVarTimeSeries(BaseData):
     def data(self, selection = slice(None)):
         return self.doc[selection]
 
-    # TODO: propagate upwards?
+    def quicklook_type(self):
+        return "timeseries"
+
     def quicklook(self, points, selection = slice(None)):
+        return self._quicklook(points, selection)
+
+    # TODO: propagate upwards?
+    def _quicklook(self, points, selection):
         '''
         Generates a quicklook of the time series object sampled at
         given number of points.
@@ -133,6 +140,25 @@ class SingleVarTimeSeries(BaseData):
         for i in range(points):
             yield avg_float(v, int(span * i), span)
 
+
+class SingleVarTimeSeriesFFT(SingleVarTimeSeries):
+    """
+    [en]: FFT
+    [uk]: FFT
+    """
+    def quicklook_type(self):
+        return "fftspectrum"
+
+    def quicklook(self, points, selection = slice(None)):
+        # TODO: ignorning selection altogether
+        # TODO: hardcoded constants
+        for i in range(50):
+            v = [ x for x in self._quicklook(60, slice(i*1000, (i+1)*1000))] 
+            yield [ abs(x) for x in fft.fft(v) ]
+
+    def timeslice(self, *args, **kwargs):
+        # TODO: stub
+        return slice(None)
 
 # TODO: realize
 class ObliqueThreeVarTimeSeriesHF(BaseData):

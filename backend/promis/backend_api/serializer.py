@@ -106,6 +106,7 @@ class SessionsSerializer(serializers.ModelSerializer):
 
 class QuicklookSerializer(serializers.Serializer):
     data = serializers.SerializerMethodField()
+    data_type = serializers.SerializerMethodField()
     timelapse = serializers.SerializerMethodField()
     source = serializers.SerializerMethodField()
     value = serializers.SerializerMethodField()
@@ -158,6 +159,10 @@ class QuicklookSerializer(serializers.Serializer):
     def get_data(self, obj):
         doc_obj = obj.instance(self.source_name())
         return doc_obj.quicklook(self.context['view'].points, doc_obj.timeslice(*self.context['view'].time_filter))
+
+    def get_data_type(self, obj):
+        doc_obj = obj.instance(self.source_name())
+        return doc_obj.quicklook_type()
 
     def source_name(self):
         # TODO: swagger should do the default here
