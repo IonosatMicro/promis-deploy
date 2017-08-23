@@ -135,7 +135,7 @@ export default class Quicklook extends Component {
         /* TODO: switch, generalise */
         let plot_obj = ( this.props.data_type == "timeseries" ? 
             (<LineMarkSeries data={this.data} size={3}/>) :
-            (<HeatmapSeries data={this.data} colorRange={["red", "blue"]}/>) );
+            (<HeatmapSeries data={this.data} colorRange={["#1a1e98", "#fac621"]}/>) );
 
         let ylabel = ( this.props.data_type == "timeseries" ? this.props.ylabel : "Frequency" );
 
