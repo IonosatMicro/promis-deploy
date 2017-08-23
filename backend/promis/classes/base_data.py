@@ -147,7 +147,7 @@ class SingleVarTimeSeriesFFT(SingleVarTimeSeries):
     [uk]: FFT
     """
     def quicklook_type(self):
-        return "fftspectrum"
+        return "fftseries"
 
     def quicklook(self, points, selection = slice(None)):
         # TODO: ignorning selection altogether

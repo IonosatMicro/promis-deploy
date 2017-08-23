@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { findDOMNode } from 'react-dom';
-import {XYPlot, XAxis, YAxis, HorizontalGridLines, LineMarkSeries} from 'react-vis';
+import {XYPlot, XAxis, YAxis, HorizontalGridLines, LineMarkSeries, HeatmapSeries} from 'react-vis';
 import { Button } from 'react-bootstrap';
 import { saveAs } from 'file-saver';
 import { dataURLToBlob } from 'blob-util';
@@ -21,7 +21,8 @@ export default class Quicklook extends Component {
         this.formatData = this.formatData.bind(this);
         this.makeFilename = this.makeFilename.bind(this);
         this.makeWatermark = this.makeWatermark.bind(this);
-        this.data = this.formatData(this.props.data, this.props.time);
+        this.data = this.formatData(this.props.data, this.props.time, this.props.data_type);
+        this.data_type = this.props.data_type;
     }
 
     componentDidUpdate() {
@@ -100,24 +101,37 @@ export default class Quicklook extends Component {
         } else window.alert('Quicklook is not completely loaded yet!');
     }
 
-    formatData(data, time) {
+    formatData(data, time, data_type) {
         var formatted = new Array();
 
-        if(Array.isArray(data)) {
+        if(data_type=="timeseries") {
             /* Adjusting the X axis to the actual duration */
             /* TODO: do we include the last second? */
             var data_duration = time.end - time.start + 1;
             var sec_per_sample = data_duration / data.length;
 
+            /* TODO: foreach?? */
             data.map(function(item, index) {
                 formatted.push({ x: sec_per_sample * index, y: item });
             })
-        } else formatted = [{ x: 0, y: 20 }, { x: 1, y: 30 }, { x: 2, y: 10 }, { x: 3, y: 5 }, { x: 4, y: 8 }, { x: 5, y: 15 }, { x: 6, y: 10 }];
+        } else if(data_type=="fftseries") {
+            data.forEach(function(item, index) {
+                item.forEach(function(vitem, vindex) {
+                    formatted.push({ x: index, y: vindex, color: vitem });
+                });
+            });
+        } 
+        else formatted = [{ x: 0, y: 20 }, { x: 1, y: 30 }, { x: 2, y: 10 }, { x: 3, y: 5 }, { x: 4, y: 8 }, { x: 5, y: 15 }, { x: 6, y: 10 }];
 
         return formatted;
     }
 
     render() {
+        /* TODO: switch, generalise */
+        let plot_obj = ( self.data_type == "timeseries" ? 
+            (<LineMarkSeries data={this.data} size={3}/>) :
+            (<HeatmapSeries data={this.data}/>) );
+
         return (
             <Modal show = {this.props.show} title = {this.props.timelapse} onClose = {this.props.onClose}>
                 <h4>{this.props.title}</h4>
@@ -129,7 +143,7 @@ export default class Quicklook extends Component {
                     <XAxis title={this.props.xlabel}/>
                     <YAxis title={this.props.ylabel}/>
                     <HorizontalGridLines/>
-                    <LineMarkSeries data={this.data} size={3}/>
+                    { plot_obj }
                 </XYPlot>
                 
                 <Button onClick = {this.saveMe}>
