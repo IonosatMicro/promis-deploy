@@ -68,25 +68,28 @@ class Variant(BaseProject):
             data = {
                 'ΔE1, ΔE2, ΔE3': {
                     'param': 'Ex, Ey, Ez (three components of electric field HF Fs = 31.25 kHz)',
-                    'comps' : {
-                        'E1~': 'e1',
-                        'E2~': 'e2',
-                        'E3~': 'e3'
-                    }
+                    'file': 'E1~'
+                    #'comps' : {
+                    #    'E1~': 'e1',
+                    #    'E2~': 'e2',
+                    #    'E3~': 'e3'
+                    #}
                 },
                 'Bx~, By~ (not calibrated)': {
                     'param': 'Bx, By (two components of magnetic field HF Fs = 31,25 kHz)',
-                    'comps': {
-                        'Bx~': 'bx',
-                        'By~': 'by'
-                    }
+                    'file': 'Bx~'
+                    #'comps': {
+                    #    'Bx~': 'bx',
+                    #    'By~': 'by'
+                    #}
                 },
                 'Jxz~, Jyz~ (not calibrated)': {
                     'param': 'Jxz, Jyz (two components of current density Fs = 31.25 kHz)',
-                    'comps': {
-                        'Jxz~': 'jxz',
-                        'Jyz~': 'jyz'
-                    }
+                    'file': 'Jxz~'
+                    #'comps': {
+                    #    'Jxz~': 'jxz',
+                    #    'Jyz~': 'jyz'
+                    #}
                 }
             }
 
@@ -97,10 +100,11 @@ class Variant(BaseProject):
             for chan_name, chan_files in data.items():
                 chan_obj = model.Channel.objects.language('en').filter(name = chan_name)[0]
                 par_obj = model.Parameter.objects.language('en').filter(name = chan_files['param'])[0]
-                json_data = { key: get_file(name) for name, key in chan_files['comps'].items() }
+                # json_data = { key: get_file(name) for name, key in chan_files['comps'].items() }
+                json_data = get_file(chan_files['file'])
                 doc_obj = model.Document.objects.create(json_data = json_data )
-                model.Measurement.objects.create(session = sess_obj, parameter = par_obj, channel = chan_obj, channel_doc = doc_obj, parameter_doc = doc_obj, sampling_frequency = 31250, max_frequency = 31250, min_frequency = 31250)
-
+                meas = model.Measurement.objects.create(session = sess_obj, parameter = par_obj, channel = chan_obj, channel_doc = doc_obj, parameter_doc = doc_obj, sampling_frequency = 31250, max_frequency = 31250, min_frequency = 31250)
+            
 
 
 
