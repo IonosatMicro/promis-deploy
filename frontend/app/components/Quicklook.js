@@ -115,9 +115,14 @@ export default class Quicklook extends Component {
                 formatted.push({ x: sec_per_sample * index, y: item });
             })
         } else if(data_type=="fftseries") {
+            /* TODO: proper time scaling */
+            /* TODO: hardcode here */
+            /* each column is 1000 pts sampled at 31250 Hz */
+            let coef = 1000 / 31250 ;
+
             data.forEach(function(item, index) {
                 item.forEach(function(vitem, vindex) {
-                    formatted.push({ x: index, y: vindex, color: vitem });
+                    formatted.push({ x: index * coef, y: vindex, color: vitem });
                 });
             });
         } 
@@ -128,9 +133,11 @@ export default class Quicklook extends Component {
 
     render() {
         /* TODO: switch, generalise */
-        let plot_obj = ( self.data_type == "timeseries" ? 
+        let plot_obj = ( this.props.data_type == "timeseries" ? 
             (<LineMarkSeries data={this.data} size={3}/>) :
-            (<HeatmapSeries data={this.data}/>) );
+            (<HeatmapSeries data={this.data} colorRange={["red", "blue"]}/>) );
+
+        let ylabel = ( this.props.data_type == "timeseries" ? this.props.ylabel : "Frequency" );
 
         return (
             <Modal show = {this.props.show} title = {this.props.timelapse} onClose = {this.props.onClose}>
@@ -140,10 +147,10 @@ export default class Quicklook extends Component {
                     height = { this.props.graphHeight }
                     margin = { { left: 60, right: 10, top: 10, bottom: 40} }
                     ref = { function(node) { this.el = node; }.bind(this) }>
-                    <XAxis title={this.props.xlabel}/>
-                    <YAxis title={this.props.ylabel}/>
                     <HorizontalGridLines/>
                     { plot_obj }
+                    <XAxis title={this.props.xlabel}/>
+                    <YAxis title={ylabel}/>
                 </XYPlot>
                 
                 <Button onClick = {this.saveMe}>
