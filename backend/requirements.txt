@@ -1,18 +1,18 @@
-psycopg2
-gunicorn
+psycopg2==2.7.1
+gunicorn==19.7.1
 django==1.10.6
-djangorestframework
-django-extensions     # for graph models
-markdown
-django-filter
-jsonfield
+djangorestframework==3.6.2
+django-extensions==1.7.8     # for graph models
+markdown==2.6.8
+django-filter==1.0.2
+jsonfield==2.0.1
 djsw_wrapper>=0.2.3.0
-drf-nested-routers
-dj-database-url
-django-hvad
-djangorestframework-gis
-djangorestframework-filters
-django-filters
-pytz                  # for datetime conversions
-django_loaddata_stdin # for loading test data from the host
-pytest-django
+drf-nested-routers==0.90.0
+dj-database-url==0.4.2
+django-hvad==1.7.0
+djangorestframework-gis==0.11
+djangorestframework-filters==0.9.1
+django-filters==0.2.1
+pytz==2017.2                  # for datetime conversions
+django_loaddata_stdin==0.1.0 # for loading test data from the host
+pytest-django==3.1.2
