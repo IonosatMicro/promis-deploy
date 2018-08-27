@@ -58,7 +58,8 @@ class DataSection extends Component {
             time    += '&time_end=' + this.props.timelapse.end;
 
             a.download = this.state.main + '.txt';
-            a.href = '/en/api/download/' + this.props.mid + '/data/?format=txt' + src + time;
+            //a.href = '/en/api/download/' + this.props.mid + '/data/?format=txt' + src + time;
+            a.href = '/en/api/download/' + this.props.mid + '/data/?format=netcdf' + src + time;
             a.click();
         }
         // http://localhost:8081/en/api/download/29/data/?format=ascii&source=parameter

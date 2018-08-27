@@ -51,3 +51,13 @@ class CSVRenderer(TextRenderer):
 
     def process(self, table, value, units):
         return export.csv_export(table, value, units)
+
+class NetCDFRenderer(renderers.BaseRenderer):
+   media_type = 'application/x-netcdf'
+   format = 'netcdf'
+
+   def render(self, data, media_type=None, renderer_context=None):
+      table = export.make_table(data['data'], data['timelapse']['start'], data['timelapse']['end'], data['geo_line'])
+      value = data['value']['name']
+      units = data['value']['units']
+      return export.netcdf_export(table, value, units)

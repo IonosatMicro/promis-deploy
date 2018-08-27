@@ -1,6 +1,4 @@
 #
-# Copyright 2016 Space Research Institute of NASU and SSAU (Ukraine)
-#
 # Licensed under the EUPL, Version 1.1 or – as soon they
 # will be approved by the European Commission - subsequent
 # versions of the EUPL (the "Licence");
@@ -118,6 +116,72 @@ def csv_export(table, datalabel="Data", dataunits="units"):
         yield ",".join(str(x) for x in [row.date, row.ut, row.lon, row.lat, row.alt, row.data])
 
 
+def netcdf_export(table, datalabel="Data", dataunits="units"):
+   numElems = 0
+   dates = []
+   uts = []
+   latitudes = []
+   longtitudes = []
+   altitudes = []
+   dataValues = []
+   for row in table:
+      dates.append(row.date)
+      uts.append(row.ut)
+      latitudes.append(row.lat)
+      longtitudes.append(row.lon)
+      altitudes.append(row.alt)
+      dataValues.append(row.data)
+      numElems = numElems + 1
+
+   from netCDF4 import Dataset
+
+   dataset = Dataset("temp.nc", 'w', format='NETCDF4')
+   date = dataset.createDimension('Date', None)
+   ut = dataset.createDimension('UT', numElems)
+   latitude = dataset.createDimension('Latitude', numElems)
+   longtitude = dataset.createDimension('Longtitude', numElems)
+   altitude = dataset.createDimension('Altitude', numElems)
+   data = dataset.createDimension('Data', numElems)
+
+   import numpy as np
+   dateVar= dataset.createVariable('Date', np.float32, ('Date'))
+   utVar = dataset.createVariable('UT', np.int32, ('UT'))
+   latitudeVar = dataset.createVariable('Latitude', np.float32, ('Latitude'))
+   longtitudeVar = dataset.createVariable('Longtitude', np.float32, ('Longtitude'))
+   altitudeVar = dataset.createVariable('Altitude', np.float32, ('Altitude'))
+   complexDataType = np.dtype([("date", 'S20'), ("ut", np.int32), ("latitude", np.float32), ("longtitude", np.float32), ("altitude", np.float32), ("data", np.float32)])
+   complexDataType_t = dataset.createCompoundType(complexDataType, 'dtype')
+   dataVar = dataset.createVariable(datalabel, complexDataType_t, ('Data'))
+   
+   dateVar.units = 'YYYYDDD'
+   utVar.units = 'ms'
+   latitudeVar.units = 'deg'
+   longtitudeVar.units = 'deg'
+   altitudeVar.units = 'km'
+   dataVar.units = 'Date (YYYYDDD), "UT (ms), Longitude (deg), Latitude (deg), Altitude (km)'
+
+   dateVar[:] = dates
+   utVar[:] = uts
+   latitudeVar[:] = latitudes
+   longtitudeVar[:] = longtitudes
+   altitudeVar[:] = altitudes
+
+   temp = np.empty(numElems, complexDataType)
+   temp["date"] = dates
+   temp["ut"] = uts
+   temp["latitude"] = latitudes
+   temp["longtitude"] = longtitudes
+   temp["altitude"] = altitudes
+   temp["data"] = dataValues
+   dataVar[:] = temp
+
+   dataset.close()
+
+   f = open("temp.nc", "rb")
+   result = f.read()
+   f.close()
+
+   return result
 
 # TODO: remove after completion
 if __name__ == "__main__":

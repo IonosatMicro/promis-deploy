@@ -200,7 +200,8 @@ class DownloadView(viewsets.GenericViewSet):
                   renderer_classes = (BrowsableAPIRenderer,
                                       JSONRenderer,
                                       renderer.AsciiRenderer,
-                                      renderer.CSVRenderer))
+                                      renderer.CSVRenderer,
+				      renderer.NetCDFRenderer))
     def data(self, request, id):
         self.serializer_class = serializer.JSONDataSerializer
 
