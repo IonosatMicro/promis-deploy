@@ -134,8 +134,10 @@ def netcdf_export(table, datalabel="Data", dataunits="units"):
       numElems = numElems + 1
 
    from netCDF4 import Dataset
-
-   dataset = Dataset("temp.nc", 'w', format='NETCDF4')
+   import tempfile
+   import os
+   (fd, filename) = tempfile.mkstemp()
+   dataset = Dataset(filename, 'w', format='NETCDF4')
    date = dataset.createDimension('Date', None)
    ut = dataset.createDimension('UT', numElems)
    latitude = dataset.createDimension('Latitude', numElems)
@@ -144,12 +146,12 @@ def netcdf_export(table, datalabel="Data", dataunits="units"):
    data = dataset.createDimension('Data', numElems)
 
    import numpy as np
-   dateVar= dataset.createVariable('Date', np.float32, ('Date'))
+   dateVar= dataset.createVariable('Date', np.int32, ('Date'))
    utVar = dataset.createVariable('UT', np.int32, ('UT'))
    latitudeVar = dataset.createVariable('Latitude', np.float32, ('Latitude'))
    longtitudeVar = dataset.createVariable('Longtitude', np.float32, ('Longtitude'))
    altitudeVar = dataset.createVariable('Altitude', np.float32, ('Altitude'))
-   complexDataType = np.dtype([("date", 'S20'), ("ut", np.int32), ("latitude", np.float32), ("longtitude", np.float32), ("altitude", np.float32), ("data", np.float32)])
+   complexDataType = np.dtype([("date", np.int32), ("ut", np.int32), ("latitude", np.float32), ("longtitude", np.float32), ("altitude", np.float32), ("data", np.float32)])
    complexDataType_t = dataset.createCompoundType(complexDataType, 'dtype')
    dataVar = dataset.createVariable(datalabel, complexDataType_t, ('Data'))
    
@@ -177,9 +179,10 @@ def netcdf_export(table, datalabel="Data", dataunits="units"):
 
    dataset.close()
 
-   f = open("temp.nc", "rb")
+   f = os.fdopen(fd, 'rb')
    result = f.read()
    f.close()
+   os.remove(filename)
 
    return result
 
