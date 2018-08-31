@@ -116,8 +116,20 @@ def csv_export(table, datalabel="Data", dataunits="units"):
         yield ",".join(str(x) for x in [row.date, row.ut, row.lon, row.lat, row.alt, row.data])
 
 
+import calendar
+import datetime
+def JulianDate_to_MMDDYYY(julianDate, ms):
+   y = julianDate[0]
+   jd = julianDate[1]
+   month = 1
+   day = 0
+   while jd - calendar.monthrange(y, month)[1] > 0 and month <= 12:
+      jd = jd - calendar.monthrange(y, month)[1]
+      month = month + 1
+   date = datetime.datetime(y, month, jd)
+   return date + datetime.timedelta(milliseconds=ms)
+
 def netcdf_export(table, datalabel="Data", dataunits="units"):
-   numElems = 0
    dates = []
    uts = []
    latitudes = []
@@ -131,51 +143,55 @@ def netcdf_export(table, datalabel="Data", dataunits="units"):
       longtitudes.append(row.lon)
       altitudes.append(row.alt)
       dataValues.append(row.data)
-      numElems = numElems + 1
 
-   from netCDF4 import Dataset
+   from netCDF4 import Dataset, num2date
    import tempfile
    import os
    (fd, filename) = tempfile.mkstemp()
    dataset = Dataset(filename, 'w', format='NETCDF4')
-   date = dataset.createDimension('Date', None)
-   ut = dataset.createDimension('UT', numElems)
-   latitude = dataset.createDimension('Latitude', numElems)
-   longtitude = dataset.createDimension('Longtitude', numElems)
-   altitude = dataset.createDimension('Altitude', numElems)
-   data = dataset.createDimension('Data', numElems)
+   time = dataset.createDimension('time', None)
 
    import numpy as np
-   dateVar= dataset.createVariable('Date', np.int32, ('Date'))
-   utVar = dataset.createVariable('UT', np.int32, ('UT'))
-   latitudeVar = dataset.createVariable('Latitude', np.float32, ('Latitude'))
-   longtitudeVar = dataset.createVariable('Longtitude', np.float32, ('Longtitude'))
-   altitudeVar = dataset.createVariable('Altitude', np.float32, ('Altitude'))
-   complexDataType = np.dtype([("date", np.int32), ("ut", np.int32), ("latitude", np.float32), ("longtitude", np.float32), ("altitude", np.float32), ("data", np.float32)])
-   complexDataType_t = dataset.createCompoundType(complexDataType, 'dtype')
-   dataVar = dataset.createVariable(datalabel, complexDataType_t, ('Data'))
+   timeVar= dataset.createVariable('time', np.int32, ('time'))
+   latitudeVar = dataset.createVariable('latitude', np.float32, ('time'))
+   longtitudeVar = dataset.createVariable('longtitude', np.float32, ('time'))
+   altitudeVar = dataset.createVariable('altitude', np.float32, ('time'))
+   dataVar = dataset.createVariable(datalabel, np.float32, ('time'))
    
-   dateVar.units = 'YYYYDDD'
-   utVar.units = 'ms'
-   latitudeVar.units = 'deg'
-   longtitudeVar.units = 'deg'
-   altitudeVar.units = 'km'
-   dataVar.units = 'Date (YYYYDDD), "UT (ms), Longitude (deg), Latitude (deg), Altitude (km)'
+   startDateTime = JulianDate_to_MMDDYYY(divmod(int(dates[0]), 1000), int(uts[0]))
+   timeVar.units = 'miliseconds since ' + str(startDateTime)
+   timeVar.long_name = 'Universal Time'
+   timeVar.calendar = 'gregorian'
 
-   dateVar[:] = dates
-   utVar[:] = uts
+   latitudeVar.units = 'degrees'
+   latitudeVar.valid_min = min(latitudes)
+   latitudeVar.valid_max = max(latitudes)
+   latitudeVar.description = 'The latitude of observation\'s point'
+
+   longtitudeVar.units = 'degrees'
+   longtitudeVar.valid_min = min(longtitudes)
+   longtitudeVar.valid_max = max(longtitudes)
+   longtitudeVar.description = 'The longtitude of observation\'s point'
+
+   altitudeVar.units = 'km'
+   altitudeVar.valid_min = min(altitudes)
+   altitudeVar.valid_max = max(altitudes)
+   altitudeVar.description = 'The altitudes of the spacecraft in km'
+
+   dataVar.units = dataunits
+   dataVar.valid_min = min(dataValues)
+   dataVar.valid_max = max(dataValues)
+
+   times = []
+   for i in range(len(dates)):
+      currentDate = JulianDate_to_MMDDYYY(divmod(int(dates[i]), 1000), int(uts[i]))
+      timeDiff = (currentDate - startDateTime).total_seconds()*1000
+      times.append(timeDiff)
+   timeVar[:] = times
    latitudeVar[:] = latitudes
    longtitudeVar[:] = longtitudes
    altitudeVar[:] = altitudes
-
-   temp = np.empty(numElems, complexDataType)
-   temp["date"] = dates
-   temp["ut"] = uts
-   temp["latitude"] = latitudes
-   temp["longtitude"] = longtitudes
-   temp["altitude"] = altitudes
-   temp["data"] = dataValues
-   dataVar[:] = temp
+   dataVar[:] = dataValues
 
    dataset.close()
 
