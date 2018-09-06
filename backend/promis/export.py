@@ -130,19 +130,19 @@ def JulianDate_to_MMDDYYY(julianDate, ms):
    return date + datetime.timedelta(milliseconds=ms)
 
 def netcdf_export(table, datalabel="Data", dataunits="units"):
-   dates = []
-   uts = []
-   latitudes = []
-   longtitudes = []
-   altitudes = []
-   dataValues = []
-   for row in table:
-      dates.append(row.date)
-      uts.append(row.ut)
-      latitudes.append(row.lat)
-      longtitudes.append(row.lon)
-      altitudes.append(row.alt)
-      dataValues.append(row.data)
+   #dates = []
+   #uts = []
+   #latitudes = []
+   #longtitudes = []
+   #altitudes = []
+   #dataValues = []
+   #for row in table:
+   #   dates.append(row.date)
+   #   uts.append(row.ut)
+   #   latitudes.append(row.lat)
+   #   longtitudes.append(row.lon)
+   #   altitudes.append(row.alt)
+   #   dataValues.append(row.data)
 
    from netCDF4 import Dataset, num2date
    import tempfile
@@ -158,40 +158,42 @@ def netcdf_export(table, datalabel="Data", dataunits="units"):
    altitudeVar = dataset.createVariable('altitude', np.float32, ('time'))
    dataVar = dataset.createVariable(datalabel, np.float32, ('time'))
    
-   startDateTime = JulianDate_to_MMDDYYY(divmod(int(dates[0]), 1000), int(uts[0]))
+   i = 0
+   startDateTime = 0
+   for row in table:
+      if i == 0:
+         startDateTime = JulianDate_to_MMDDYYY(divmod(int(row.date), 1000), int(row.ut))
+         #print(startDateTime)
+      currentDate = JulianDate_to_MMDDYYY(divmod(int(row.date), 1000), int(row.ut))
+      timeVar[i] = (currentDate - startDateTime).total_seconds()*1000
+      latitudeVar[i] = row.lat
+      longtitudeVar[i] = row.lon
+      altitudeVar[i] = row.alt
+      dataVar[i]= row.data
+      i = i + 1
+
    timeVar.units = 'miliseconds since ' + str(startDateTime)
    timeVar.long_name = 'Universal Time'
    timeVar.calendar = 'gregorian'
 
    latitudeVar.units = 'degrees'
-   latitudeVar.valid_min = min(latitudes)
-   latitudeVar.valid_max = max(latitudes)
+   latitudeVar.valid_min = min(latitudeVar)
+   latitudeVar.valid_max = max(latitudeVar)
    latitudeVar.description = 'The latitude of observation\'s point'
 
    longtitudeVar.units = 'degrees'
-   longtitudeVar.valid_min = min(longtitudes)
-   longtitudeVar.valid_max = max(longtitudes)
+   longtitudeVar.valid_min = min(longtitudeVar)
+   longtitudeVar.valid_max = max(longtitudeVar)
    longtitudeVar.description = 'The longtitude of observation\'s point'
 
    altitudeVar.units = 'km'
-   altitudeVar.valid_min = min(altitudes)
-   altitudeVar.valid_max = max(altitudes)
+   altitudeVar.valid_min = min(altitudeVar)
+   altitudeVar.valid_max = max(altitudeVar)
    altitudeVar.description = 'The altitudes of the spacecraft in km'
 
    dataVar.units = dataunits
-   dataVar.valid_min = min(dataValues)
-   dataVar.valid_max = max(dataValues)
-
-   times = []
-   for i in range(len(dates)):
-      currentDate = JulianDate_to_MMDDYYY(divmod(int(dates[i]), 1000), int(uts[i]))
-      timeDiff = (currentDate - startDateTime).total_seconds()*1000
-      times.append(timeDiff)
-   timeVar[:] = times
-   latitudeVar[:] = latitudes
-   longtitudeVar[:] = longtitudes
-   altitudeVar[:] = altitudes
-   dataVar[:] = dataValues
+   dataVar.valid_min = min(dataVar)
+   dataVar.valid_max = max(dataVar)
 
    dataset.close()
 
