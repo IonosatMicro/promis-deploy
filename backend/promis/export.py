@@ -129,20 +129,7 @@ def JulianDate_to_MMDDYYY(julianDate, ms):
    date = datetime.datetime(y, month, jd)
    return date + datetime.timedelta(milliseconds=ms)
 
-def netcdf_export(table, datalabel="Data", dataunits="units"):
-   #dates = []
-   #uts = []
-   #latitudes = []
-   #longtitudes = []
-   #altitudes = []
-   #dataValues = []
-   #for row in table:
-   #   dates.append(row.date)
-   #   uts.append(row.ut)
-   #   latitudes.append(row.lat)
-   #   longtitudes.append(row.lon)
-   #   altitudes.append(row.alt)
-   #   dataValues.append(row.data)
+def netcdf_export(table, sampling_frequency, datalabel="Data", dataunits="units"):
 
    from netCDF4 import Dataset, num2date
    import tempfile
@@ -158,6 +145,15 @@ def netcdf_export(table, datalabel="Data", dataunits="units"):
    altitudeVar = dataset.createVariable('altitude', np.float32, ('time'))
    dataVar = dataset.createVariable(datalabel, np.float32, ('time'))
    
+   timeVarMultCoef = 1
+   timeVarUnits = 'seconds'
+   if sampling_frequency == 1024:
+      timeVarMultCoef = 1000
+      timeVarUnits = 'milliseconds'
+   elif sampling_frequency > 1024:
+      timeVarMultCoef= 1000000
+      timeVarUnits = 'microseconds'
+
    i = 0
    startDateTime = 0
    for row in table:
@@ -165,14 +161,14 @@ def netcdf_export(table, datalabel="Data", dataunits="units"):
          startDateTime = JulianDate_to_MMDDYYY(divmod(int(row.date), 1000), int(row.ut))
          #print(startDateTime)
       currentDate = JulianDate_to_MMDDYYY(divmod(int(row.date), 1000), int(row.ut))
-      timeVar[i] = (currentDate - startDateTime).total_seconds()*1000
+      timeVar[i] = (currentDate - startDateTime).total_seconds()*timeVarMultCoef
       latitudeVar[i] = row.lat
       longtitudeVar[i] = row.lon
       altitudeVar[i] = row.alt
       dataVar[i]= row.data
       i = i + 1
 
-   timeVar.units = 'miliseconds since ' + str(startDateTime)
+   timeVar.units = timeVarUnits + ' since ' + str(startDateTime)
    timeVar.long_name = 'Universal Time'
    timeVar.calendar = 'gregorian'
 

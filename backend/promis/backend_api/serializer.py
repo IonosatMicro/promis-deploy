@@ -168,6 +168,7 @@ class QuicklookSerializer(serializers.Serializer):
 
 class JSONDataSerializer(QuicklookSerializer):
     geo_line = serializers.SerializerMethodField()
+    sampling_frequency = serializers.SerializerMethodField()
 
     def get_geo_line(self, obj):
         # Determining which part of the geo_line to cut
@@ -184,6 +185,9 @@ class JSONDataSerializer(QuicklookSerializer):
     def get_data(self, obj):
         doc_obj = obj.instance(self.source_name())
         return doc_obj.data(doc_obj.timeslice(*self.context['view'].time_filter))
+
+    def get_sampling_frequency(self, obj):
+        return obj.sampling_frequency
 
 
 class MeasurementsSerializer(serializers.ModelSerializer):

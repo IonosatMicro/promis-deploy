@@ -60,4 +60,5 @@ class NetCDFRenderer(renderers.BaseRenderer):
       table = export.make_table(data['data'], data['timelapse']['start'], data['timelapse']['end'], data['geo_line'])
       value = data['value']['name']
       units = data['value']['units']
-      return export.netcdf_export(table, value, units)
+      sampling_frequency = data['sampling_frequency']
+      return export.netcdf_export(table, int(sampling_frequency), value, units)
