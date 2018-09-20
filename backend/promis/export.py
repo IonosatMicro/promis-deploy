@@ -116,21 +116,8 @@ def csv_export(table, datalabel="Data", dataunits="units"):
         yield ",".join(str(x) for x in [row.date, row.ut, row.lon, row.lat, row.alt, row.data])
 
 
-import calendar
-import datetime
-def JulianDate_to_MMDDYYY(julianDate, ms):
-   y = julianDate[0]
-   jd = julianDate[1]
-   month = 1
-   day = 0
-   while jd - calendar.monthrange(y, month)[1] > 0 and month <= 12:
-      jd = jd - calendar.monthrange(y, month)[1]
-      month = month + 1
-   date = datetime.datetime(y, month, jd)
-   return date + datetime.timedelta(milliseconds=ms)
-
-def netcdf_export(table, sampling_frequency, datalabel="Data", dataunits="units"):
-
+def netcdf_export(data, start_time, end_time, orbit, sampling_frequency, datalabel="Data", dataunits="units"):
+   
    from netCDF4 import Dataset, num2date
    import tempfile
    import os
@@ -144,55 +131,49 @@ def netcdf_export(table, sampling_frequency, datalabel="Data", dataunits="units"
    longtitudeVar = dataset.createVariable('longtitude', np.float32, ('time'))
    altitudeVar = dataset.createVariable('altitude', np.float32, ('time'))
    dataVar = dataset.createVariable(datalabel, np.float32, ('time'))
-   
-   timeVarMultCoef = 1
+
+   timeMultCoef = 1
    timeVarUnits = 'seconds'
    if sampling_frequency == 1024:
-      timeVarMultCoef = 1000
+      timeMultCoef = 1000
       timeVarUnits = 'milliseconds'
    elif sampling_frequency > 1024:
-      timeVarMultCoef= 1000000
+      timeMultCoef = 1000000
       timeVarUnits = 'microseconds'
 
-   i = 0
-   startDateTime = 0
-   for row in table:
-      if i == 0:
-         startDateTime = JulianDate_to_MMDDYYY(divmod(int(row.date), 1000), int(row.ut))
-         #print(startDateTime)
-      currentDate = JulianDate_to_MMDDYYY(divmod(int(row.date), 1000), int(row.ut))
-      timeVar[i] = (currentDate - startDateTime).total_seconds()*timeVarMultCoef
-      latitudeVar[i] = row.lat
-      longtitudeVar[i] = row.lon
-      altitudeVar[i] = row.alt
-      dataVar[i]= row.data
-      i = i + 1
+   #orbit = list(orbit)
+   dataVar[:] = data
+   latitudeVar[:], longtitudeVar[:], altitudeVar[:] = [np.repeat(x, sampling_frequency) for x in zip(*orbit)]
 
-   timeVar.units = timeVarUnits + ' since ' + str(startDateTime)
+   dataVar[:] = data
+   timeVar[:] = np.arange(0, (end_time - start_time)*timeMultCoef, (end_time - start_time) / len(data) * timeMultCoef)
+
+   from datetime import datetime
+   timeVar.units = timeVarUnits + ' since ' + datetime.utcfromtimestamp(start_time).strftime('%Y-%m-%d %H:%M:%S')
    timeVar.long_name = 'Universal Time'
    timeVar.calendar = 'gregorian'
 
    latitudeVar.units = 'degrees'
-   latitudeVar.valid_min = min(latitudeVar)
-   latitudeVar.valid_max = max(latitudeVar)
+   latitudeVar.valid_min = np.amin(latitudeVar)
+   latitudeVar.valid_max = np.amax(latitudeVar)
    latitudeVar.description = 'The latitude of observation\'s point'
 
    longtitudeVar.units = 'degrees'
-   longtitudeVar.valid_min = min(longtitudeVar)
-   longtitudeVar.valid_max = max(longtitudeVar)
+   longtitudeVar.valid_min = np.amin(longtitudeVar)
+   longtitudeVar.valid_max = np.amax(longtitudeVar)
    longtitudeVar.description = 'The longtitude of observation\'s point'
 
    altitudeVar.units = 'km'
-   altitudeVar.valid_min = min(altitudeVar)
-   altitudeVar.valid_max = max(altitudeVar)
+   altitudeVar.valid_min = np.amin(altitudeVar)
+   altitudeVar.valid_max = np.amax(altitudeVar)
    altitudeVar.description = 'The altitudes of the spacecraft in km'
 
    dataVar.units = dataunits
-   dataVar.valid_min = min(dataVar)
-   dataVar.valid_max = max(dataVar)
+   dataVar.valid_min = np.amin(dataVar)
+   dataVar.valid_max = np.amax(dataVar)
 
    dataset.close()
-
+   
    f = os.fdopen(fd, 'rb')
    result = f.read()
    f.close()
