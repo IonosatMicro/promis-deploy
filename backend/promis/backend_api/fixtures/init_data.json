@@ -58,7 +58,7 @@
             "classes.variant.Variant"
         ],
         "date_start": "2005-02-01",
-        "date_end": "2005-03-25"
+        "date_end": "2005-03-26"
     }
 },
 {
@@ -546,7 +546,7 @@
         "exponent": -3,
         "device": 1,
         "klass": [
-            "classes.base_data.ObliqueThreeVarTimeSeriesHF"
+            "classes.base_data.SingleVarTimeSeriesFFT"
         ]
     }
 },
@@ -558,7 +558,7 @@
         "exponent": 0,
         "device": 4,
         "klass": [
-            "classes.base_data.ObliqueThreeVarTimeSeriesHF"
+            "classes.base_data.SingleVarTimeSeriesFFT"
         ]
     }
 },
@@ -570,7 +570,7 @@
         "exponent": 0,
         "device": 5,
         "klass": [
-            "classes.base_data.OrthogonalTwoVarTimeSeriesHF"
+            "classes.base_data.SingleVarTimeSeriesFFT"
         ]
     }
 },
@@ -718,7 +718,7 @@
         "exponent": 0,
         "channel": 3,
         "klass": [
-            "classes.base_data.OrthogonalThreeVarTimeSeriesHF"
+            "classes.base_data.SingleVarTimeSeriesFFT"
         ]
     }
 },
@@ -730,7 +730,7 @@
         "exponent": 0,
         "channel": 4,
         "klass": [
-            "classes.base_data.OrthogonalTwoVarTimeSeriesHF"
+            "classes.base_data.SingleVarTimeSeriesFFT"
         ]
     }
 },
@@ -742,7 +742,7 @@
         "exponent": 0,
         "channel": 5,
         "klass": [
-            "classes.base_data.OrthogonalTwoVarTimeSeriesHF"
+            "classes.base_data.SingleVarTimeSeriesFFT"
         ]
     }
 }

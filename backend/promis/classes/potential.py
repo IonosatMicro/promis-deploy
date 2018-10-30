@@ -132,7 +132,10 @@ class Potential(BaseProject):
                                 ez_time_end = time_end
 
                                 # Generator for the orbit
-                                line_gen = ( (y.lon, y.lat, t) for t, y, _ in orbit.generate_orbit(orbit_path, time_start, time_end) )
+                                # TODO: rewrite as generator if possible at all
+                                path = [ (y.lon, y.lat, y.alt, t) for t, y, _ in orbit.generate_orbit(orbit_path, time_start, time_end) ]
+                                line_gen = [ (x, y, t) for x, y, _, t in path ]
+                                alt_gen = [ alt for _, _, alt, _ in path ]
                                 # Converting time to python objects for convenience
                                 # This is the point where onboard time gets converted to the UTC
                                 time_start = unix_time.maketime(time_start)
@@ -143,7 +146,8 @@ class Potential(BaseProject):
                                 # Creating a session object
                                 # TODO: make it more readable
                                 # TODO: srid should be 4979 see #222
-                                ez_sess_obj = model.Session.objects.create(time_begin = time_start, time_end = time_end, geo_line = LineString(*line_gen, srid = 4326), space_project = self.project_obj )
+                                ez_sess_obj = model.Session.objects.create(time_begin = time_start, time_end = time_end, altitude = alt_gen,
+                                        geo_line = LineString(*line_gen, srid = 4326), space_project = self.project_obj )
 
                                 # TODO: record data_id in the object
                                 # TODO: somehow generalise this process maybe

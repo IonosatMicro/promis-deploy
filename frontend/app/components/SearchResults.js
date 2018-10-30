@@ -39,6 +39,7 @@ class DataSection extends Component {
                     return {
                         main: resp.source.name,
                         data: resp.data,
+                        data_type: resp.data_type,
                         desc: resp.source.description,
                         time: resp.timelapse,
                         ylab: resp.value.name,
@@ -96,6 +97,7 @@ class DataSection extends Component {
                 { this.state.data.length &&
                 <Quicklook
                     data = {this.state.data}
+                    data_type = {this.state.data_type}
                     title = {this.state.desc}
                     timelapse = {UnixToISO(this.state.time.start) + " – " + UnixToISO(this.state.time.end)}
                     ylabel = {this.state.ylab + " (" + this.state.unit + ")"}

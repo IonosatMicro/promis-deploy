@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 from django.db import models
 from django.db.models.fields import ( DateTimeField, IntegerField, CharField,
     DateField, FloatField, TextField )
+from django.contrib.postgres.fields import ArrayField
 from django.db.models.fields.related import ForeignKey
 from jsonfield import JSONField
 from django.contrib.gis.db.models import LineStringField
@@ -92,6 +93,9 @@ class Session(models.Model):
     # but ensures distances and intersections are caclulated correctly
     # TODO: srid should eventually be 4979 see #222
     geo_line = LineStringField(dim = 3, srid = 4326, geography=True)
+
+    # TODO: 4D coordinates, see #256
+    altitude = ArrayField(FloatField())
     space_project = ForeignKey('Space_project', null = True)
 
     class Meta:
