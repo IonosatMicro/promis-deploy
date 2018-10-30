@@ -23,3 +23,6 @@ test/deploy/
 !.keep
 
 /frontend/nbproject/
+
+# PyCharm configs
+.idea/
