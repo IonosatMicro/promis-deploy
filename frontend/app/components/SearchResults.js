@@ -6,10 +6,11 @@ import Quicklook from './Quicklook';
 
 /* TODO: do you need these shared anywhere? */
 function UnixToISO(unix_ts) {
-    return new Date(unix_ts * 1e3).toISOString();
+    return Date(unix_ts * 1e3).toISOString();
 }
 
-function ISOToAlmostISO(iso_ts) {
+function UnixToAlmostISO(unix_ts) {
+    let iso_ts = UnixToISO(unix_ts)
     let time_display = iso_ts.substr(0, 10) + " " + iso_ts.substr(11, 8);
     return time_display;
 }
@@ -19,10 +20,10 @@ class DataSection extends Component {
         super(props);
 
         this.state = {
-            data : new Array(),
+            data : [],
             desc: '',
             quicklookStatus: false
-        }
+        };
 
         this.fetchData = this.fetchData.bind(this);
         this.downloadResult = this.downloadResult.bind(this);
@@ -124,7 +125,7 @@ export default class SearchResults extends Component {
         /* check if we have a results list */
         var results = this.props.results;
 
-        if(!this.props.results.fetch && Array.isArray(results.data) && results.data.length > 0 && this.props.map.total == 0) {
+        if(!this.props.results.fetch && Array.isArray(results.data) && results.data.length > 0 && this.props.map.total === 0) {
             let total = results.data.length;
 
             this.props.mapped.updateTotal(total);
@@ -136,7 +137,7 @@ export default class SearchResults extends Component {
              */
 
             let index = 0;
-            let geolines = new Array();
+            let geolines = [];
             function step_func(data) {
                 /* null parameter means first run */
                 if(data!=null) {
@@ -155,7 +156,7 @@ export default class SearchResults extends Component {
 
                 /* if the list is not exhausted, ask a new session */
                 this.props.actions.getSingle(results.data[index].session, null, step_func);
-            };
+            }
 
             step_func = step_func.bind(this);
 
@@ -190,7 +191,7 @@ export default class SearchResults extends Component {
                                 let mid = measurement.id;
 
                                 let session = this.props.storage.sessions.data.find(function(s) {
-                                    return s.url == measurement.session;
+                                    return s.url === measurement.session;
                                 });
 
                                 let storage = (channels ?
@@ -198,7 +199,7 @@ export default class SearchResults extends Component {
                                     this.props.storage.parameters.data);
 
                                 let data = storage.find(function(d) {
-                                    return (channels ? (d.url == measurement.channel) : (d.url == measurement.parameter));
+                                    return (channels ? (d.url === measurement.channel) : (d.url === measurement.parameter));
                                 });
 
                                 let size = 'size unknown';
@@ -207,7 +208,7 @@ export default class SearchResults extends Component {
                                 return measurement.selection.map(function(selection, index) {
                                     return (
                                         <tr key = {index}>
-                                            <td>{ISOToAlmostISO(selection.start)}</td>
+                                            <td>{UnixToAlmostISO(selection.start)}</td>
                                             <td>{data.name}</td>
                                             <td>{size}</td>
                                             <td>

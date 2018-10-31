@@ -11,7 +11,6 @@ export default function SearchReducer(state = State, action) {
                     begin: action.payload
                 }
             };
-        break;
 
         case Enum.DateToChanged:
             return {
@@ -21,7 +20,6 @@ export default function SearchReducer(state = State, action) {
                     end: action.payload
                 }
             };
-        break;
 
         /* manual polygon */
         case Enum.LatFromChanged:
@@ -32,7 +30,6 @@ export default function SearchReducer(state = State, action) {
                     begin: [action.payload, state.rectangle.begin[1]]
                 }
             };
-        break;
 
         case Enum.LatToChanged:
             return {
@@ -41,8 +38,7 @@ export default function SearchReducer(state = State, action) {
                     ...state.rectangle,
                     end: [action.payload, state.rectangle.end[1]]
                 }
-            }
-        break;
+            };
 
         case Enum.LngFromChanged:
             return {
@@ -51,8 +47,7 @@ export default function SearchReducer(state = State, action) {
                     ...state.rectangle,
                     begin: [state.rectangle.begin[0], action.payload]
                 }
-            }
-        break;
+            };
 
         case Enum.LngToChanged:
             return {
@@ -61,8 +56,7 @@ export default function SearchReducer(state = State, action) {
                     ...state.rectangle,
                     end: [state.rectangle.end[0], action.payload]
                 }
-            }
-        break;
+            };
 
         /* altitude */
         case Enum.AltFromChanged:
@@ -72,8 +66,7 @@ export default function SearchReducer(state = State, action) {
                     ...state.altitude,
                     begin: action.payload
                 }
-            }
-        break;
+            };
 
         case Enum.AltToChanged:
             return {
@@ -82,16 +75,14 @@ export default function SearchReducer(state = State, action) {
                     ...state.altitude,
                     end: action.payload
                 }
-            }
-        break;
+            };
 
         /* channels/parameters */
         case Enum.ChannelsModeChanged:
             return {
                 ...state,
                 useChannels: action.payload
-            }
-        break;
+            };
 
         /* query handling */
         case Enum.QueryClearData:
@@ -99,12 +90,11 @@ export default function SearchReducer(state = State, action) {
                 ...state,
                 query: {
                     ...state.query,
-                    devices: new Array(),
-                    channels: new Array(),
-                    parameters: new Array()
+                    devices: [],
+                    channels: [],
+                    parameters: []
                 }
-            }
-        break;
+            };
 
         case Enum.QuerySetProject:
             return {
@@ -114,7 +104,6 @@ export default function SearchReducer(state = State, action) {
                     project: action.payload
                 }
             };
-        break;
 
         case Enum.QuerySetDevice:
             return {
@@ -124,7 +113,6 @@ export default function SearchReducer(state = State, action) {
                     devices: [...state.query.devices, action.payload]
                 }
             };
-        break;
 
         case Enum.QuerySetChannel:
             return {
@@ -134,7 +122,6 @@ export default function SearchReducer(state = State, action) {
                     channels: [...state.query.channels, action.payload]
                 }
             };
-        break;
 
         case Enum.QueryClearChannel:
             return {
@@ -144,7 +131,6 @@ export default function SearchReducer(state = State, action) {
                     channels: state.query.channels.filter((e) => e !== action.payload)
                 }
             };
-        break;
 
         case Enum.QuerySetParameter:
             return {
@@ -153,8 +139,7 @@ export default function SearchReducer(state = State, action) {
                     ...state.query,
                     parameters: [...state.query.parameters, action.payload]
                 }
-            }
-        break;
+            };
 
         case Enum.QueryClearParameter:
             return {
@@ -164,10 +149,8 @@ export default function SearchReducer(state = State, action) {
                     parameters: state.query.parameters.filter((e) => e !== action.payload)
                 }
             };
-        break;
 
         default:
             return state;
-        break;
     }
 }
