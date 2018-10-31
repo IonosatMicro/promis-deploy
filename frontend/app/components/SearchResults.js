@@ -6,7 +6,7 @@ import Quicklook from './Quicklook';
 
 /* TODO: do you need these shared anywhere? */
 function UnixToISO(unix_ts) {
-    return Date(unix_ts * 1e3).toISOString();
+    return new Date(unix_ts * 1e3).toISOString();
 }
 
 function UnixToAlmostISO(unix_ts) {
