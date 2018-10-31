@@ -9,6 +9,11 @@ function UnixToISO(unix_ts) {
     return new Date(unix_ts * 1e3).toISOString();
 }
 
+function ISOToAlmostISO(iso_ts) {
+    let time_display = iso_ts.substr(0, 10) + " " + iso_ts.substr(11, 8);
+    return time_display;
+}
+
 class DataSection extends Component {
     constructor(props) {
         super(props);
@@ -202,7 +207,7 @@ export default class SearchResults extends Component {
                                 return measurement.selection.map(function(selection, index) {
                                     return (
                                         <tr key = {index}>
-                                            <td>{UnixToISO(selection.start)}</td>
+                                            <td>{ISOToAlmostISO(selection.start)}</td>
                                             <td>{data.name}</td>
                                             <td>{size}</td>
                                             <td>
