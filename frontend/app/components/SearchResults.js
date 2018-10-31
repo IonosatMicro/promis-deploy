@@ -10,8 +10,8 @@ function UnixToISO(unix_ts) {
 }
 
 function UnixToAlmostISO(unix_ts) {
-    let iso_ts = UnixToISO(unix_ts)
-    let time_display = iso_ts.substr(0, 10) + " " + iso_ts.substr(11, 8);
+    let iso_ts = UnixToISO(unix_ts);
+    let time_display = iso_ts.replace("T", " ").substr(0, 19);
     return time_display;
 }
 
