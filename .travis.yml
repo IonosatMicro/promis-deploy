@@ -6,6 +6,7 @@ addons:
   apt:
     sources:
       - sourceline: deb http://vagrant-deb.linestarve.com/ any main
+        key_url: https://vagrant-deb.linestarve.com/vagrant-deb.asc
     packages:
       - vagrant
 before_script:
