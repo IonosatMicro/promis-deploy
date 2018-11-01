@@ -390,10 +390,10 @@ export default class TimeAndPositionInput extends Component {
                             Interval
                         </Col>
                         <Col sm={5}>
-                            <DateTime dateTime = {String(opts.timelapse.begin * 1000)} inputFormat = "DD/MM/YYYY HH:MM:SS" onChange = {this.dateFromChange} />
+                            <DateTime dateTime = {String(opts.timelapse.begin * 1000)} inputFormat = "YYYY-MM-DD HH:MM:SS" onChange = {this.dateFromChange} />
                         </Col>
                         <Col sm={5}>
-                            <DateTime dateTime = {String(opts.timelapse.end * 1000)} inputFormat = "DD/MM/YYYY HH:MM:SS" onChange = {this.dateToChange} />
+                            <DateTime dateTime = {String(opts.timelapse.end * 1000)} inputFormat = "YYYY-MM-DD HH:MM:SS" onChange = {this.dateToChange} />
                         </Col>
                     </FormGroup>
                     <FormGroup controlId = 'Altitude'>
