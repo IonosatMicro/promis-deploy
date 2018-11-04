@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Nav, Navbar, NavItem, NavDropdown, MenuItem, Button, ButtonToolbar } from 'react-bootstrap';
+import { strings } from "../localizations/localization";
 
 import LoginWindow from './LoginWindow';
 import RegisterWindow from './RegisterWindow';
@@ -75,12 +76,12 @@ export default class PromisNavbar extends Component {
                         { data.user ? (
                         <div>
                             <span className = 'welcome'>Hello, {data.user.name} </span>
-                            <Button onClick = {actions.logout} bsStyle="warning">Sign out</Button>
+                            <Button onClick = {actions.logout} bsStyle="warning">{strings.sighOut}</Button>
                         </div>
                         ) : (
                         <ButtonToolbar>
-                            <Button onClick = {this.toggleWindow.bind(null, 'login', true)} bsStyle="success">Sign in</Button>
-                            <Button onClick = {this.toggleWindow.bind(null, 'register', true)} bsStyle="primary">Register</Button>
+                            <Button onClick = {this.toggleWindow.bind(null, 'login', true)} bsStyle="success">{strings.signIn}</Button>
+                            <Button onClick = {this.toggleWindow.bind(null, 'register', true)} bsStyle="primary">{strings.register}</Button>
                             <LoginWindow
                                 onLogin = {actions.login}
                                 userData = {data}
