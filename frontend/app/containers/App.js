@@ -20,6 +20,7 @@ import SearchForm from '../components/SearchForm.js';
 import SearchResults from '../components/SearchResults.js';
 
 import {strings, getCookie, getInterfaceLanguage, setLanguage } from '../localizations/localization'
+import { getCurrentLanguage } from "../localizations/localization";
 import EventEmitter from 'event-emitter';
 
 class App extends Component {
@@ -35,8 +36,13 @@ class App extends Component {
 
         /* localisation settings */
         let language = getCookie("lang") || getInterfaceLanguage() || "en";
-        setLanguage(language);
+        if (language.toLowerCase().slice(0, 2) === "ru"){
+            setLanguage('uk');
+        } else {
+            setLanguage(language);
+        }
         console.log("!!!!!!!!!!!!!!!!!!!!!!!" + language + "!!!!!!!!!!!!!!!!!");
+        console.log("Current interface lang: " + getCurrentLanguage());
     }
 
     componentDidMount() {

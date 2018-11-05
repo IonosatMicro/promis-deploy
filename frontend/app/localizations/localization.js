@@ -1,13 +1,11 @@
 import LocalizedStrings from 'react-localization';
 import en from './en.js';
 import uk from './uk.js';
-import ru from './uk.js';
 
 
 export let strings = new LocalizedStrings({
     en,
-    uk,
-    ru
+    uk
 });
 
 export function getInterfaceLanguage() {
@@ -18,6 +16,9 @@ export function setLanguage(lang) {
     return strings.setLanguage(lang);
 }
 
+export function getCurrentLanguage() {
+    return strings.getLanguage();
+}
 
 export function getCookie(cname) {
     let name = cname + "=";

@@ -1,11 +1,13 @@
 import { Enum } from '../constants/User';
 import Cookies from 'js-cookie';
+import { getCurrentLanguage } from '../localizations/localization';
 import axios from 'axios';
 
 
 export default {
     login : function(user, pass) {
         return function(dispatch) {
+            let lang = getCurrentLanguage();
             const loginFailed = 'Login failed, check username and password';
 
             dispatch({
@@ -16,7 +18,7 @@ export default {
             // get csrf from page instead of server
             // .....
    
-            axios.get('/en/api-auth/login/').then(function(response) {
+            axios.get('/'+lang+'/api-auth/login/').then(function(response) {
                 let regex = /csrfmiddlewaretoken' value='([^']*)/g;
                 let match = regex.exec(response.data);
                 let csrf = match[1];
@@ -26,7 +28,7 @@ export default {
                 data.append('password', pass);
                 data.append('csrfmiddlewaretoken', csrf);
                 
-                axios.post('/en/api-auth/login/', data, { 
+                axios.post('/'+lang+'/api-auth/login/', data, {
                     headers: { 'Content-Type': 'multipart/form-data' },
                     maxRedirects: 0
                 }).then(function(res)
@@ -70,7 +72,9 @@ export default {
                 type: Enum.ProfileRequest
             });
 
-            axios.get('/en/user')
+            let lang = getCurrentLanguage();
+
+            axios.get('/'+lang+'/user')
             .then(function(res) {
                 dispatch({
                     type: Enum.ProfileSuccess,
