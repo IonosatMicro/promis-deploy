@@ -19,7 +19,7 @@ import TimeAndPositionPanel from '../components/TimeAndPosition';
 import SearchForm from '../components/SearchForm.js';
 import SearchResults from '../components/SearchResults.js';
 
-import { strings } from '../localizations/localization'
+import {strings, getCookie, getInterfaceLanguage, setLanguage } from '../localizations/localization'
 import EventEmitter from 'event-emitter';
 
 class App extends Component {
@@ -32,6 +32,11 @@ class App extends Component {
         this.updateDimensions = this.updateDimensions.bind(this);
 
         this.props.userActions.profile();
+
+        /* localisation settings */
+        let language = getCookie("lang") || getInterfaceLanguage() || "en";
+        setLanguage(language);
+        console.log("!!!!!!!!!!!!!!!!!!!!!!!" + language + "!!!!!!!!!!!!!!!!!");
     }
 
     componentDidMount() {

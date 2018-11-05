@@ -6,7 +6,7 @@ export default {
     // TODO when signed in
 
     // Block title
-    searchTitle: "Пошук",
+    searchTitle: "Вибір проекту та параметрів",
     searchResultTitle: "Результат пошуку",
     timePositionTitle: "Час та місцезнаходження",
     mapTitle: "Мапа",
@@ -34,4 +34,9 @@ export default {
     deleteButton: "Видалити",
 
     // Project-parameter
+    project: "Проект",
+    parametersChanells: "Параметри",
+    searchButton: "Пошук",
+    resetSearchButton: "",
+    level: "Рівень"
  }
