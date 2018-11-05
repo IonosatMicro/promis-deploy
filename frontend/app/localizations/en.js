@@ -34,5 +34,9 @@ export default {
     deleteButton: "Delete",
 
     // Project-parameter
-
+    project: "Project",
+    parametersChanells: "Measurements",
+    searchButton: "Search",
+    resetSearchButton: "Reset search",
+    level: "Level"
  }
