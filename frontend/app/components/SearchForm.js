@@ -79,7 +79,7 @@ export default class SearchForm extends Component {
         if(measurements) {
             ResetControl = (
                 <Button onClick = {this.resetSearch}>
-                    <Glyphicon glyph = 'trash' /> Reset search
+                    <Glyphicon glyph = 'trash' /> {strings.resetSearchButton}
                 </Button>
             );
         }
@@ -119,7 +119,7 @@ export default class SearchForm extends Component {
                     <FormGroup>
                         <Col sm = {6}>
                             <Button onClick = {this.getData}>
-                                <Glyphicon glyph = 'search' />Search
+                                <Glyphicon glyph = 'search' />{strings.searchButton}
                             </Button>
                         </Col>
                         <Col sm = {6}>

@@ -286,7 +286,7 @@ class MapSelection extends Component {
 
         if(selection.active) {
             return (
-                <InfoBox>{current.type}, next point (lat, lng): {preview[0]}, {preview[1]}</InfoBox>
+                <InfoBox>{current.type}, {strings.nextPoint} (lat, lng): {preview[0]}, {preview[1]}</InfoBox>
             )
         } else {
             if(isSelectionElement(selection.elements[0]) && selection.elements[0].data.length > 0)

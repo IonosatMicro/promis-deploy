@@ -69,13 +69,13 @@ export default class PromisNavbar extends Component {
                     <Nav pullRight>
                         <ExternalNavItem href="http://ionosat-micro.ikd.kiev.ua/" target="_blank">
                                 <img src="/img/ionosat-41x41.png" style={{height: "41px", marginTop: -7}} />
-                                <b>Ionosat-Micro</b>
+                                <b>{strings.ionosatSite}</b>
                         </ExternalNavItem>
                         <NavItem>
                             <div></div>
                         { data.user ? (
                         <div>
-                            <span className = 'welcome'>Hello, {data.user.name} </span>
+                            <span className = 'welcome'>{strings.hello} {data.user.name} </span>
                             <Button onClick = {actions.logout} bsStyle="warning">{strings.sighOut}</Button>
                         </div>
                         ) : (

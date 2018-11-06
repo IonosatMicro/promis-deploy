@@ -3,7 +3,7 @@ import { Form, Button, Glyphicon } from 'react-bootstrap';
 import ReactSpinner from 'react-spinjs';
 import Tooltip from './Tooltip';
 import Quicklook from './Quicklook';
-import { getCurrentLanguage } from "../localizations/localization";
+import { strings, getCurrentLanguage } from "../localizations/localization";
 
 /* TODO: do you need these shared anywhere? */
 function UnixToISO(unix_ts) {
@@ -92,12 +92,12 @@ class DataSection extends Component {
     render() {
         return (
             <div>
-                <Tooltip text = 'Quicklook'>
+                <Tooltip text = {strings.tooltipQuicklook}>
                     <Button onClick = {this.showQuicklook} bsSize = 'small'>
                         <Glyphicon glyph = 'stats' />
                     </Button>
                 </Tooltip>
-                <Tooltip text = 'Download'>
+                <Tooltip text = {strings.tooltipDownload}>
                     <Button onClick = {this.downloadResult} bsSize = 'small'>
                         <Glyphicon glyph = 'download-alt' />
                     </Button>
@@ -179,14 +179,14 @@ export default class SearchResults extends Component {
 
                 return (
                     <div>
-                    <span>Found {results.data.length} result(s)</span>
+                    <span>{strings.found} {results.data.length} {strings.results}</span>
                     <table className = 'table table-hover'>
                         <thead>
                             <tr>
-                                <th>Date from</th>
-                                <th>{ channels ? 'Channel' : 'Parameter' }</th>
-                                <th>Data size (approx)</th>
-                                <th>Actions</th>
+                                <th>{strings.datetimeFrom}</th>
+                                <th>{ channels ? strings.channel : strings.parameter }</th>
+                                <th>{strings.dataSize}</th>
+                                <th>{strings.actions}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -205,7 +205,7 @@ export default class SearchResults extends Component {
                                     return (channels ? (d.url === measurement.channel) : (d.url === measurement.parameter));
                                 });
 
-                                let size = 'size unknown';
+                                let size = strings.sizeUnknown;
 
                                 /* each measurement may have multiple parts defined by the selection array */
                                 return measurement.selection.map(function(selection, index) {
@@ -233,7 +233,7 @@ export default class SearchResults extends Component {
                 )
             } else {
                 return (
-                    <span>Nothing has been found</span>
+                    <span>{strings.notFound}</span>
                 )
             }
         }
