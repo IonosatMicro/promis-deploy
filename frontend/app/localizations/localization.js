@@ -16,9 +16,26 @@ export function setLanguage(lang) {
     return strings.setLanguage(lang);
 }
 
+export function switchLanguage(lang) {
+    setCookie("lang", lang, 0);
+    document.location.href = '/';
+}
+
 export function getCurrentLanguage() {
     return strings.getLanguage();
 }
+
+function setCookie(cname, cvalue, exdays) {
+    var d = "0";
+    if (exdays != 0) {
+        var d = new Date();
+        d.setTime(d.getTime() + (exdays*24*60*60*1000));
+        d = d.toUTCString();
+    }
+    var expires = "expires="+ d;
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+
 
 export function getCookie(cname) {
     let name = cname + "=";

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Nav, Navbar, NavItem, NavDropdown, MenuItem, Button, ButtonToolbar } from 'react-bootstrap';
-import { strings } from "../localizations/localization";
+import { strings, switchLanguage } from "../localizations/localization";
 
 import LoginWindow from './LoginWindow';
 import RegisterWindow from './RegisterWindow';
@@ -95,6 +95,10 @@ export default class PromisNavbar extends Component {
                             />
                         </ButtonToolbar>
                         ) }
+                        </NavItem>
+                        <NavItem>
+                            <Button onClick = { () => switchLanguage("en") } bsStyle="success">EN</Button>
+                            <Button onClick = { () => switchLanguage("uk") } bsStyle="success">UA</Button>
                         </NavItem>
                     </Nav>
                 </Navbar.Collapse>
