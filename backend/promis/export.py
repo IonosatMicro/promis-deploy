@@ -100,7 +100,7 @@ def ascii_export(table, datalabel="Data", dataunits="units"):
     yield "{:^10} {:^10} {:^6} {:^6} {:^6} {:^15}".format("Date", "UT", "Lat.", "Lon.", "Alt.", datalabel)
     yield "{:^10} {:^10} {:^6} {:^6} {:^6} {:^15}".format("(YYYYDDD)", "(ms)", "(deg.)", "(deg.)", "(km)", "(%s)" % dataunits)
     for row in table:
-        yield "{:>10} {:>10} {:>6.02f} {:>6.02f} {:>6.02f} {:>15.06f}".format(row.date, row.ut, row.lat, row.lon, row.alt, row.data)
+        yield "{:>10} {:>10} {:>6.02f} {:>6.02f} {:>6.02f}".format(row.date, row.ut, row.lat, row.lon, row.alt) + "".join(" {:>15.06f}".format(dataComp) for dataComp in row.data)
 
 def csv_export(table, datalabel="Data", dataunits="units"):
     """

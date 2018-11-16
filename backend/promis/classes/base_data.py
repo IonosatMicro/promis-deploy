@@ -148,6 +148,17 @@ class OrthogonalThreeVarTimeSeriesHF(BaseData):
     [en]: Three high frequency components in orthogonal coordinate system
     [uk]: Три високочастотні компоненти вектора величини в ортогональній системі координат
     """
+    def __len__(self):
+        return len(self.doc)
+
+    def __getitem__(self, idx):
+        return self.doc[idx]
+
+    def data(self, selection = slice(None)):
+        return self.doc[selection]
+
+    def quicklook(self, points, selection = slice(None)):
+        return
 
 
 # TODO: realize
@@ -156,4 +167,15 @@ class OrthogonalTwoVarTimeSeriesHF(BaseData):
     [en]: Two high frequency components in orthogonal coordinate system
     [uk]: Дві високочастотні компоненти вектора величини в ортогональній системі координат
     """
+    def __len__(self):
+        return len(self.doc)
+
+    def __getitem__(self, idx):
+        return self.doc[idx]
+
+    def data(self, selection = slice(None)):
+        return self.doc[selection]
+
+    def quicklook(self, points, selection = slice(None)):
+        return
     pass

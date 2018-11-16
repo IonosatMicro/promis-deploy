@@ -47,7 +47,7 @@ class Variant(BaseProject):
 
             # TODO: hardcode
             time_start = 1111714367 # 25-03-2005 01:32:47
-            time_end = time_start + 56
+            time_end = time_start + 55
 
             # TODO: assuming there was only one session
             path = [ (y.lon, y.lat, y.alt, t) for t, y, _ in orbit.generate_orbit(orbit_path, time_start, time_end) ]
@@ -68,28 +68,31 @@ class Variant(BaseProject):
             data = {
                 'ΔE1, ΔE2, ΔE3': {
                     'param': 'Ex, Ey, Ez (three components of electric field HF Fs = 31.25 kHz)',
-                    'file': 'E1~'
+                    #'file': 'E1~'
                     #'comps' : {
                     #    'E1~': 'e1',
                     #    'E2~': 'e2',
                     #    'E3~': 'e3'
                     #}
+                    'comps' : ['E1~', 'E2~', 'E3~']
                 },
                 'Bx~, By~ (not calibrated)': {
                     'param': 'Bx, By (two components of magnetic field HF Fs = 31,25 kHz)',
-                    'file': 'Bx~'
+                    #'file': 'Bx~'
                     #'comps': {
                     #    'Bx~': 'bx',
                     #    'By~': 'by'
                     #}
+                    'comps' : ['Bx~', 'By~']
                 },
                 'Jxz~, Jyz~ (not calibrated)': {
                     'param': 'Jxz, Jyz (two components of current density Fs = 31.25 kHz)',
-                    'file': 'Jxz~'
+                    #'file': 'Jxz~'
                     #'comps': {
                     #    'Jxz~': 'jxz',
                     #    'Jyz~': 'jyz'
                     #}
+                    'comps' : ['Jxz~', 'Jyz~']
                 }
             }
 
@@ -100,11 +103,15 @@ class Variant(BaseProject):
             for chan_name, chan_files in data.items():
                 chan_obj = model.Channel.objects.language('en').filter(name = chan_name)[0]
                 par_obj = model.Parameter.objects.language('en').filter(name = chan_files['param'])[0]
-                # json_data = { key: get_file(name) for name, key in chan_files['comps'].items() }
-                json_data = get_file(chan_files['file'])
+                listOfComponents = [get_file(name) for name in chan_files['comps']]
+                numValues = int(time_dur.total_seconds()) * 31250
+                def catchIdxError(component, idx):
+                   try:
+                      return component[idx]
+                   except:
+                      return 0
+                json_data = [tuple([catchIdxError(component,idx) for component in listOfComponents]) for idx in range(numValues)]
                 doc_obj = model.Document.objects.create(json_data = json_data )
                 meas = model.Measurement.objects.create(session = sess_obj, parameter = par_obj, channel = chan_obj, channel_doc = doc_obj, parameter_doc = doc_obj, sampling_frequency = 31250, max_frequency = 31250, min_frequency = 31250)
-            
-
 
 
