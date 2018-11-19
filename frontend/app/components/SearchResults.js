@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Button, Glyphicon } from 'react-bootstrap';
+import { Col, Form, Button, FormControl, Glyphicon } from 'react-bootstrap';
 import ReactSpinner from 'react-spinjs';
 import Tooltip from './Tooltip';
 import Quicklook from './Quicklook';
@@ -179,7 +179,18 @@ export default class SearchResults extends Component {
 
                 return (
                     <div>
-                    <span>{strings.found} {results.data.length} {strings.results}</span>
+                        <Form horizontal>
+                            <Col sm = {8}>
+                                {strings.found} {results.data.length} {strings.results}
+                            </Col>
+                            <Col sm = {4}>
+                                <FormControl componentClass="select" placeholder="select" style={{width: 50 + '%', float: 'right'}}>
+                                    <option value="txt">text</option>
+                                    <option value="csv">csv</option>
+                                    <option value="nc">netcdf</option>
+                                </FormControl>
+                            </Col>
+                        </Form>
                     <table className = 'table table-hover'>
                         <thead>
                             <tr>
