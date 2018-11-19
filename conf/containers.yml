@@ -7,9 +7,12 @@
     POSTGRES_PASSWORD:  ${conf.postgres_password}
     POSTGRES_DB:        ${conf.postgres_dbname}
 
+- name:   ${conf.hostname_cache}
+  image:  "redis:5.0.1"
+    
 - name:     ${conf.hostname_api}
   build:    ${conf.dir_api}
-  depend:   [ "${conf.hostname_db}" ]
+  depend:   [ "${conf.hostname_db}", "${conf.hostname_cache}" ]
   sync:
     - [ "sync/", "${conf.sync_api_dir}" ]
   reload:

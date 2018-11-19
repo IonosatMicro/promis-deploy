@@ -158,3 +158,16 @@ REST_FRAMEWORK = {
 }
 
 LOGIN_REDIRECT_URL = '/en/user/'
+
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://cache.promis:6379/1",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient"
+        },
+        "KEY_PREFIX": "promis"
+    }
+}
+        
+CACHE_TTL = 6 * 15
