@@ -183,6 +183,7 @@ export default class SearchResults extends Component {
                     <table className = 'table table-hover'>
                         <thead>
                             <tr>
+                                <th>{strings.validityStatus}</th>
                                 <th>{strings.datetimeFrom}</th>
                                 <th>{ channels ? strings.channel : strings.parameter }</th>
                                 <th>{strings.dataSize}</th>
@@ -208,9 +209,11 @@ export default class SearchResults extends Component {
                                 let size = strings.sizeUnknown;
 
                                 /* each measurement may have multiple parts defined by the selection array */
+                                /* TODO: tooltip to validity mark, doesn't work straight away */
                                 return measurement.selection.map(function(selection, index) {
                                     return (
                                         <tr key = {index}>
+                                            <td>{selection.invalid? '❌' : '✔️'}</td>
                                             <td>{UnixToAlmostISO(selection.start)}</td>
                                             <td>{data.name}</td>
                                             <td>{size}</td>
