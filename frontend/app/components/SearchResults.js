@@ -180,6 +180,7 @@ export default class SearchResults extends Component {
                     <table className = 'table table-hover'>
                         <thead>
                             <tr>
+                                <th>Status</th>
                                 <th>Date from</th>
                                 <th>{ channels ? 'Channel' : 'Parameter' }</th>
                                 <th>Data size (approx)</th>
@@ -205,9 +206,11 @@ export default class SearchResults extends Component {
                                 let size = 'size unknown';
 
                                 /* each measurement may have multiple parts defined by the selection array */
+                                /* TODO: tooltip to validity mark, doesn't work straight away */
                                 return measurement.selection.map(function(selection, index) {
                                     return (
                                         <tr key = {index}>
+                                            <td>{selection.invalid? '❌' : '✔️'}</td>
                                             <td>{UnixToAlmostISO(selection.start)}</td>
                                             <td>{data.name}</td>
                                             <td>{size}</td>
