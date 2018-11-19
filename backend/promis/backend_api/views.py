@@ -22,6 +22,12 @@ from rest_framework.pagination import LimitOffsetPagination
 
 from django.contrib.auth import get_user_model
 
+from django.conf import settings
+from django.core.cache.backends.base import DEFAULT_TIMEOUT
+from django.views.decorators.cache import cache_page
+from django.utils.decorators import method_decorator
+CACHE_TTL = getattr(settings, 'CACHE_TTL', DEFAULT_TIMEOUT)
+
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.exceptions import NotAuthenticated, NotFound, MethodNotAllowed
 from rest_framework.renderers import JSONRenderer, BrowsableAPIRenderer
@@ -108,11 +114,11 @@ class DevicesView(PromisViewSet):
     serializer_class = serializer.DevicesSerializer
     filter_fields = ('space_project',)
 
-
 class SessionsView(PromisViewSet):
     queryset = models.Session.objects.all()
     serializer_class = serializer.SessionsSerializer
     filter_class = SessionFilter
+    # TODO: reenable, breaks cache because it returns generators
     pagination_class = LimitOffsetPagination
 
 
@@ -261,6 +267,7 @@ def UserUpdate(request):
 # TODO: playground code for the alpha REFACTOR
 # TODO: create a proper filterset
 # TODO: make use of Q() to help django understand the request
+@method_decorator(cache_page(CACHE_TTL), name='dispatch')
 class DataView(PromisViewSet):
     serializer_class = serializer.DataSerializer
     # TODO: only to prevent Django from asking for base_name
