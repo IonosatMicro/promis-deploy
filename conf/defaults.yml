@@ -90,3 +90,7 @@ dir_test:           'test'
 # Override to true/on/yes in conf.yml to cause a boot2docker VM to be run
 # regardless of vagrant's own judgment
 force_host_vm:      off
+
+# LinkedIn configuration, please set it up
+linkedin_oauth2_key:    ''
+linkedin_oauth2_secret: ''

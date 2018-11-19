@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import LinkedIn from 'react-linkedin-login';
 import { Nav, Navbar, NavItem, NavDropdown, MenuItem, Button, ButtonToolbar } from 'react-bootstrap';
 import { strings, switchLanguage, getCurrentLanguage } from "../localizations/localization";
 
@@ -36,6 +37,7 @@ export default class PromisNavbar extends Component {
                 this.setState({user: null});
         })*/
         this.toggleWindow = this.toggleWindow.bind(this);
+        this.callbackLinkedIn = this.callbackLinkedIn.bind(this);
     }
 
     toggleWindow(what, state) {
@@ -46,6 +48,14 @@ export default class PromisNavbar extends Component {
 
             return newState;
         })
+    }
+    
+    callbackLinkedIn ({code, redirectUri}) {
+        
+        /* Original buttons:
+         * <Button onClick = {this.toggleWindow.bind(null, 'login', true)} bsStyle="success">Sign in</Button>
+            <Button onClick = {this.toggleWindow.bind(null, 'register', true)} bsStyle="primary">Register</Button> 
+        */
     }
 
     render() {
@@ -81,8 +91,11 @@ export default class PromisNavbar extends Component {
                         </div>
                         ) : (
                         <ButtonToolbar>
-                            <Button onClick = {this.toggleWindow.bind(null, 'login', true)} bsStyle="success">{strings.signIn}</Button>
-                            <Button onClick = {this.toggleWindow.bind(null, 'register', true)} bsStyle="primary">{strings.register}</Button>
+                            <LinkedIn
+                                clientId='863rt496vyjrrd'
+                                callback={this.callbackLinkedIn}
+                                className='btn btn-primary'
+                            text='LinkedIn' />
                             <LoginWindow
                                 onLogin = {actions.login}
                                 userData = {data}
