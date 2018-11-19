@@ -30,6 +30,8 @@
     SYNC_DIR:           ${conf.sync_api_dir}
     PYTHONUNBUFFERED:   "0"
     YML_PATH:           ${conf.yml_api_dir}
+    LINKEDIN_OAUTH2_KEY:    ${conf.linkedin_oauth2_key}
+    LINKEDIN_OAUTH2_SECRET: ${conf.linkedin_oauth2_secret}
 
 - name:   ${conf.hostname_web}
   build:  ${conf.dir_web}

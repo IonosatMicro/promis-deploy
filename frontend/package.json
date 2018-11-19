@@ -41,6 +41,7 @@
     "react-dom": "^15.5.4",
     "react-draggable": "^2.2.3",
     "react-edit-inline": "^1.0.8",
+    "react-linkedin-login": "1.0.3",
     "react-loading-spinner": "^1.0.12",
     "react-redux": "^5.0.4",
     "react-spinjs": "^3.0.0",
