@@ -324,4 +324,10 @@ class DataSerializer(serializers.ModelSerializer):
         # Generate a list of tuples, sort them, then convert to list of dictionaries
         # TODO: data links
         res = sorted(x for x in gen_selection())
-        return [ { 'start': x[0], 'end': x[1] } for x in res ]
+        
+        # TODO: STUB code to test validation markers
+        # TODO: pass this mark elsewhere at all when redesigning the API
+        def is_invalid(x):
+            return hash(x) % 100 <= 20
+        
+        return [ { 'start': x[0], 'end': x[1], 'invalid': is_invalid(x) } for x in res ]
