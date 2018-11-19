@@ -52,6 +52,7 @@ export default {
     notFound: "Nothing has been found",
     tooltipQuicklook: "Quick view",
     tooltipDownload: "Download",
+    validityStatus: "Status",
 
     /* Map block */
     tooltipSwitchTo: "Switch to ",

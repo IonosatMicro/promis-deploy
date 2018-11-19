@@ -52,6 +52,7 @@ export default {
     notFound: "Нічого не знайдено",
     tooltipQuicklook: "Переглянути",
     tooltipDownload: "Завантажити",
+    validityStatus: "Статус",
 
     /* Map block */
     tooltipSwitchTo: "Переключити на ",
