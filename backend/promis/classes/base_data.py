@@ -178,4 +178,22 @@ class OrthogonalTwoVarTimeSeriesHF(BaseData):
 
     def quicklook(self, points, selection = slice(None)):
         return
+
+# TODO: realize
+class OrthogonalThreeVarTimeSeriesLF(BaseData):
+    """
+    [en]: Three low frequency components in orthogonal coordinate system
+    [uk]: Три низькочастотні компоненти вектора величини в ортогональній системі координат
+    """
+    def __len__(self):
+        return len(self.doc)
+
+    def __getitem__(self, idx):
+        return self.doc[idx]
+
+    def data(self, selection = slice(None)):
+        return self.doc[selection]
+
+    def quicklook(self, points, selection = slice(None)):
+        return
     pass
