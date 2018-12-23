@@ -43,7 +43,9 @@
     "model": "backend_api.space_project",
     "pk": 1,
     "fields": {
-        "klass": 7,
+        "klass": [
+            "classes.potential.Potential"
+        ],
         "date_start": "2011-08-30",
         "date_end": "2012-11-01"
     }
@@ -52,7 +54,9 @@
     "model": "backend_api.space_project",
     "pk": 2,
     "fields": {
-        "klass": 10,
+        "klass": [
+            "classes.variant.Variant"
+        ],
         "date_start": "2005-02-01",
         "date_end": "2005-03-26"
     }
@@ -577,7 +581,7 @@
     "model": "backend_api.channeltranslation",
     "pk": 11,
     "fields": {
-        "name": "E1=, E2=, E3=",
+        "name": "\u0394E1=, \u0394E2=, \u0394E3=",
         "description": "",
         "language_code": "en",
         "master": 6
@@ -643,7 +647,7 @@
         "exponent": -3,
         "device": 1,
         "klass": [
-            "classes.base_data.ObliqueThreeVarTimeSeriesHF"
+            "classes.base_data.SingleVarTimeSeries"
         ]
     }
 },
@@ -691,7 +695,7 @@
         "exponent": 0,
         "device": 4,
         "klass": [
-            "classes.base_data.OrthogonalThreeVarTimeSeriesLF"
+            "classes.base_data.ObliqueThreeVarTimeSeriesLF"
         ]
     }
 },
@@ -703,7 +707,7 @@
         "exponent": 0,
         "device": 6,
         "klass": [
-            "classes.base_data.OrthogonalTwoVarTimeSeriesHF"
+            "classes.base_data.ScalarValueDifference"
         ]
     }
 },
@@ -727,7 +731,7 @@
         "exponent": 0,
         "device": 8,
         "klass": [
-            "classes.base_data.OrthogonalThreeVarTimeSeriesHF"
+            "classes.base_data.OrthogonalThreeVarTimeSeriesLF"
         ]
     }
 },
@@ -739,7 +743,7 @@
         "exponent": 0,
         "device": 6,
         "klass": [
-            "classes.base_data.OrthogonalTwoVarTimeSeriesHF"
+            "classes.base_data.ScalarValueDifference"
         ]
     }
 },
@@ -787,7 +791,7 @@
     "model": "backend_api.parametertranslation",
     "pk": 5,
     "fields": {
-        "name": "Ex, Ey, Ez (three components of electric field HF Fs = 31.25 kHz)",
+        "name": "Ex, Ey, Ez (three components of electric field HF)",
         "description": "",
         "language_code": "en",
         "master": 3
@@ -807,7 +811,7 @@
     "model": "backend_api.parametertranslation",
     "pk": 7,
     "fields": {
-        "name": "Bx, By (two components of magnetic field HF Fs = 31,25 kHz)",
+        "name": "Bx, By (two components of magnetic field HF)",
         "description": "",
         "language_code": "en",
         "master": 4
@@ -827,7 +831,7 @@
     "model": "backend_api.parametertranslation",
     "pk": 9,
     "fields": {
-        "name": "Jxz, Jyz (two components of current density Fs = 31.25 kHz)",
+        "name": "Jxz, Jyz (two components of current density)",
         "description": "",
         "language_code": "en",
         "master": 5
@@ -857,7 +861,7 @@
     "model": "backend_api.parametertranslation",
     "pk": 12,
     "fields": {
-        "name": "FC1~, FC2~ (two components of current density)",
+        "name": "\u0394FC~",
         "description": "",
         "language_code": "en",
         "master": 7
@@ -887,7 +891,7 @@
     "model": "backend_api.parametertranslation",
     "pk": 15,
     "fields": {
-        "name": "FC1=, FC2= (two components of current density)",
+        "name": "\u0394FC=",
         "description": "",
         "language_code": "en",
         "master": 10
@@ -925,7 +929,7 @@
         "exponent": 0,
         "channel": 3,
         "klass": [
-            "classes.base_data.OrthogonalThreeVarTimeSeriesHF"
+            "classes.base_data.ObliqueThreeVarTimeSeriesHF"
         ]
     }
 },
@@ -961,7 +965,7 @@
         "exponent": 0,
         "channel": 6,
         "klass": [
-            "classes.base_data.OrthogonalThreeVarTimeSeriesLF"
+            "classes.base_data.ObliqueThreeVarTimeSeriesLF"
         ]
     }
 },
@@ -973,7 +977,7 @@
         "exponent": 0,
         "channel": 7,
         "klass": [
-            "classes.base_data.OrthogonalTwoVarTimeSeriesHF"
+            "classes.base_data.ScalarValueDifference"
         ]
     }
 },
@@ -997,7 +1001,7 @@
         "exponent": 0,
         "channel": 9,
         "klass": [
-            "classes.base_data.OrthogonalThreeVarTimeSeriesHF"
+            "classes.base_data.OrthogonalThreeVarTimeSeriesLF"
         ]
     }
 },
@@ -1009,7 +1013,7 @@
         "exponent": 0,
         "channel": 10,
         "klass": [
-            "classes.base_data.OrthogonalTwoVarTimeSeriesHF"
+            "classes.base_data.ScalarValueDifference"
         ]
     }
 }

@@ -134,15 +134,23 @@ class SingleVarTimeSeries(BaseData):
             yield avg_float(v, int(span * i), span)
 
 
-# TODO: realize
 class ObliqueThreeVarTimeSeriesHF(BaseData):
     """
     [en]: Three high frequency components in oblique coordinate system
     [uk]: Три високочастотні компоненти вектора величини в косоугольній системі координат
     """
+    def __len__(self):
+        return len(self.doc)
 
+    def __getitem__(self, idx):
+        return self.doc[idx]
 
-# TODO: realize
+    def data(self, selection = slice(None)):
+        return self.doc[selection]
+
+    def quicklook(self, points, selection = slice(None)):
+        return
+
 class OrthogonalThreeVarTimeSeriesHF(BaseData):
     """
     [en]: Three high frequency components in orthogonal coordinate system
@@ -160,8 +168,40 @@ class OrthogonalThreeVarTimeSeriesHF(BaseData):
     def quicklook(self, points, selection = slice(None)):
         return
 
+class ObliqueThreeVarTimeSeriesLF(BaseData):
+    """
+    [en]: Three low frequency components in oblique coordinate system
+    [uk]: Три низькочастотні компоненти вектора величини в косоугольній системі координат
+    """
+    def __len__(self):
+        return len(self.doc)
 
-# TODO: realize
+    def __getitem__(self, idx):
+        return self.doc[idx]
+
+    def data(self, selection = slice(None)):
+        return self.doc[selection]
+
+    def quicklook(self, points, selection = slice(None)):
+        return
+
+class OrthogonalThreeVarTimeSeriesLF(BaseData):
+    """
+    [en]: Three low frequency components in orthogonal coordinate system
+    [uk]: Три низькочастотні компоненти вектора величини в ортогональній системі координат
+    """
+    def __len__(self):
+        return len(self.doc)
+
+    def __getitem__(self, idx):
+        return self.doc[idx]
+
+    def data(self, selection = slice(None)):
+        return self.doc[selection]
+
+    def quicklook(self, points, selection = slice(None)):
+        return
+
 class OrthogonalTwoVarTimeSeriesHF(BaseData):
     """
     [en]: Two high frequency components in orthogonal coordinate system
@@ -179,11 +219,27 @@ class OrthogonalTwoVarTimeSeriesHF(BaseData):
     def quicklook(self, points, selection = slice(None)):
         return
 
-# TODO: realize
-class OrthogonalThreeVarTimeSeriesLF(BaseData):
+class ObliqueTwoVarTimeSeriesHF(BaseData):
     """
-    [en]: Three low frequency components in orthogonal coordinate system
-    [uk]: Три низькочастотні компоненти вектора величини в ортогональній системі координат
+    [en]: Two high frequency components in oblique coordinate system
+    [uk]: Дві високочастотні компоненти вектора величини в косоугольній системі координат
+    """
+    def __len__(self):
+        return len(self.doc)
+
+    def __getitem__(self, idx):
+        return self.doc[idx]
+
+    def data(self, selection = slice(None)):
+        return self.doc[selection]
+
+    def quicklook(self, points, selection = slice(None)):
+        return
+
+class ScalarValueDifference(BaseData):
+    """
+    [en]: Scalar difference of two values
+    [uk]: Скалярна різниця двух змінних
     """
     def __len__(self):
         return len(self.doc)
