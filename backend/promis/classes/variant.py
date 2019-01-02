@@ -141,6 +141,8 @@ class Variant(BaseProject):
                 for line in fp:
                     if idx >= len(component_sf):
                         break
+                    if daydir in ["1057", "1071", "1109", "1278", "1394"] and idx == 3:
+                        idx += 2
                     if len(line.rstrip()) != 0:
                         component_sf[idx][1] = float(line)
                     idx += 1
@@ -205,7 +207,7 @@ class Variant(BaseProject):
                             if name == comp_name:
                                 max_sf = max(max_sf, sf)
                                 break
-                    #print("components: " + str(components) + " sf: " + str(max_sf))        
+                    #print("components: " + str(components) + " max_sf: " + str(max_sf))        
                     return max_sf
 
                 sampling_frequency = find_sf(chan_files['comps'])
@@ -219,4 +221,4 @@ class Variant(BaseProject):
 
                 json_data = [tuple([catchIdxError(component,idx) for component in listOfComponents]) for idx in range(numValues)]
                 doc_obj = model.Document.objects.create(json_data = json_data )
-                meas = model.Measurement.objects.create(session = sess_obj, parameter = par_obj, channel = chan_obj, channel_doc = doc_obj, parameter_doc = doc_obj, sampling_frequency = sampling_frequency, max_frequency = 31250, min_frequency = 31250)
+                meas = model.Measurement.objects.create(session = sess_obj, parameter = par_obj, channel = chan_obj, channel_doc = doc_obj, parameter_doc = doc_obj, sampling_frequency = sampling_frequency, max_frequency = sampling_frequency, min_frequency = sampling_frequency)

@@ -113,6 +113,8 @@ class SingleVarTimeSeries(BaseData):
             return s / span
 
         v = self.data(selection)
+        if len(v) > 0 and type(v) is list and len(v[0]) == 1:
+            v = [x[0] for x in v]
 
         # If given too much points, return the original data
         # TODO: make configurable somewhere
