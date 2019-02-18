@@ -44,12 +44,12 @@ def cord_conv(RX, RY, RZ, **kwargs):
     return OrbitPoint(math.degrees(φ), math.degrees(λ), ρ - _earth_radius)
 
 # Generating an orbit point every 1 second, discarding extra point and filling the gaps
-def generate_orbit(datapoints, orbit_start, orbit_end, isVariantProject = False):
+def generate_orbit(datapoints, orbit_start, orbit_end, isOrbitExtended = False):
     datakeys = datapoints.keys()
     time_start, time_end = min(datakeys), max(datakeys)
     orbit_len = orbit_end - orbit_start
 
-    assert((orbit_end <= time_end and orbit_start >= time_start) or (isVariantProject == True))
+    assert((orbit_end <= time_end and orbit_start >= time_start) or (isOrbitExtended == True))
 
     # Anchor points from which the curve is deduced
     # anchor[t] is a list of 4 known timepoints: 2 before t + 2 after t if possible

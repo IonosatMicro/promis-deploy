@@ -25,19 +25,7 @@ from classes.base_project import BaseProject
 import datetime
 import ftp_helper, parsers, unix_time, orbit
 import backend_api.models as model
-'''
-sessions_channels = {
-    "0597": ["Bx", "By", "Bz", "JF~", "FC1~", "FC2~", "FC2=", "Jyz~", "Jxz~", "By~", "E1=", "E2=", "E3="],
-    "1056": ["Bx", "By", "Bz", "JF~", "FC1~", "FC1=", "FC2~", "FC2=", "Jyz~","Bx~", "Jxz~", "By~", "E1=", "E2~", "E2=", "E3~", "E3="],
-    "1057": ["Jyz~","Bx~", "Jxz~", "By~"],
-    "1071": ["JF~", "FC1~", "FC1=", "Jyz~","Bx~", "Jxz~", "E1~", "E2~", "E3~"],
-    "1109": ["JF~", "FC1~", "FC1=", "FC2~", "Jyz~","Bx~", "E2~", "E3~"],
-    "1139": ["Bx", "By", "Bz", "JF~", "FC1~", "FC1=", "FC2~", "FC2=", "Bx~", "Jxz~", "By~", "E1~", "E1=", "E2~", "E2=", "E3~", "E3="],
-    "1278": ["Jyz~", "Jxz~", "E1~", "E2~"],
-    "1363": ["JF~", "FC1~", "FC1=", "FC2~", "Jyz~","Bx~", "E3~"],
-    "1394": ["JF~", "FC1~", "Jyz~","Bx~", "Jxz~", "By~", "E1~", "E2~", "E3~"]
-}
-'''
+
 sessions_time = {
     "597": {
       'time_start': datetime.datetime(2005, 2, 1, 8, 22, 59).timestamp(),
@@ -112,7 +100,7 @@ class Variant(BaseProject):
             print("Time start: " + str(time_start) + ", time end: " + str(time_end))
 
             # TODO: assuming there was only one session
-            path = [ (y.lon, y.lat, y.alt, t) for t, y, _ in orbit.generate_orbit(orbit_path, time_start, time_end, True) ]
+            path = [ (y.lon, y.lat, y.alt, t) for t, y, _ in orbit.generate_orbit(orbit_path, time_start, time_end, isOrbitExtended = True) ]
             line_gen = [ (x, y, t) for x, y, _, t in path ]
             alt_gen = [ alt for _, _, alt, _ in path ]
 
@@ -194,12 +182,12 @@ class Variant(BaseProject):
                 chan_obj = model.Channel.objects.language('en').filter(name = chan_name)[0]
                 par_obj = model.Parameter.objects.language('en').filter(name = chan_files['param'])[0]
                 listOfComponents = [get_file(name) for name in chan_files['comps']]
-                if (len(listOfComponents) == 0) or (sum(len(x) for x in listOfComponents) == 0):
-                    #print('skipping pass for '+ chan_name)
-                    continue
-                #else:
-                #    print('processing '+ chan_name)
 
+                if (len(listOfComponents) == 0) or (sum(len(x) for x in listOfComponents) == 0):
+                    continue
+
+                # All the components of the single channel are suuposed to have the same sampling frequecny
+                # In fact sometimes some fo them appeared to be 0, that is why max is needed here
                 def find_sf(components):
                     max_sf = 0
                     for comp_name in components:
@@ -216,9 +204,14 @@ class Variant(BaseProject):
                 def catchIdxError(component, idx):
                    try:
                       return component[idx]
-                   except:
-                      return 0
+                   except IndexError:
+                      return 0.0
 
-                json_data = [tuple([catchIdxError(component,idx) for component in listOfComponents]) for idx in range(numValues)]
+                # We should better not covert a single component into a tuple. Handling this here
+                if len(listOfComponents) > 1:
+                    json_data = [tuple([catchIdxError(component,idx) for component in listOfComponents]) for idx in range(numValues)]
+                else:
+                    json_data = [catchIdxError(listOfComponents[0],idx) for idx in range(numValues)]
+
                 doc_obj = model.Document.objects.create(json_data = json_data )
                 meas = model.Measurement.objects.create(session = sess_obj, parameter = par_obj, channel = chan_obj, channel_doc = doc_obj, parameter_doc = doc_obj, sampling_frequency = sampling_frequency, max_frequency = sampling_frequency, min_frequency = sampling_frequency)
