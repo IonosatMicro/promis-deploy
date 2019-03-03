@@ -89,18 +89,13 @@ class Variant(BaseProject):
             # TODO: timezone hack
             Δ = 1111714367 - 1111703568
 
-            # TODO: lots of pre-conference half-measures here
             with ftp.xopen("var{0}.tm".format(daydir)) as fp:
                 orbit_path = { (t + Δ): pt for t, pt in parsers.telemetry(fp, cartesian=False) }
 
-            # TODO: hardcode
             time_start = int(sessions_time[daydir]['time_start'])
             time_end = int(sessions_time[daydir]['time_end'])
 
-            print("Time start: " + str(time_start) + ", time end: " + str(time_end))
-
-            # TODO: assuming there was only one session
-            path = [ (y.lon, y.lat, y.alt, t) for t, y, _ in orbit.generate_orbit(orbit_path, time_start, time_end, isOrbitExtended = True) ]
+            path = [ (y.lon, y.lat, y.alt, t) for t, y, _ in orbit.generate_orbit(orbit_path, time_start, time_end, time_delta = 20) ]
             line_gen = [ (x, y, t) for x, y, _, t in path ]
             alt_gen = [ alt for _, _, alt, _ in path ]
 
@@ -181,9 +176,9 @@ class Variant(BaseProject):
             for chan_name, chan_files in data.items():
                 chan_obj = model.Channel.objects.language('en').filter(name = chan_name)[0]
                 par_obj = model.Parameter.objects.language('en').filter(name = chan_files['param'])[0]
-                listOfComponents = [get_file(name) for name in chan_files['comps']]
+                list_of_components = [get_file(name) for name in chan_files['comps']]
 
-                if (len(listOfComponents) == 0) or (sum(len(x) for x in listOfComponents) == 0):
+                if (len(list_of_components) == 0) or (sum(len(x) for x in list_of_components) == 0):
                     continue
 
                 # All the components of the single channel are suuposed to have the same sampling frequecny
@@ -201,17 +196,17 @@ class Variant(BaseProject):
                 sampling_frequency = find_sf(chan_files['comps'])
                 numValues = int(time_dur.total_seconds() * sampling_frequency)
 
-                def catchIdxError(component, idx):
+                def catch_idx_error(component, idx):
                    try:
                       return component[idx]
                    except IndexError:
                       return 0.0
 
                 # We should better not covert a single component into a tuple. Handling this here
-                if len(listOfComponents) > 1:
-                    json_data = [tuple([catchIdxError(component,idx) for component in listOfComponents]) for idx in range(numValues)]
+                if len(list_of_components) > 1:
+                    json_data = [tuple([catch_idx_error(component,idx) for component in list_of_components]) for idx in range(numValues)]
                 else:
-                    json_data = [catchIdxError(listOfComponents[0],idx) for idx in range(numValues)]
+                    json_data = [catch_idx_error(list_of_components[0],idx) for idx in range(numValues)]
 
                 doc_obj = model.Document.objects.create(json_data = json_data )
                 meas = model.Measurement.objects.create(session = sess_obj, parameter = par_obj, channel = chan_obj, channel_doc = doc_obj, parameter_doc = doc_obj, sampling_frequency = sampling_frequency, max_frequency = sampling_frequency, min_frequency = sampling_frequency)

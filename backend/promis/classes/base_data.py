@@ -190,4 +190,3 @@ class ScalarValueDifference(BaseData):
     """
     def quicklook(self, points, selection = slice(None)):
         return
-    pass
