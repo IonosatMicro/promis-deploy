@@ -58,7 +58,7 @@
             "classes.variant.Variant"
         ],
         "date_start": "2005-02-01",
-        "date_end": "2005-03-25"
+        "date_end": "2005-03-26"
     }
 },
 {
@@ -162,6 +162,36 @@
     }
 },
 {
+    "model": "backend_api.devicetranslation",
+    "pk": 11,
+    "fields": {
+        "name": "Faraday cups (FC1, FC2)",
+        "description": "",
+        "language_code": "en",
+        "master": 6
+    }
+},
+{
+    "model": "backend_api.devicetranslation",
+    "pk": 12,
+    "fields": {
+        "name": "Rogowski coil",
+        "description": "",
+        "language_code": "en",
+        "master": 7
+    }
+},
+{
+    "model": "backend_api.devicetranslation",
+    "pk": 13,
+    "fields": {
+        "name": "Fluxgate magnetometer FZM",
+        "description": "",
+        "language_code": "en",
+        "master": 8
+    }
+},
+{
     "model": "backend_api.device",
     "pk": 1,
     "fields": {
@@ -192,6 +222,27 @@
 {
     "model": "backend_api.device",
     "pk": 5,
+    "fields": {
+        "space_project": 2
+    }
+},
+{
+    "model": "backend_api.device",
+    "pk": 6,
+    "fields": {
+        "space_project": 2
+    }
+},
+{
+    "model": "backend_api.device",
+    "pk": 7,
+    "fields": {
+        "space_project": 2
+    }
+},
+{
+    "model": "backend_api.device",
+    "pk": 8,
     "fields": {
         "space_project": 2
     }
@@ -527,6 +578,56 @@
     }
 },
 {
+    "model": "backend_api.channeltranslation",
+    "pk": 11,
+    "fields": {
+        "name": "\u0394E1=, \u0394E2=, \u0394E3=",
+        "description": "",
+        "language_code": "en",
+        "master": 6
+    }
+},
+{
+    "model": "backend_api.channeltranslation",
+    "pk": 12,
+    "fields": {
+        "name": "FC1~, FC2~",
+        "description": "",
+        "language_code": "en",
+        "master": 7
+    }
+},
+{
+    "model": "backend_api.channeltranslation",
+    "pk": 13,
+    "fields": {
+        "name": "JF~",
+        "description": "",
+        "language_code": "en",
+        "master": 8
+    }
+},
+{
+    "model": "backend_api.channeltranslation",
+    "pk": 14,
+    "fields": {
+        "name": "Bx, By, Bz",
+        "description": "",
+        "language_code": "en",
+        "master": 9
+    }
+},
+{
+    "model": "backend_api.channeltranslation",
+    "pk": 15,
+    "fields": {
+        "name": "FC1=, FC2=",
+        "description": "",
+        "language_code": "en",
+        "master": 10
+    }
+},
+{
     "model": "backend_api.channel",
     "pk": 1,
     "fields": {
@@ -546,7 +647,7 @@
         "exponent": -3,
         "device": 1,
         "klass": [
-            "classes.base_data.ObliqueThreeVarTimeSeriesHF"
+            "classes.base_data.SingleVarTimeSeries"
         ]
     }
 },
@@ -583,6 +684,66 @@
         "device": 5,
         "klass": [
             "classes.base_data.OrthogonalTwoVarTimeSeriesHF"
+        ]
+    }
+},
+{
+    "model": "backend_api.channel",
+    "pk": 6,
+    "fields": {
+        "value": 2,
+        "exponent": 0,
+        "device": 4,
+        "klass": [
+            "classes.base_data.ObliqueThreeVarTimeSeriesLF"
+        ]
+    }
+},
+{
+    "model": "backend_api.channel",
+    "pk": 7,
+    "fields": {
+        "value": 5,
+        "exponent": 0,
+        "device": 6,
+        "klass": [
+            "classes.base_data.ScalarValueDifference"
+        ]
+    }
+},
+{
+    "model": "backend_api.channel",
+    "pk": 8,
+    "fields": {
+        "value": 5,
+        "exponent": 0,
+        "device": 7,
+        "klass": [
+            "classes.base_data.SingleVarTimeSeries"
+        ]
+    }
+},
+{
+    "model": "backend_api.channel",
+    "pk": 9,
+    "fields": {
+        "value": 4,
+        "exponent": 0,
+        "device": 8,
+        "klass": [
+            "classes.base_data.OrthogonalThreeVarTimeSeriesLF"
+        ]
+    }
+},
+{
+    "model": "backend_api.channel",
+    "pk": 10,
+    "fields": {
+        "value": 5,
+        "exponent": 0,
+        "device": 6,
+        "klass": [
+            "classes.base_data.ScalarValueDifference"
         ]
     }
 },
@@ -630,7 +791,7 @@
     "model": "backend_api.parametertranslation",
     "pk": 5,
     "fields": {
-        "name": "Ex, Ey, Ez (three components of electric field HF Fs = 31.25 kHz)",
+        "name": "Ex, Ey, Ez (three components of electric field HF)",
         "description": "",
         "language_code": "en",
         "master": 3
@@ -650,7 +811,7 @@
     "model": "backend_api.parametertranslation",
     "pk": 7,
     "fields": {
-        "name": "Bx, By (two components of magnetic field HF Fs = 31,25 kHz)",
+        "name": "Bx, By (two components of magnetic field HF)",
         "description": "",
         "language_code": "en",
         "master": 4
@@ -670,7 +831,7 @@
     "model": "backend_api.parametertranslation",
     "pk": 9,
     "fields": {
-        "name": "Jxz, Jyz (two components of current density Fs = 31.25 kHz)",
+        "name": "Jxz, Jyz (two components of current density)",
         "description": "",
         "language_code": "en",
         "master": 5
@@ -684,6 +845,56 @@
         "description": "",
         "language_code": "uk",
         "master": 5
+    }
+},
+{
+    "model": "backend_api.parametertranslation",
+    "pk": 11,
+    "fields": {
+        "name": "E1=, E2=, E3= (three components of electric field LF)",
+        "description": "",
+        "language_code": "en",
+        "master": 6
+    }
+},
+{
+    "model": "backend_api.parametertranslation",
+    "pk": 12,
+    "fields": {
+        "name": "\u0394FC~",
+        "description": "",
+        "language_code": "en",
+        "master": 7
+    }
+},
+{
+    "model": "backend_api.parametertranslation",
+    "pk": 13,
+    "fields": {
+        "name": "JF~ (current density)",
+        "description": "",
+        "language_code": "en",
+        "master": 8
+    }
+},
+{
+    "model": "backend_api.parametertranslation",
+    "pk": 14,
+    "fields": {
+        "name": "Bx, By, Bz (three components of magnetic field)",
+        "description": "",
+        "language_code": "en",
+        "master": 9
+    }
+},
+{
+    "model": "backend_api.parametertranslation",
+    "pk": 15,
+    "fields": {
+        "name": "\u0394FC=",
+        "description": "",
+        "language_code": "en",
+        "master": 10
     }
 },
 {
@@ -718,7 +929,7 @@
         "exponent": 0,
         "channel": 3,
         "klass": [
-            "classes.base_data.OrthogonalThreeVarTimeSeriesHF"
+            "classes.base_data.ObliqueThreeVarTimeSeriesHF"
         ]
     }
 },
@@ -743,6 +954,66 @@
         "channel": 5,
         "klass": [
             "classes.base_data.OrthogonalTwoVarTimeSeriesHF"
+        ]
+    }
+},
+{
+    "model": "backend_api.parameter",
+    "pk": 6,
+    "fields": {
+        "value": 2,
+        "exponent": 0,
+        "channel": 6,
+        "klass": [
+            "classes.base_data.ObliqueThreeVarTimeSeriesLF"
+        ]
+    }
+},
+{
+    "model": "backend_api.parameter",
+    "pk": 7,
+    "fields": {
+        "value": 5,
+        "exponent": 0,
+        "channel": 7,
+        "klass": [
+            "classes.base_data.ScalarValueDifference"
+        ]
+    }
+},
+{
+    "model": "backend_api.parameter",
+    "pk": 8,
+    "fields": {
+        "value": 5,
+        "exponent": 0,
+        "channel": 8,
+        "klass": [
+            "classes.base_data.SingleVarTimeSeries"
+        ]
+    }
+},
+{
+    "model": "backend_api.parameter",
+    "pk": 9,
+    "fields": {
+        "value": 4,
+        "exponent": 0,
+        "channel": 9,
+        "klass": [
+            "classes.base_data.OrthogonalThreeVarTimeSeriesLF"
+        ]
+    }
+},
+{
+    "model": "backend_api.parameter",
+    "pk": 10,
+    "fields": {
+        "value": 5,
+        "exponent": 0,
+        "channel": 10,
+        "klass": [
+            "classes.base_data.ScalarValueDifference"
         ]
     }
 }

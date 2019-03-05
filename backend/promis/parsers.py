@@ -28,9 +28,12 @@ import unix_time
 # TODO: replace ValueErrors with meaningful exception classes when integrating
 # or make something like DataImportError(), whatever
 
-def telemetry(fp):
+def telemetry(fp, cartesian=True):
     """
     Parses the telemetry .txt file used in Potential and possibly some other satellites.
+    If cartesian is true, then the parser looks for RX, RY, RZ sections and converts to
+    geographic coordinates.
+    Otherwise the parser expects V_ALT, V_LAT and V_LONG as ready-to use data. 
 
     Yields time, (time, lon, lat, alt) tuples.
     """
@@ -40,7 +43,8 @@ def telemetry(fp):
     # I'm going with route #2 for now, no particular reason, just think it will be more elegant in code
 
     # Pointers to the current reading positions in the file per section
-    sections_index = { "RX": -1 , "RY": -1, "RZ": -1 }
+    # Yes, Variant's ones have a space before the name. Yush!
+    sections_index = { "RX": -1 , "RY": -1, "RZ": -1 } if cartesian else { " V_LAT": -1, " V_LONG": -1, " V_ALT": -1 }
 
     # Regular expression to match the sections above
     sections_rx = "^@(%s)" % "|".join(sections_index)
@@ -67,8 +71,9 @@ def telemetry(fp):
             fp.seek(sections_index[sect])
 
             # Read a line, exit the iteration if it's the end of input
+            # Variant doesn't have proper spacing, so stop at new section as well
             ln = fp.readline()
-            if ln.rstrip() == "":
+            if ln.rstrip() == "" or ln[0] == '@':
                 break
 
             # Record the new position
@@ -76,10 +81,14 @@ def telemetry(fp):
 
             # Try to parse the data
             # NOTE: expected format: <timestamp> <float value(.)> <human readable date>, ignoring the last one
-            m = re.search("^[0-9]* ([0-9.-]*) (2.*)", ln)
+            m = re.search("^([0-9]+) *([0-9.-]+) *(2.*)?", ln)
             if m:
+                # Potential had human readable time at the end and onboard time in first column
+                # Variant seems(!) to have UNIX time in first column and no third one
+                time_mark = unix_time.str_to_utc(m.group(3)) if m.group(3) else int(m.group(1))
+
                 # Yielding a nested tuple e.g. ( "RX", (1, 432.0) ), will be converted to dict
-                yield ( sect, (unix_time.str_to_utc(m.group(2)), float(m.group(1))) )
+                yield ( sect, (time_mark, float(m.group(2))) )
             else:
                 raise ValueError("Input inconsistency detected")
 
@@ -100,7 +109,13 @@ def telemetry(fp):
                 for k,v in nextpoint.items():
                     nextpoint[k] = v[1]
 
-                yield timemark, orbit.cord_conv(**nextpoint)
+                # Convert if the input is cartesian, otherwise just construct a class 
+                if cartesian:
+                    point_value = orbit.cord_conv(**nextpoint)
+                else:
+                    point_value = orbit.OrbitPoint(*nextpoint.values())
+
+                yield timemark,  point_value
         except StopIteration:
             pass
 
