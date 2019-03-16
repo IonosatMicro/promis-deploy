@@ -636,7 +636,8 @@
         "device": 1,
         "klass": [
             "classes.base_data.SingleVarTimeSeries"
-        ]
+        ],
+        "labels": ["ez/lf/0"]
     }
 },
 {
@@ -648,7 +649,8 @@
         "device": 1,
         "klass": [
             "classes.base_data.SingleVarTimeSeries"
-        ]
+        ],
+        "labels": ["ez/hf/00"]
     }
 },
 {
@@ -660,7 +662,8 @@
         "device": 4,
         "klass": [
             "classes.base_data.ObliqueThreeVarTimeSeriesHF"
-        ]
+        ],
+        "labels": ["E1~", "E2~", "E3~"]
     }
 },
 {
@@ -672,7 +675,8 @@
         "device": 5,
         "klass": [
             "classes.base_data.OrthogonalTwoVarTimeSeriesHF"
-        ]
+        ],
+        "labels": ["Bx~", "By~"]
     }
 },
 {
@@ -684,7 +688,8 @@
         "device": 5,
         "klass": [
             "classes.base_data.OrthogonalTwoVarTimeSeriesHF"
-        ]
+        ],
+        "labels": ["Jxz~", "Jyz~"]
     }
 },
 {
@@ -696,7 +701,8 @@
         "device": 4,
         "klass": [
             "classes.base_data.ObliqueThreeVarTimeSeriesLF"
-        ]
+        ],
+        "labels": ["E1=", "E2=", "E3="]
     }
 },
 {
@@ -708,7 +714,8 @@
         "device": 6,
         "klass": [
             "classes.base_data.ScalarValueDifference"
-        ]
+        ],
+        "labels": ["FC1~", "FC2~"]
     }
 },
 {
@@ -720,7 +727,8 @@
         "device": 7,
         "klass": [
             "classes.base_data.SingleVarTimeSeries"
-        ]
+        ],
+        "labels": ["JF~"]
     }
 },
 {
@@ -732,7 +740,8 @@
         "device": 8,
         "klass": [
             "classes.base_data.OrthogonalThreeVarTimeSeriesLF"
-        ]
+        ],
+        "labels": ["Bx", "By", "Bz"]
     }
 },
 {
@@ -744,7 +753,8 @@
         "device": 6,
         "klass": [
             "classes.base_data.ScalarValueDifference"
-        ]
+        ],
+        "labels": ["FC1=", "FC2="]
     }
 },
 {

@@ -130,42 +130,6 @@ class Variant(BaseProject):
                         component_sf[idx][1] = float(line)
                     idx += 1
 
-            # Per-channel dicts of filename and JSON name
-            data = {
-                'ΔE1, ΔE2, ΔE3': {
-                    'param': 'Ex, Ey, Ez (three components of electric field HF)',
-                    'comps' : ['E1~', 'E2~', 'E3~']
-                },
-                'Bx~, By~ (not calibrated)': {
-                    'param': 'Bx, By (two components of magnetic field HF)',
-                    'comps' : ['Bx~', 'By~']
-                },
-                'Jxz~, Jyz~ (not calibrated)': {
-                    'param': 'Jxz, Jyz (two components of current density)',
-                    'comps' : ['Jxz~', 'Jyz~'] 
-                },
-                'ΔE1=, ΔE2=, ΔE3=': {
-                    'param': 'E1=, E2=, E3= (three components of electric field LF)',
-                    'comps': ['E1=', 'E2=', 'E3=']
-                },
-                'FC1~, FC2~': {
-                    'param': 'ΔFC~',
-                    'comps': ['FC1~', 'FC2~']
-                },
-                'JF~': {
-                    'param': 'JF~ (current density)',
-                    'comps': ['JF~']
-                },
-                'Bx, By, Bz': {
-                    'param': 'Bx, By, Bz (three components of magnetic field)',
-                    'comps': ['Bx', 'By', 'Bz']
-                },
-                'FC1=, FC2=': {
-                    'param': 'ΔFC=',
-                    'comps': ['FC1=', 'FC2=']
-                }
-            }
-
             def get_file(name):
                 try:
                     with ftp.xopen(name) as fp:
@@ -173,11 +137,17 @@ class Variant(BaseProject):
                 except:
                     return []
 
-            for chan_name, chan_files in data.items():
-                chan_obj = model.Channel.objects.language('en').filter(name = chan_name)[0]
-                par_obj = model.Parameter.objects.language('en').filter(name = chan_files['param'])[0]
-                list_of_components = [get_file(name) for name in chan_files['comps']]
+            project_devices = model.Device.objects.language('en').filter(space_project = self.project_obj.id)
+            project_channels = []
+            for device in project_devices:
+                project_channels.extend(model.Channel.objects.language('en').filter(device = device.id))
 
+            # just in case there are duplicates in the list
+            project_channels = list(set(project_channels)) 
+
+            for chan_obj in project_channels:
+                par_obj = model.Parameter.objects.language('en').filter(channel = chan_obj.id)[0]
+                list_of_components = [get_file(name) for name in chan_obj.labels]
                 if (len(list_of_components) == 0) or (sum(len(x) for x in list_of_components) == 0):
                     continue
 
@@ -193,7 +163,7 @@ class Variant(BaseProject):
                     #print("components: " + str(components) + " max_sf: " + str(max_sf))        
                     return max_sf
 
-                sampling_frequency = find_sf(chan_files['comps'])
+                sampling_frequency = find_sf(chan_obj.labels)
                 numValues = int(time_dur.total_seconds() * sampling_frequency)
 
                 def catch_idx_error(component, idx):
