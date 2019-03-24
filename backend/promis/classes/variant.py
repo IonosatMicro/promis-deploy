@@ -142,9 +142,6 @@ class Variant(BaseProject):
             for device in project_devices:
                 project_channels.extend(model.Channel.objects.language('en').filter(device = device.id))
 
-            # just in case there are duplicates in the list
-            project_channels = list(set(project_channels)) 
-
             for chan_obj in project_channels:
                 par_obj = model.Parameter.objects.language('en').filter(channel = chan_obj.id)[0]
                 list_of_components = [get_file(name) for name in chan_obj.labels]

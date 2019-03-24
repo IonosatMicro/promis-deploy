@@ -82,9 +82,6 @@ class Potential(BaseProject):
             for device in project_devices:
                 project_channels.extend(model.Channel.objects.language('en').filter(device = device.id))
 
-            # just in case there are duplicates in the list
-            project_channels = list(set(project_channels)) 
-
             for chan in project_channels:
                 for label in chan.labels:
                     try:
@@ -160,3 +157,4 @@ class Potential(BaseProject):
 
                     except error_perm:
                         pass
+                        
