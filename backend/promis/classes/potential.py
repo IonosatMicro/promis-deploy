@@ -125,12 +125,17 @@ class Potential(BaseProject):
                                 time_start = unix_time.maketime(time_start)
                                 time_end = unix_time.maketime(time_end)
                                 time_dur = time_end - time_start
-                                print("\tSession: [ %s, %s ] (%s)." % (time_start.isoformat(), time_end.isoformat(), str(time_dur)) )
+                                
 
                                 # Creating a session object
                                 # TODO: make it more readable
                                 # TODO: srid should be 4979 see #222
-                                ez_sess_obj = model.Session.objects.create(time_begin = time_start, time_end = time_end, altitude = alt_gen,
+                                session_obj = model.Session.objects.filter(time_begin = time_start, time_end = time_end, space_project = self.project_obj)
+                                if len(session_obj) > 0:
+                                    ez_sess_obj = session_obj[0]
+                                else:
+                                    print("\tSession: [ %s, %s ] (%s)." % (time_start.isoformat(), time_end.isoformat(), str(time_dur)) )
+                                    ez_sess_obj = model.Session.objects.create(time_begin = time_start, time_end = time_end, altitude = alt_gen,
                                         geo_line = LineString(*line_gen, srid = 4326), space_project = self.project_obj )
 
                                 # TODO: record data_id in the object
