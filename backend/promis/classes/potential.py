@@ -77,42 +77,26 @@ class Potential(BaseProject):
                     # TODO: check if orbit is continous at all
                     # ANSWER: it sort of is, but not necessarily
 
-            # TODO: Hypothesis: there is no overlap across differing devices
-            for dev in ftp.xlist("^(ez|pd)$"):
-                # TODO: I don't know nkp/ekp frequency so, ignoring them atm
-                if dev == "pd":
-                    continue
+            project_devices = model.Device.objects.language('en').filter(space_project = self.project_obj.id)
+            project_channels = []
+            for device in project_devices:
+                project_channels.extend(model.Channel.objects.language('en').filter(device = device.id))
 
-                # TODO: working code so far
-                freqs = { "lf": 1, "hf": 1024 }
-                dirs = { "lf": "0", "hf": "00" }
-
-                # Device, Channel and Parameter discovery
-                # TODO: delenda est, see #51
-                # TODO: maybe do this before everything?
-                # TODO: really bad code here
-                ez_chan_txt = { "lf": "EZ low-frequency channel" , "hf": "EZ high-frequency channel" }
-                ez_par_txt = { "lf": "V (electric potential LF Fs = 1 Hz)", "hf": "V (electric potential HF Fs = 1 kHz)"}
-
-                # TODO: check for existence etc, etc
-                ez_chan = { k: model.Channel.objects.language('en').filter(name = v)[0] for k,v in ez_chan_txt.items() }
-                ez_par = { k: model.Parameter.objects.language('en').filter(name = v)[0] for k,v in ez_par_txt.items() }
-
-                ftp.cwd(dev)
-
-                # Both EZ channels should start at the same time and measure for the same duration
-                # TODO: maybe we need to conduct a more sophisticated comparison?
-                ez_time_start = None
-                ez_time_end   = None
-                ez_sess_obj   = None
-
-                # Checking for the valid directory
-                for freq in ftp.xlist("^(%s)$" % "|".join(freqs.keys())):
-                    ftp.cwd(freq)
-
-                    # TODO: Some folders have "test" data instead "0"/"00", not sure what to do about them
+            for chan in project_channels:
+                for label in chan.labels:
                     try:
-                        ftp.cwd(dirs[freq])
+                        ftp.cwd(label)
+
+                        # still a little bit of hardcode
+                        dirs = len(label.split('/'))
+                        freq = label.split('/')[-2]
+                        freq_val = 1 if freq == "lf" else 1024
+
+                        # Both EZ channels should start at the same time and measure for the same duration
+                        # TODO: maybe we need to conduct a more sophisticated comparison?
+                        ez_time_start = None
+                        ez_time_end   = None
+                        ez_sess_obj   = None
 
                         # Checking for -mv file, should be exactly one
                         mvfile = [ fname for fname in ftp.xlist("^%s[0-9-]*mv.set$" % freq) ]
@@ -123,7 +107,7 @@ class Potential(BaseProject):
                         with ftp.xopen(mvfile[0]) as fp:
                             data = { k:v for k,v in parsers.sets(fp, {"utc", "samp"}) }
                             time_start = data["utc"]
-                            time_end = data["utc"] + data["samp"] // freqs[freq]
+                            time_end = data["utc"] + data["samp"] // freq_val
 
                             # Check if we were the first
                             if not ez_time_start and not ez_time_end:
@@ -141,12 +125,17 @@ class Potential(BaseProject):
                                 time_start = unix_time.maketime(time_start)
                                 time_end = unix_time.maketime(time_end)
                                 time_dur = time_end - time_start
-                                print("\tSession: [ %s, %s ] (%s)." % (time_start.isoformat(), time_end.isoformat(), str(time_dur)) )
+                                
 
                                 # Creating a session object
                                 # TODO: make it more readable
                                 # TODO: srid should be 4979 see #222
-                                ez_sess_obj = model.Session.objects.create(time_begin = time_start, time_end = time_end, altitude = alt_gen,
+                                session_obj = model.Session.objects.filter(time_begin = time_start, time_end = time_end, space_project = self.project_obj)
+                                if len(session_obj) > 0:
+                                    ez_sess_obj = session_obj[0]
+                                else:
+                                    print("\tSession: [ %s, %s ] (%s)." % (time_start.isoformat(), time_end.isoformat(), str(time_dur)) )
+                                    ez_sess_obj = model.Session.objects.create(time_begin = time_start, time_end = time_end, altitude = alt_gen,
                                         geo_line = LineString(*line_gen, srid = 4326), space_project = self.project_obj )
 
                                 # TODO: record data_id in the object
@@ -165,12 +154,12 @@ class Potential(BaseProject):
 
                             # Creating a measurement instance
                             # TODO: same doc right now
-                            model.Measurement.objects.create(session = ez_sess_obj, parameter = ez_par[freq], channel = ez_chan[freq], channel_doc = doc_obj, parameter_doc = doc_obj, sampling_frequency = freqs[freq], max_frequency = freqs[freq], min_frequency = freqs[freq])
+                            param = model.Parameter.objects.language('en').filter(channel = chan.id)
+                            model.Measurement.objects.create(session = ez_sess_obj, parameter = param[0], channel = chan, channel_doc = doc_obj, parameter_doc = doc_obj, sampling_frequency = freq_val, max_frequency = freq_val, min_frequency = freq_val)
 
-                        ftp.cwd("..")
+                        for _ in range(dirs):
+                            ftp.cwd("..")
+
                     except error_perm:
                         pass
-
-                    ftp.cwd("..")
-
-                ftp.cwd("..")
+                        

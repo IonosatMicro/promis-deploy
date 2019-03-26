@@ -177,6 +177,7 @@ class Channel(TranslatableModel):
     exponent = IntegerField(default = 0)
     device = ForeignKey('Device', related_name = 'channels')  # TODO: <- do we need this?
     klass = ForeignKey('Class', null = True)
+    labels = ArrayField(CharField(max_length = 20)) 
 
     translations = TranslatedFields(
         name = TextField(),
