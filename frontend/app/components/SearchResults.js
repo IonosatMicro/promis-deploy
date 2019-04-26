@@ -29,8 +29,6 @@ class DataSection extends Component {
         this.downloadResult = this.downloadResult.bind(this);
         this.closeQuicklook = this.closeQuicklook.bind(this);
         this.showQuicklook = this.showQuicklook.bind(this);
-
-        this.fetchData(this.props.mid);
     }
 
     fetchData() {
@@ -71,6 +69,7 @@ class DataSection extends Component {
     }
 
     showQuicklook() {
+        this.fetchData(this.props.mid);
         this.setState(function() {
             return {
                 quicklookStatus: true
@@ -91,7 +90,7 @@ class DataSection extends Component {
             <div>
                 <Tooltip text = 'Quicklook'>
                     <Button onClick = {this.showQuicklook} bsSize = 'small'>
-                        <Glyphicon glyph = 'stats' />
+                        { this.state.quicklookStatus == true && !this.state.data.length ? "Loading..." : <Glyphicon glyph = 'stats' /> }
                     </Button>
                 </Tooltip>
                 <Tooltip text = 'Download'>
