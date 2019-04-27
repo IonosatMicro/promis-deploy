@@ -135,7 +135,13 @@ def netcdf_export(data, start_time, end_time, orbit, sampling_frequency, datalab
    latitudeVar = dataset.createVariable('latitude', np.float32, ('time'))
    longtitudeVar = dataset.createVariable('longtitude', np.float32, ('time'))
    altitudeVar = dataset.createVariable('altitude', np.float32, ('time'))
-   dataVar = dataset.createVariable(datalabel, np.float32, ('time'))
+
+   if True == isinstance(data[0], numbers.Real):
+      dataVar = dataset.createVariable(datalabel, np.float32, ('time'))
+   else:
+      compound_data = np.dtype([( str(i), np.float64) for i in range(len(data[0]))]) 
+      compound_data_t = dataset.createCompoundType(compound_data,"compoundData")
+      dataVar = dataset.createVariable(datalabel, compound_data_t, ('time'))
 
    timeMultCoef = 1
    timeVarUnits = 'seconds'
@@ -147,10 +153,13 @@ def netcdf_export(data, start_time, end_time, orbit, sampling_frequency, datalab
       timeVarUnits = 'microseconds'
 
    #orbit = list(orbit)
-   dataVar[:] = data
    latitudeVar[:], longtitudeVar[:], altitudeVar[:] = [np.repeat(x, sampling_frequency) for x in zip(*orbit)]
 
-   dataVar[:] = data
+   if True == isinstance(data[0], numbers.Real):
+      dataVar[:] = data
+   else:
+      dataVar[:] = np.array([tuple(x) for x in data], compound_data_t)
+
    timeVar[:] = np.arange(0, (end_time - start_time)*timeMultCoef, (end_time - start_time) / len(data) * timeMultCoef)
 
    from datetime import datetime
@@ -174,8 +183,9 @@ def netcdf_export(data, start_time, end_time, orbit, sampling_frequency, datalab
    altitudeVar.description = 'The altitudes of the spacecraft in km'
 
    dataVar.units = dataunits
-   dataVar.valid_min = np.amin(dataVar)
-   dataVar.valid_max = np.amax(dataVar)
+   if True == isinstance(data[0], numbers.Real):
+      dataVar.valid_min = np.amin(dataVar)
+      dataVar.valid_max = np.amax(dataVar)
 
    dataset.close()
    
