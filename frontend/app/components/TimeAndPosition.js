@@ -261,7 +261,7 @@ class MapSelection extends Component {
         this.empty = -1;
         this.state = {
             editableIndex: this.empty
-        }
+        };
 
         this.updateEditable = this.updateEditable.bind(this);
     }
@@ -281,12 +281,17 @@ class MapSelection extends Component {
     render() {
         let selection = this.props.selection;
         let current = this.props.selection.elements[this.props.selection.current];
+        let displayedShape = {
+            'Rectangle': strings.rectangle,
+            'Circle': strings.circle,
+            'Polygon': strings.polygon
+        };
         let actions = this.props.actions;
         let preview = this.props.preview;
 
         if(selection.active) {
             return (
-                <InfoBox>{current.type}, {strings.nextPoint} (lat, lng): {preview[0]}, {preview[1]}</InfoBox>
+                <InfoBox>{displayedShape[current.type]}, {strings.nextPoint} (lat, lng): {preview[0]}, {preview[1]}</InfoBox>
             )
         } else {
             if(isSelectionElement(selection.elements[0]) && selection.elements[0].data.length > 0)
@@ -305,13 +310,13 @@ class MapSelection extends Component {
 
                                 return (
                                     <option key = {i} value = {rootIndex}>
-                                        { '#' + String(i) + ' : ' + String(collection.type) }
+                                        { '#' + String(i) + ' : ' + displayedShape[collection.type] }
                                     </option>
                                 )
                             }) }
                         </FormControl>
                         <br />
-                        { (this.state.editableIndex != this.empty) &&
+                        { (this.state.editableIndex !== this.empty) &&
                             <SelectionElements
                                 actions = {actions}
                                 rootIndex = {this.state.editableIndex}

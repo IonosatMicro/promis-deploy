@@ -25,7 +25,7 @@ export default {
     // Different selections in Time and Position
     pleaseSelectToEdit: "Виберіть елемент для редагування",
     rectangle: "Прямокутник",
-    circle: "Круг",
+    circle: "Коло",
     polygon: "Полігон",
     nextPoint: "наступна точка",
     circleCenter: "Центр",
@@ -54,6 +54,8 @@ export default {
     tooltipDownload: "Завантажити",
 
     /* Map block */
+    zoomIn: "Збільшити",
+    zoomOut: "Зменшити",
     tooltipSwitchTo: "Переключити на ",
     tooltipSelectRectangle: "Виберіть прямокутну область",
     tooltipSelectCircle: "Виберіть кругову область",

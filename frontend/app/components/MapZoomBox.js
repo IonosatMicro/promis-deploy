@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { ButtonGroup } from 'react-bootstrap';
 
 import ToolboxButton from './ToolboxButton';
+import { strings } from "../localizations/localization";
 
 export default class MapZoomBox extends Component {
     constructor(props) {
@@ -43,8 +44,8 @@ export default class MapZoomBox extends Component {
         return (
             <div className = 'mapZoomBox'>
                 <ButtonGroup className = 'innerToolBox' vertical>
-                    <ToolboxButton placement = 'right' onClick = {this.zoomIn} disabled = {this.state.zoom == this.maxZoom} icon = 'plus' help = 'Zoom in' />
-                    <ToolboxButton placement = 'right' onClick = {this.zoomOut} disabled = {this.state.zoom == this.minZoom} icon = 'minus' help = 'Zoom out' />
+                    <ToolboxButton placement = 'right' onClick = {this.zoomIn} disabled = {this.state.zoom === this.maxZoom} icon = 'plus' help = {strings.zoomIn} />
+                    <ToolboxButton placement = 'right' onClick = {this.zoomOut} disabled = {this.state.zoom === this.minZoom} icon = 'minus' help = {strings.zoomOut} />
                 </ButtonGroup>
             </div>
         )

@@ -54,6 +54,8 @@ export default {
     tooltipDownload: "Download",
 
     /* Map block */
+    zoomIn: "Zoom in",
+    zoomOut: "Zoom out",
     tooltipSwitchTo: "Switch to ",
     tooltipSelectRectangle: "Select rectangular are",
     tooltipSelectCircle: "Select circular area",
