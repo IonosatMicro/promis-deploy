@@ -52,6 +52,10 @@ export default {
     notFound: "Нічого не знайдено",
     tooltipQuicklook: "Переглянути",
     tooltipDownload: "Завантажити",
+    /* Quicklook window */
+    save: "Зберегти",
+    xlabel_time: "Час (с.)",
+    alert: "Швидкий перегляд ще не повністю завантажений!",
 
     /* Map block */
     zoomIn: "Збільшити",

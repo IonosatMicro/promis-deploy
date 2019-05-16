@@ -52,6 +52,10 @@ export default {
     notFound: "Nothing has been found",
     tooltipQuicklook: "Quick view",
     tooltipDownload: "Download",
+    /* Quicklook window */
+    save: "Save",
+    xlabel_time: "time (sec)",
+    alert: "Quicklook is not completely loaded yet!",
 
     /* Map block */
     zoomIn: "Zoom in",
