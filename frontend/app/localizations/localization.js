@@ -18,6 +18,7 @@ export function setLanguage(lang) {
 
 export function switchLanguage(lang) {
     setCookie("lang", lang, 0);
+    // TODO: make it without refresh using changing state Redux
     document.location.href = '/';
 }
 
@@ -26,13 +27,13 @@ export function getCurrentLanguage() {
 }
 
 function setCookie(cname, cvalue, exdays) {
-    var d = "0";
-    if (exdays != 0) {
-        var d = new Date();
-        d.setTime(d.getTime() + (exdays*24*60*60*1000));
-        d = d.toUTCString();
+    let d = "0";
+    if (exdays !== 0) {
+        let date = new Date();
+        date.setTime(date.getTime() + (exdays*24*60*60*1000));
+        d = date.toUTCString();
     }
-    var expires = "expires="+ d;
+    let expires = "expires="+ d;
     document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
 }
 
@@ -42,11 +43,8 @@ export function getCookie(cname) {
     let ca = document.cookie.split(';');
     for(let i = 0; i <ca.length; i++) {
         let c = ca[i];
-        while (c.charAt(0)===' ') {
-            c = c.substring(1);
-        }
-        if (c.indexOf(name) === 0) {
-            return c.substring(name.length,c.length);
+        if (c.indexOf(name) > -1) {
+            return c.substring(c.indexOf(name) + name.length, c.length);
         }
     }
     return "";
