@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Button, Glyphicon } from 'react-bootstrap';
+import { Form, Button, Glyphicon, ButtonGroup } from 'react-bootstrap';
 import ReactSpinner from 'react-spinjs';
 import Tooltip from './Tooltip';
 import Quicklook from './Quicklook';
@@ -29,8 +29,6 @@ class DataSection extends Component {
         this.downloadResult = this.downloadResult.bind(this);
         this.closeQuicklook = this.closeQuicklook.bind(this);
         this.showQuicklook = this.showQuicklook.bind(this);
-
-        this.fetchData(this.props.mid);
     }
 
     fetchData() {
@@ -71,6 +69,7 @@ class DataSection extends Component {
     }
 
     showQuicklook() {
+        this.fetchData(this.props.mid);
         this.setState(function() {
             return {
                 quicklookStatus: true
@@ -89,8 +88,10 @@ class DataSection extends Component {
     render() {
         return (
             <div>
+            <ButtonGroup>
                 <Tooltip text = 'Quicklook'>
                     <Button onClick = {this.showQuicklook} bsSize = 'small'>
+                        { this.state.quicklookStatus == true && !this.state.data.length ? (<ReactSpinner config = { {scale: 0.65} }/>) : (null) }
                         <Glyphicon glyph = 'stats' />
                     </Button>
                 </Tooltip>
@@ -99,8 +100,9 @@ class DataSection extends Component {
                         <Glyphicon glyph = 'download-alt' />
                     </Button>
                 </Tooltip>
-                { this.state.data.length &&
-                <Quicklook
+            </ButtonGroup>
+                { this.state.data.length ?
+                (<Quicklook
                     data = {this.state.data}
                     title = {this.state.desc}
                     timelapse = {UnixToISO(this.state.time.start) + " – " + UnixToISO(this.state.time.end)}
@@ -108,7 +110,8 @@ class DataSection extends Component {
                     onClose = {this.closeQuicklook}
                     show = {this.state.quicklookStatus}
                     time = {this.state.time}
-                />
+                />)
+                : (null)
                 }
             </div>
         )
