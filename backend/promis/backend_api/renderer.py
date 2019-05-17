@@ -51,3 +51,13 @@ class CSVRenderer(TextRenderer):
 
     def process(self, table, value, units):
         return export.csv_export(table, value, units)
+
+class NetCDFRenderer(renderers.BaseRenderer):
+   media_type = 'application/x-netcdf'
+   format = 'netcdf'
+
+   def render(self, data, media_type=None, renderer_context=None):
+      value = data['value']['name']
+      units = data['value']['units']
+      sampling_frequency = data['sampling_frequency']
+      return export.netcdf_export(data['data'], data['timelapse']['start'], data['timelapse']['end'], data['geo_line'], int(sampling_frequency), value, units)

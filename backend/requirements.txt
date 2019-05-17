@@ -16,3 +16,5 @@ django-filters==0.2.1
 pytz==2017.2                  # for datetime conversions
 django_loaddata_stdin==0.1.0 # for loading test data from the host
 pytest-django==3.1.2
+numpy==1.13.1
+netCDF4==1.4.0

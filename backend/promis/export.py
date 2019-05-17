@@ -1,6 +1,4 @@
 #
-# Copyright 2016 Space Research Institute of NASU and SSAU (Ukraine)
-#
 # Licensed under the EUPL, Version 1.1 or – as soon they
 # will be approved by the European Commission - subsequent
 # versions of the EUPL (the "Licence");
@@ -123,6 +121,80 @@ def csv_export(table, datalabel="Data", dataunits="units"):
         yield ",".join(str(x) for x in itertools.chain([row.date, row.ut, row.lon, row.lat, row.alt], row.data))
 
 
+def netcdf_export(data, start_time, end_time, orbit, sampling_frequency, datalabel="Data", dataunits="units"):
+   
+   from netCDF4 import Dataset, num2date
+   import tempfile
+   import os
+   (fd, filename) = tempfile.mkstemp()
+   dataset = Dataset(filename, 'w', format='NETCDF4')
+   time = dataset.createDimension('time', None)
+
+   import numpy as np
+   timeVar= dataset.createVariable('time', np.int32, ('time'))
+   latitudeVar = dataset.createVariable('latitude', np.float32, ('time'))
+   longtitudeVar = dataset.createVariable('longtitude', np.float32, ('time'))
+   altitudeVar = dataset.createVariable('altitude', np.float32, ('time'))
+
+   if True == isinstance(data[0], numbers.Real):
+      dataVar = dataset.createVariable(datalabel, np.float32, ('time'))
+   else:
+      compound_data = np.dtype([( str(i), np.float64) for i in range(len(data[0]))]) 
+      compound_data_t = dataset.createCompoundType(compound_data,"compoundData")
+      dataVar = dataset.createVariable(datalabel, compound_data_t, ('time'))
+
+   timeMultCoef = 1
+   timeVarUnits = 'seconds'
+   if sampling_frequency == 1024:
+      timeMultCoef = 1000
+      timeVarUnits = 'milliseconds'
+   elif sampling_frequency > 1024:
+      timeMultCoef = 1000000
+      timeVarUnits = 'microseconds'
+
+   #orbit = list(orbit)
+   latitudeVar[:], longtitudeVar[:], altitudeVar[:] = [np.repeat(x, sampling_frequency) for x in zip(*orbit)]
+
+   if True == isinstance(data[0], numbers.Real):
+      dataVar[:] = data
+   else:
+      dataVar[:] = np.array([tuple(x) for x in data], compound_data_t)
+
+   timeVar[:] = np.arange(0, (end_time - start_time)*timeMultCoef, (end_time - start_time) / len(data) * timeMultCoef)
+
+   from datetime import datetime
+   timeVar.units = timeVarUnits + ' since ' + datetime.utcfromtimestamp(start_time).strftime('%Y-%m-%d %H:%M:%S')
+   timeVar.long_name = 'Universal Time'
+   timeVar.calendar = 'gregorian'
+
+   latitudeVar.units = 'degrees'
+   latitudeVar.valid_min = np.amin(latitudeVar)
+   latitudeVar.valid_max = np.amax(latitudeVar)
+   latitudeVar.description = 'The latitude of observation\'s point'
+
+   longtitudeVar.units = 'degrees'
+   longtitudeVar.valid_min = np.amin(longtitudeVar)
+   longtitudeVar.valid_max = np.amax(longtitudeVar)
+   longtitudeVar.description = 'The longtitude of observation\'s point'
+
+   altitudeVar.units = 'km'
+   altitudeVar.valid_min = np.amin(altitudeVar)
+   altitudeVar.valid_max = np.amax(altitudeVar)
+   altitudeVar.description = 'The altitudes of the spacecraft in km'
+
+   dataVar.units = dataunits
+   if True == isinstance(data[0], numbers.Real):
+      dataVar.valid_min = np.amin(dataVar)
+      dataVar.valid_max = np.amax(dataVar)
+
+   dataset.close()
+   
+   f = os.fdopen(fd, 'rb')
+   result = f.read()
+   f.close()
+   os.remove(filename)
+
+   return result
 
 # TODO: remove after completion
 if __name__ == "__main__":
