@@ -10,6 +10,7 @@ import Panel from './Panel';
 import '../styles/search.css';
 
 import { isSelectionElement, Types } from '../constants/Selection';
+import { strings } from "../localizations/localization";
 
 
 class LimitedNumericField extends Component {
@@ -110,18 +111,18 @@ class GeoInputForm extends Component {
             <div>
                 <FormGroup controlId = 'Latitude'>
                     <Col componentClass={ControlLabel} sm={2}>
-                        Latitude
+                        {strings.latitude}
                     </Col>
                     <Col sm={5}>
                         <InputGroup>
-                            <InputGroup.Addon>From</InputGroup.Addon>
+                            <InputGroup.Addon>{strings.from}</InputGroup.Addon>
                             <LimitedNumericField limit = {90} onChange = {this.latFromChange} value = {opts.rectangle.begin[0]} />
                             <InputGroup.Addon>&deg;</InputGroup.Addon>
                         </InputGroup>
                     </Col>
                     <Col sm={5}>
                         <InputGroup>
-                            <InputGroup.Addon>To</InputGroup.Addon>
+                            <InputGroup.Addon>{strings.to}</InputGroup.Addon>
                             <LimitedNumericField limit = {90} onChange = {this.latToChange} value = {opts.rectangle.end[0]} />
                             <InputGroup.Addon>&deg;</InputGroup.Addon>
                         </InputGroup>
@@ -129,18 +130,18 @@ class GeoInputForm extends Component {
                 </FormGroup>
                 <FormGroup controlId = 'Longitude'>
                     <Col componentClass={ControlLabel} sm={2}>
-                        Longitude
+                        {strings.longitude}
                     </Col>
                     <Col sm={5}>
                         <InputGroup>
-                            <InputGroup.Addon>From</InputGroup.Addon>
+                            <InputGroup.Addon>{strings.from}</InputGroup.Addon>
                             <LimitedNumericField limit = {180} onChange = {this.lngFromChange} value = {opts.rectangle.begin[1]} />
                             <InputGroup.Addon>&deg;</InputGroup.Addon>
                         </InputGroup>
                     </Col>
                     <Col sm={5}>
                         <InputGroup>
-                            <InputGroup.Addon>To</InputGroup.Addon>
+                            <InputGroup.Addon>{strings.to}</InputGroup.Addon>
                             <LimitedNumericField limit = {180} onChange = {this.lngToChange} value = {opts.rectangle.end[1]} />
                             <InputGroup.Addon>&deg;</InputGroup.Addon>
                         </InputGroup>
@@ -177,18 +178,18 @@ class SelectionElements extends Component {
 
         switch(active.type) {
             case Types.Rect:
-                tableData.push(new Array('From', active.data[0][0], active.data[0][1]));
-                tableData.push(new Array('To', active.data[1][0], active.data[1][1]));
+                tableData.push(new Array(strings.from, active.data[0][0], active.data[0][1]));
+                tableData.push(new Array(strings.to, active.data[1][0], active.data[1][1]));
             break;
 
             case Types.Circle:
-                tableData.push(new Array('Center', active.data[0][0], active.data[0][1]));
-                tableData.push(new Array('Radius', Math.round(active.data[1])));
+                tableData.push(new Array(strings.circleCenter, active.data[0][0], active.data[0][1]));
+                tableData.push(new Array(strings.circleRadius, Math.round(active.data[1])));
             break;
 
             case Types.Polygon:
                 active.data.forEach(function(point, index) {
-                    tableData.push(new Array('Point #' + index, point[0], point[1]));
+                    tableData.push(new Array(strings.polygonPoint+' #' + index, point[0], point[1]));
                 });
             break;
         }
@@ -199,8 +200,8 @@ class SelectionElements extends Component {
                     <thead>
                         <tr>
                             <th></th>
-                            <th>Latitude</th>
-                            <th>Longitude</th>
+                            <th>{strings.latitude}</th>
+                            <th>{strings.longitude}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -260,7 +261,7 @@ class MapSelection extends Component {
         this.empty = -1;
         this.state = {
             editableIndex: this.empty
-        }
+        };
 
         this.updateEditable = this.updateEditable.bind(this);
     }
@@ -280,12 +281,17 @@ class MapSelection extends Component {
     render() {
         let selection = this.props.selection;
         let current = this.props.selection.elements[this.props.selection.current];
+        let displayedShape = {
+            'Rectangle': strings.rectangle,
+            'Circle': strings.circle,
+            'Polygon': strings.polygon
+        };
         let actions = this.props.actions;
         let preview = this.props.preview;
 
         if(selection.active) {
             return (
-                <InfoBox>{current.type}, next point (lat, lng): {preview[0]}, {preview[1]}</InfoBox>
+                <InfoBox>{displayedShape[current.type]}, {strings.nextPoint} (lat, lng): {preview[0]}, {preview[1]}</InfoBox>
             )
         } else {
             if(isSelectionElement(selection.elements[0]) && selection.elements[0].data.length > 0)
@@ -298,19 +304,19 @@ class MapSelection extends Component {
                             defaultValue = {this.empty}
                             placeholder = 'select'
                         >
-                            <option key = {0} value = {this.empty}>Please select element to edit</option>
+                            <option key = {0} value = {this.empty}>{strings.pleaseSelectToEdit}</option>
                             { selection.elements.map(function(collection, rootIndex) {
                                 let i = rootIndex + 1;
 
                                 return (
                                     <option key = {i} value = {rootIndex}>
-                                        { '#' + String(i) + ' : ' + String(collection.type) }
+                                        { '#' + String(i) + ' : ' + displayedShape[collection.type] }
                                     </option>
                                 )
                             }) }
                         </FormControl>
                         <br />
-                        { (this.state.editableIndex != this.empty) &&
+                        { (this.state.editableIndex !== this.empty) &&
                             <SelectionElements
                                 actions = {actions}
                                 rootIndex = {this.state.editableIndex}
@@ -321,7 +327,7 @@ class MapSelection extends Component {
                 );
             } else {
                 return (
-                    <InfoBox>Selection is empty</InfoBox>
+                    <InfoBox>{strings.emptySelection}</InfoBox>
                 );
             }
         }
@@ -383,11 +389,11 @@ export default class TimeAndPositionInput extends Component {
         let prev = this.state.preview;
 
         return (
-            <Panel title = 'Time and position'>
+            <Panel title = {strings.timePositionTitle}>
                 <Form horizontal>
                     <FormGroup controlId = 'TimeAndDate'>
                         <Col componentClass={ControlLabel} sm={2}>
-                            Interval
+                            {strings.timeInterval}
                         </Col>
                         <Col sm={5}>
                             <DateTime dateTime = {String(opts.timelapse.begin * 1000)} inputFormat = "YYYY-MM-DD HH:MM:SS" onChange = {this.dateFromChange} />
@@ -398,27 +404,27 @@ export default class TimeAndPositionInput extends Component {
                     </FormGroup>
                     <FormGroup controlId = 'Altitude'>
                         <Col componentClass={ControlLabel} sm={2}>
-                            Altitude
+                            {strings.altitude}
                         </Col>
                         <Col sm={5}>
                             <InputGroup>
-                                <InputGroup.Addon>From</InputGroup.Addon>
+                                <InputGroup.Addon>{strings.from}</InputGroup.Addon>
                                 <FormControl onChange = {this.altFromChange} value = {opts.altitude.begin} type="number" disabled />
-                                <InputGroup.Addon>km</InputGroup.Addon>
+                                <InputGroup.Addon>{strings.km}</InputGroup.Addon>
                             </InputGroup>
                         </Col>
                         <Col sm={5}>
                             <InputGroup>
-                                <InputGroup.Addon>To</InputGroup.Addon>
+                                <InputGroup.Addon>{strings.to}</InputGroup.Addon>
                                 <FormControl onChange = {this.altToChange} value = {opts.altitude.end} type="number" disabled />
-                                <InputGroup.Addon>km</InputGroup.Addon>
+                                <InputGroup.Addon>{strings.km}</InputGroup.Addon>
                             </InputGroup>
                         </Col>
                     </FormGroup>
                     <GeoInputForm actions = {this.actions} options = {opts} />
                     <FormGroup controlId = 'MapSelection'>
                         <Col componentClass = {ControlLabel} sm = {2}>
-                            Selection
+                            {strings.selectionOnMap}
                         </Col>
                         <Col sm = {10}>
                             <MapSelection preview = {prev} selection = {this.props.selection} actions = {this.props.selectionActions} />

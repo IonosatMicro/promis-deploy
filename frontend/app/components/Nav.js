@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Nav, Navbar, NavItem, NavDropdown, MenuItem, Button, ButtonToolbar } from 'react-bootstrap';
+import { strings, switchLanguage, getCurrentLanguage } from "../localizations/localization";
 
 import LoginWindow from './LoginWindow';
 import RegisterWindow from './RegisterWindow';
@@ -23,7 +24,8 @@ export default class PromisNavbar extends Component {
 
         this.state = { 
             login: false,
-            register: false
+            register: false,
+            language: getCurrentLanguage()
         }
 
         /*
@@ -68,19 +70,19 @@ export default class PromisNavbar extends Component {
                     <Nav pullRight>
                         <ExternalNavItem href="http://ionosat-micro.ikd.kiev.ua/" target="_blank">
                                 <img src="/img/ionosat-41x41.png" style={{height: "41px", marginTop: -7}} />
-                                <b>Ionosat-Micro</b>
+                                <b>{strings.ionosatSite}</b>
                         </ExternalNavItem>
                         <NavItem>
                             <div></div>
                         { data.user ? (
                         <div>
-                            <span className = 'welcome'>Hello, {data.user.name} </span>
-                            <Button onClick = {actions.logout} bsStyle="warning">Sign out</Button>
+                            <span className = 'welcome'>{strings.hello} {data.user.name} </span>
+                            <Button onClick = {actions.logout} bsStyle="warning">{strings.sighOut}</Button>
                         </div>
                         ) : (
                         <ButtonToolbar>
-                            <Button onClick = {this.toggleWindow.bind(null, 'login', true)} bsStyle="success">Sign in</Button>
-                            <Button onClick = {this.toggleWindow.bind(null, 'register', true)} bsStyle="primary">Register</Button>
+                            <Button onClick = {this.toggleWindow.bind(null, 'login', true)} bsStyle="success">{strings.signIn}</Button>
+                            <Button onClick = {this.toggleWindow.bind(null, 'register', true)} bsStyle="primary">{strings.register}</Button>
                             <LoginWindow
                                 onLogin = {actions.login}
                                 userData = {data}
@@ -94,6 +96,10 @@ export default class PromisNavbar extends Component {
                             />
                         </ButtonToolbar>
                         ) }
+                        </NavItem>
+                        <NavItem>
+                            <Button onClick = { () => switchLanguage("en") } disabled = {this.state.language === "en"}>EN</Button>
+                            <Button onClick = { () => switchLanguage("uk") } disabled = {this.state.language === "uk"}>UA</Button>
                         </NavItem>
                     </Nav>
                 </Navbar.Collapse>

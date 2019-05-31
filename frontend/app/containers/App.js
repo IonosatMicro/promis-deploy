@@ -19,6 +19,7 @@ import TimeAndPositionPanel from '../components/TimeAndPosition';
 import SearchForm from '../components/SearchForm.js';
 import SearchResults from '../components/SearchResults.js';
 
+import {strings, getCookie, getInterfaceLanguage, setLanguage } from '../localizations/localization'
 import EventEmitter from 'event-emitter';
 
 class App extends Component {
@@ -31,6 +32,14 @@ class App extends Component {
         this.updateDimensions = this.updateDimensions.bind(this);
 
         this.props.userActions.profile();
+
+        /* localisation settings */
+        let language = getCookie("lang") || getInterfaceLanguage() || "en";
+        if (language.toLowerCase().slice(0, 2) === "ru"){
+            setLanguage('uk');
+        } else {
+            setLanguage(language);
+        }
     }
 
     componentDidMount() {
@@ -48,7 +57,7 @@ class App extends Component {
         var dims = {
             width: window.innerWidth,
             height: window.innerHeight
-        }
+        };
 
         this.props.mapActions.toggleDims(dims);
     }
@@ -85,7 +94,7 @@ class App extends Component {
                     </Col>
                     <Col md={6} sm={12}>
                         <Row>
-                            <Panel title = 'Search'>
+                            <Panel title = {strings.searchTitle}>
                                 <SearchForm
                                     storage = {this.props.storage}        /* generic storage for api data */
                                     options = {this.props.searchOptions}   /* general options, datetime, etc */
@@ -99,7 +108,7 @@ class App extends Component {
                             </Panel>
                         </Row>
                         <Row>
-                            <Panel title = 'Search results'>
+                            <Panel title = {strings.searchResultTitle}>
                                 <SearchResults
                                     results = {this.props.storage.measurements}
                                     options = {this.props.searchOptions}

@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Col, Button, FormGroup, Checkbox } from 'react-bootstrap';
 import Toggle from 'react-bootstrap-toggle';
 
+import { strings } from "../localizations/localization";
+
 import { getById, isActiveState } from '../constants/REST';
 
 export default class ChannelParameterPicker extends Component {
@@ -34,8 +36,8 @@ export default class ChannelParameterPicker extends Component {
         return (
             <div>
                 <Toggle
-                    on = {<span>Level 1</span>}
-                    off = {<span>Level 2</span>}
+                    on = {<span>{strings.level} 1</span>}
+                    off = {<span>{strings.level} 2</span>}
                     active = {this.props.options.useChannels}
                     onClick = {this.toggleChannels}
                     disabled = {! this.props.active}

@@ -12,6 +12,8 @@ import '../styles/map.css';
 
 import { fixedPoint } from '../constants/Selection';
 
+import { strings } from "../localizations/localization";
+
 export default class UniversalMap extends Component {
     constructor(props) {
         super(props);
@@ -117,7 +119,7 @@ export default class UniversalMap extends Component {
             </div> ) : null ;
 
         return (
-            <Panel disableDrag = {options.full} title = 'Map' className = 'mapPanel'>
+            <Panel disableDrag = {options.full} title = {strings.mapTitle} className = 'mapPanel'>
                 <div style = {mapStyles}>
                     <div className = 'mapContainer'>
                         <MapZoomBox onChange = {map.changeZoom} defaultZoom = {options.defaultZoom} />
