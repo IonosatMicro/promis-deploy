@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Row } from 'react-bootstrap';
+import { Row, Col } from 'react-bootstrap';
 
 import Nav from '../components/Nav';
 import Panel from '../components/Panel';
@@ -71,48 +71,56 @@ class App extends Component {
             <div>
                 <Nav actions = {this.props.userActions} userData = {this.props.userData} />
                 <div className="main-part">
-                    <Row>
-                        <TimeAndPositionPanel
-                            ee = {this.ee}
-                            options = {this.props.searchOptions}
-                            selection = {this.props.selection}
-                            selectionActions = {this.props.selectionActions}
-                            searchActions = {this.props.searchActions}
-                        />
-                        <Panel title = {strings.searchTitle}>
-                            <SearchForm
-                                storage = {this.props.storage}        /* generic storage for api data */
-                                options = {this.props.searchOptions}   /* general options, datetime, etc */
-                                mapped  = {this.props.mapActions}     /* for geoline management */
-                                actions = {this.props.RESTActions}     /* api-related actions */
-                                search = {this.props.searchActions}     /* for setting time back */
-                                selected = {this.props.selectionActions}    /* for flushing selection */
-                                selection = {this.props.selection}    /* selection array */
-                                results = {this.props.storage.measurements}
-                            />
-                        </Panel>
-                    </Row>
-                    <Row>
-                        <MapPanel
-                            ee = {this.ee}
-                            selection = {this.props.selection}
-                            options = {this.props.mapOptions}
-                            searchOptions = {this.props.searchOptions}
-                            mapActions = {this.props.mapActions}
-                            selectionActions = {this.props.selectionActions}
-                        />
-                        <Panel title = {strings.searchResultTitle}>
-                            <SearchResults
-                                results = {this.props.storage.measurements}
+                    <Col md={6} sm={12}>
+                        <Row>
+                            <TimeAndPositionPanel
+                                ee = {this.ee}
                                 options = {this.props.searchOptions}
-                                storage = {this.props.storage}
-                                actions = {this.props.RESTActions}
-                                mapped  = {this.props.mapActions}     /* for geoline management */
-                                /* TODO: remove temporary code */
-                                map     = {this.props.mapOptions}
+                                selection = {this.props.selection}
+                                selectionActions = {this.props.selectionActions}
+                                searchActions = {this.props.searchActions}
                             />
-                        </Panel>
-                    </Row>
+                        </Row>
+                        <Row>
+                            <MapPanel
+                                ee = {this.ee}
+                                selection = {this.props.selection}
+                                options = {this.props.mapOptions}
+                                searchOptions = {this.props.searchOptions}
+                                mapActions = {this.props.mapActions}
+                                selectionActions = {this.props.selectionActions}
+                            />
+                        </Row>
+                    </Col>
+                    <Col md={6} sm={12}>
+                        <Row>
+                            <Panel title = {strings.searchTitle}>
+                                <SearchForm
+                                    storage = {this.props.storage}        /* generic storage for api data */
+                                    options = {this.props.searchOptions}   /* general options, datetime, etc */
+                                    mapped  = {this.props.mapActions}     /* for geoline management */
+                                    actions = {this.props.RESTActions}     /* api-related actions */
+                                    search = {this.props.searchActions}     /* for setting time back */
+                                    selected = {this.props.selectionActions}    /* for flushing selection */
+                                    selection = {this.props.selection}    /* selection array */
+                                    results = {this.props.storage.measurements}
+                                />
+                            </Panel>
+                        </Row>
+                        <Row>
+                            <Panel title = {strings.searchResultTitle}>
+                                <SearchResults
+                                    results = {this.props.storage.measurements}
+                                    options = {this.props.searchOptions}
+                                    storage = {this.props.storage}
+                                    actions = {this.props.RESTActions}
+                                    mapped  = {this.props.mapActions}     /* for geoline management */
+                                    /* TODO: remove temporary code */
+                                    map     = {this.props.mapOptions}
+                                />
+                            </Panel>
+                        </Row>
+                    </Col>
                 </div>
                 <Footer/>
             </div>
