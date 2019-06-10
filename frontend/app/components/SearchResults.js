@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { Col, Form, Button, FormControl, Glyphicon } from 'react-bootstrap';
+import { Col, Form, Button, FormControl, ButtonGroup, Glyphicon } from 'react-bootstrap';
 import ReactSpinner from 'react-spinjs';
 import Tooltip from './Tooltip';
 import Quicklook from './Quicklook';
+import { strings, getCurrentLanguage } from "../localizations/localization";
 
 /* TODO: do you need these shared anywhere? */
 function UnixToISO(unix_ts) {
@@ -29,18 +30,17 @@ class DataSection extends Component {
         this.downloadResult = this.downloadResult.bind(this);
         this.closeQuicklook = this.closeQuicklook.bind(this);
         this.showQuicklook = this.showQuicklook.bind(this);
-
-        this.fetchData(this.props.mid);
     }
 
     fetchData() {
+        let lang = getCurrentLanguage();
         let mid = this.props.mid;
 
         if(mid) {
             let src  = '&source=' + this.props.source;
             let time = '&time_start=' + this.props.timelapse.start;
             time    += '&time_end=' + this.props.timelapse.end;
-            this.props.actions.getSingle('/en/api/download/' + mid + '/quicklook?points=100' + src + time, {}, function(resp) {
+            this.props.actions.getSingle('/' + lang + '/api/download/' + mid + '/quicklook?points=100' + src + time, {}, function(resp) {
                 this.setState(function() {
                     return {
                         main: resp.source.name,
@@ -57,6 +57,7 @@ class DataSection extends Component {
 
     /* only ascii for now */
     downloadResult() {
+        let lang = getCurrentLanguage();
         if(this.props.mid) {
             let a = document.createElement('a');
             let src  = '&source=' + this.props.source;
@@ -64,13 +65,14 @@ class DataSection extends Component {
             time    += '&time_end=' + this.props.timelapse.end;
 
             a.download = this.state.main + '.' + this.props.fileformat;
-            a.href = '/en/api/download/' + this.props.mid + '/data/?format=' + this.props.fileformat + src + time;
+            a.href = '/' + lang + '/api/download/' + this.props.mid + '/data/?format=' + this.props.fileformat + src + time;
             a.click();
         }
         // http://localhost:8081/en/api/download/29/data/?format=ascii&source=parameter
     }
 
     showQuicklook() {
+        this.fetchData(this.props.mid);
         this.setState(function() {
             return {
                 quicklookStatus: true
@@ -89,18 +91,21 @@ class DataSection extends Component {
     render() {
         return (
             <div>
-                <Tooltip text = 'Quicklook'>
+            <ButtonGroup>
+                <Tooltip text = {strings.tooltipQuicklook}>
                     <Button onClick = {this.showQuicklook} bsSize = 'small'>
+                        { this.state.quicklookStatus == true && !this.state.data.length ? (<ReactSpinner config = { {scale: 0.65} }/>) : (null) }
                         <Glyphicon glyph = 'stats' />
                     </Button>
                 </Tooltip>
-                <Tooltip text = 'Download'>
+                <Tooltip text = {strings.tooltipDownload}>
                     <Button onClick = {this.downloadResult} bsSize = 'small'>
                         <Glyphicon glyph = 'download-alt' />
                     </Button>
                 </Tooltip>
-                { this.state.data.length &&
-                <Quicklook
+            </ButtonGroup>
+                { this.state.data.length ?
+                (<Quicklook
                     data = {this.state.data}
                     title = {this.state.desc}
                     timelapse = {UnixToISO(this.state.time.start) + " – " + UnixToISO(this.state.time.end)}
@@ -108,7 +113,8 @@ class DataSection extends Component {
                     onClose = {this.closeQuicklook}
                     show = {this.state.quicklookStatus}
                     time = {this.state.time}
-                />
+                />)
+                : (null)
                 }
             </div>
         )
@@ -188,7 +194,7 @@ export default class SearchResults extends Component {
                     <div>
                         <Form horizontal>
                             <Col sm = {8}>
-                                Found {results.data.length} result(s)
+                                {strings.found} {results.data.length} {strings.results}
                             </Col>
                             <Col sm = {4}>
                                 <FormControl 
@@ -205,10 +211,10 @@ export default class SearchResults extends Component {
                     <table className = 'table table-hover'>
                         <thead>
                             <tr>
-                                <th>Date from</th>
-                                <th>{ channels ? 'Channel' : 'Parameter' }</th>
-                                <th>Data size (approx)</th>
-                                <th>Actions</th>
+                                <th>{strings.datetimeFrom}</th>
+                                <th>{ channels ? strings.channel : strings.parameter }</th>
+                                <th>{strings.dataSize}</th>
+                                <th>{strings.actions}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -227,7 +233,7 @@ export default class SearchResults extends Component {
                                     return (channels ? (d.url === measurement.channel) : (d.url === measurement.parameter));
                                 });
 
-                                let size = 'size unknown';
+                                let size = strings.sizeUnknown;
 
                                 /* each measurement may have multiple parts defined by the selection array */
                                 return measurement.selection.map(function(selection, index) {
@@ -256,7 +262,7 @@ export default class SearchResults extends Component {
                 )
             } else {
                 return (
-                    <span>Nothing has been found</span>
+                    <span>{strings.notFound}</span>
                 )
             }
         }

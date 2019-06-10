@@ -1,3 +1,5 @@
+import { getCurrentLanguage } from '../localizations/localization';
+
 var AUTH = {};
 
 AUTH.setHost = function(h) {
@@ -5,6 +7,7 @@ AUTH.setHost = function(h) {
 }
 
 AUTH.register = function(login, pass, email) {
+    let lang = getCurrentLanguage();
     var first = '', last = '';
 
     function getLetter() {
@@ -17,15 +20,16 @@ AUTH.register = function(login, pass, email) {
         last += String.fromCharCode(getLetter() + (i == 0 ? 65 : 97));
     }
 
-    $.post('/en/user/', { username : login, password : pass, first_name : first, last_name : last, email : email }).
+    $.post('/' + lang + '/user/', { username : login, password : pass, first_name : first, last_name : last, email : email }).
         done(function() { PROMIS.alertSuccess('you have been registered. Please use button on the top to login', '#registerModal .modal-body'); }).
         fail(function(xhr, status, error) { PROMIS.alertError('something went wrong. Please try registering later', '#registerModal .modal-body'); });
 };
 
 AUTH.login = function(user, pass) {
+    let lang = getCurrentLanguage();
     $('#loginModal .modal-body').find('.alert').remove();
     
-    $.post('/en/api-auth/login/', { username : user, password : pass, csrfmiddlewaretoken : Cookies.get('csrftoken') }).
+    $.post('/' + lang + '/api-auth/login/', { username : user, password : pass, csrfmiddlewaretoken : Cookies.get('csrftoken') }).
         done(function(res) { var x = $(res).find('.text-error'); if(x.length) { PROMIS.alertError($(x).text(), '#loginModal .modal-body'); } }).
         fail(function(xhr, status, error) { window.location = '/' });
 }
@@ -51,6 +55,7 @@ function authSetup(logged) {
 }
 
 $(document).ready(function(){
+    let lang = getCurrentLanguage();
     $('.user-logout').click(function(){
         AUTH.logout();
     });
@@ -64,7 +69,7 @@ $(document).ready(function(){
     });
 
     $.ajax({
-        url: '/en/user',
+        url: '/' + lang + '/user',
         type: 'GET',
         success: function() {
             /* logged in */
