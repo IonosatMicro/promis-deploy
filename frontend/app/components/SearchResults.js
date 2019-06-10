@@ -63,8 +63,8 @@ class DataSection extends Component {
             let time = '&time_start=' + this.props.timelapse.start;
             time    += '&time_end=' + this.props.timelapse.end;
 
-            a.download = this.state.main + '.txt';
-            a.href = '/en/api/download/' + this.props.mid + '/data/?format=txt' + src + time;
+            a.download = this.state.main + '.' + this.props.fileformat;
+            a.href = '/en/api/download/' + this.props.mid + '/data/?format=' + this.props.fileformat + src + time;
             a.click();
         }
         // http://localhost:8081/en/api/download/29/data/?format=ascii&source=parameter
@@ -118,6 +118,16 @@ class DataSection extends Component {
 export default class SearchResults extends Component {
     constructor(props) {
         super(props);
+
+        this.state = {
+            fileformat: 'txt'
+        };
+
+    }
+
+    changeFileFormat(event) {
+        let fileFormat = event.target.value;
+        this.setState({fileformat: fileFormat})
     }
 
     componentDidUpdate() {
@@ -181,7 +191,11 @@ export default class SearchResults extends Component {
                                 Found {results.data.length} result(s)
                             </Col>
                             <Col sm = {4}>
-                                <FormControl componentClass="select" placeholder="select" style={{width: 50 + '%', float: 'right'}}>
+                                <FormControl 
+                                componentClass="select" 
+                                placeholder="select" 
+                                style={{width: 50 + '%', float: 'right'}} 
+                                onChange={this.changeFileFormat.bind(this)}>
                                     <option value="txt">text</option>
                                     <option value="csv">csv</option>
                                     <option value="nc">netcdf</option>
@@ -228,6 +242,7 @@ export default class SearchResults extends Component {
                                                     actions = {this.props.actions}
                                                     source = {(channels ? 'channel' : 'parameter')}
                                                     timelapse = { selection }
+                                                    fileformat = {this.state.fileformat}
                                                 />
                                             </td>
                                         </tr>
