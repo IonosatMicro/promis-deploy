@@ -120,7 +120,10 @@ def csv_export(table, datalabel="Data", dataunits="units"):
     """
     yield '"{}","{}","{}","{}","{}","{}"'.format("Date (YYYYDDD)", "UT (ms)", "Longitude (deg)", "Latitude (deg)", "Altitude (km)", datalabel + "(%s)" % dataunits)
     for row in table:
-        yield ",".join(str(x) for x in itertools.chain([row.date, row.ut, row.lon, row.lat, row.alt], row.data))
+        if True == isinstance(row.data, numbers.Real):
+            yield ",".join(str(x) for x in [row.date, row.ut, row.lon, row.lat, row.alt, row.data])
+        else:
+            yield ",".join(str(x) for x in itertools.chain([row.date, row.ut, row.lon, row.lat, row.alt], row.data))
 
 
 
