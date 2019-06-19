@@ -5,6 +5,7 @@ import { Button } from 'react-bootstrap';
 import { saveAs } from 'file-saver';
 import { dataURLToBlob } from 'blob-util';
 import Modal from './Modal';
+import { strings } from "../localizations/localization";
 
 export default class Quicklook extends Component {
     constructor(props) {
@@ -85,7 +86,7 @@ export default class Quicklook extends Component {
 
             /* set image data and trigger callback when done */
             image.src = imageData;
-        } else window.alert('Quicklook is not completely loaded yet!');
+        } else window.alert(strings.alert);
     }
 
     formatData(data, time) {
@@ -137,7 +138,7 @@ export default class Quicklook extends Component {
                     gridVerical = {this.props.grid}
                 />
                 <Button onClick = {this.saveMe}>
-                    Save
+                    {strings.save}
                 </Button>
             </Modal>
         );
@@ -154,6 +155,6 @@ Quicklook.defaultProps = {
     graphHeight: 480,
     watermarkText: 'https://promis.ikd.kiev.ua',
     title: 'Quicklook description',
-    xlabel: 'time (sec)', /* TODO: localisation */
+    xlabel: strings.xlabel_time, /* TODO: Figure out: is it always time in seconds? */
     ylabel: 'y axis label'
-}
+};

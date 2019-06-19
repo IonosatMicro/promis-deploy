@@ -7,6 +7,8 @@ import GridButton from './GridButton';
 import { Types } from '../constants/Selection';
 import { GridTypes } from '../constants/Map';
 
+import { strings } from "../localizations/localization";
+
 export default class MapToolBox extends Component {
     constructor(props) {
         super(props);
@@ -106,33 +108,33 @@ export default class MapToolBox extends Component {
         return (
             <div className = 'mapToolBox'>
                 <ButtonGroup className = 'innerToolBox'>
-                    <ToolboxButton onClick = {this.toggleFlat} active = {! opts.flat} icon = 'globe' help = {'Switch to ' + (opts.flat ? '3D' : '2D')} />
+                    <ToolboxButton onClick = {this.toggleFlat} active = {! opts.flat} icon = 'globe' help = {strings.tooltipSwitchTo + (opts.flat ? '3D' : '2D')} />
                     { opts.flat ? ( [
-                        <ToolboxButton key = {1} onClick = {this.toggleRect.bind(null, ! opts.rect)} active = {opts.rect} icon = 'unchecked' help = 'Select rectangular area' />,
+                        <ToolboxButton key = {1} onClick = {this.toggleRect.bind(null, ! opts.rect)} active = {opts.rect} icon = 'unchecked' help = {strings.tooltipSelectRectangle} />,
                     ]) : ([
-                        <ToolboxButton key = {1} onClick = {this.togglePoly.bind(null, ! opts.poly)} active = {opts.poly} icon = 'screenshot' help = 'Select polygonal area' />
+                        <ToolboxButton key = {1} onClick = {this.togglePoly.bind(null, ! opts.poly)} active = {opts.poly} icon = 'screenshot' help = {strings.tooltipSelectPolygon} />
                     ]) }
-                    <ToolboxButton key = {2} onClick = {this.toggleRound.bind(null, ! opts.round)} active = {opts.round} icon = 'record' help = 'Select circular area' />
+                    <ToolboxButton key = {2} onClick = {this.toggleRound.bind(null, ! opts.round)} active = {opts.round} icon = 'record' help = {strings.tooltipSelectCircle} />
 
                     <GridButton
                         grid = {opts.grid[GridTypes.Geographic]}
                         actions = {this.actions}
                         icon = 'th'
-                        help = 'Toggle geographic grid' />
+                        help = {strings.toggleGeoGrid} />
                     <GridButton
                         grid = {opts.grid[GridTypes.Inclination]}
                         actions = {this.actions}
                         icon = 'dashboard'
-                        help = 'Toggle magnetic inclination grid' />
+                        help = {strings.toggleMagInclGrid} />
                     <GridButton
                         grid = {opts.grid[GridTypes.Intensity]}
                         actions = {this.actions}
                         icon = 'magnet'
-                        help = 'Toggle magnetic intensity grid' />
+                        help = {strings.toggleMagIntensityGrid} />
 
-                    <ToolboxButton onClick = {this.toggleFull} icon = {opts.full ? 'resize-small' : 'resize-full'} help = {opts.full ? 'Minimize' : 'Fullscreen'} />
+                    <ToolboxButton onClick = {this.toggleFull} icon = {opts.full ? 'resize-small' : 'resize-full'} help = {opts.full ? strings.minimizeMap : strings.fullScreenMap} />
                     { this.props.hasSelection ? ([
-                        <ToolboxButton onClick = {this.toggleClean} key = {2} icon = 'ban-circle' style = 'danger' help = 'Clear all selection' />
+                        <ToolboxButton onClick = {this.toggleClean} key = {2} icon = 'ban-circle' style = 'danger' help = {strings.clearMap} />
                     ]) : ([]) }
                 </ButtonGroup>
             </div>

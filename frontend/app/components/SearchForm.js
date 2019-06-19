@@ -9,6 +9,7 @@ import ChannelParameterPicker from './ChannelParameterPicker';
 
 import { isActiveState } from '../constants/REST';
 import { Types, selectionToWKT, latlngRectangle } from '../constants/Selection';
+import { strings } from "../localizations/localization";
 
 import '../styles/search.css';
 
@@ -78,7 +79,7 @@ export default class SearchForm extends Component {
         if(measurements) {
             ResetControl = (
                 <Button onClick = {this.resetSearch}>
-                    <Glyphicon glyph = 'trash' /> Reset search
+                    <Glyphicon glyph = 'trash' /> {strings.resetSearchButton}
                 </Button>
             );
         }
@@ -89,7 +90,7 @@ export default class SearchForm extends Component {
                 <Form horizontal>
                     <FormGroup controlId = 'Projects'>
                         <Col componentClass = {ControlLabel} sm = {3}>
-                            Project
+                            {strings.project}
                         </Col>
                         <Col sm = {9}>
                             <ProjectSelector
@@ -103,7 +104,7 @@ export default class SearchForm extends Component {
                     </FormGroup>
                     <FormGroup controlId = 'DataSource'>
                         <Col componentClass = {ControlLabel} sm = {3}>
-                            Measurements
+                            {strings.parametersChanells}
                         </Col>
                         <Col sm = {9}>
                             <ChannelParameterPicker
@@ -118,7 +119,7 @@ export default class SearchForm extends Component {
                     <FormGroup>
                         <Col sm = {6}>
                             <Button onClick = {this.getData}>
-                                <Glyphicon glyph = 'search' />Search
+                                <Glyphicon glyph = 'search' />{strings.searchButton}
                             </Button>
                         </Col>
                         <Col sm = {6}>

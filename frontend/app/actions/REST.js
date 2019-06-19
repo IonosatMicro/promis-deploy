@@ -1,4 +1,5 @@
 import { Enum, RESTState } from '../constants/REST';
+import { getCurrentLanguage } from '../localizations/localization';
 import axios from 'axios';
 
 function makeQuery(dispatch, name, path, params) {
@@ -63,13 +64,15 @@ export default {
 
     getProjects : function() {
         return function(dispatch) {
-            makeQuery(dispatch, 'Projects', '/en/api/projects/');
+            let lang = getCurrentLanguage();
+            makeQuery(dispatch, 'Projects', '/' + lang + '/api/projects/');
         }
     },
 
     getSessions : function(project, geo, begin, end) {
         return function(dispatch) {
-            makeQuery(dispatch, 'Sessions', '/en/api/sessions/', {
+            let lang = getCurrentLanguage();
+            makeQuery(dispatch, 'Sessions', '/' + lang + '/api/sessions/', {
                 params: {
                     space_project: project,
                     time_begin: begin,
@@ -82,7 +85,8 @@ export default {
 
     getChannels : function(project) {
         return function(dispatch) {
-            makeQuery(dispatch, 'Channels', '/en/api/channels/', {
+            let lang = getCurrentLanguage();
+            makeQuery(dispatch, 'Channels', '/' + lang + '/api/channels/', {
                 params: {
                     space_project: project
                 }
@@ -95,7 +99,8 @@ export default {
     /*
     getParameters : function() {
         return function(dispatch) {
-            makeQuery(dispatch, 'Parameters', '/en/api/parameters');
+            let lang = getCurrentLanguage();
+            makeQuery(dispatch, 'Parameters', '/' + lang + '/api/parameters');
         }
     },*/
 
@@ -103,7 +108,8 @@ export default {
     /*
     getMeasurements : function() {
         return function(dispatch) {
-            makeQuery(dispatch, 'Measurements', '/en/api/measurements', {
+            let lang = getCurrentLanguage();
+            makeQuery(dispatch, 'Measurements', '/' + lang + '/api/measurements', {
                 params: {
 
                 }
@@ -116,6 +122,8 @@ export default {
     /* used until backend fix */
     getParameters : function(project) {
         return function(dispatch) {
+            let lang = getCurrentLanguage();
+
             dispatch({
                 type: Enum['Parameters' + RESTState.pending],
                 payload: true
@@ -124,14 +132,14 @@ export default {
             let promises = new Array();
             let parameters = new Array();
 
-            axios.get('/en/api/channels', {
+            axios.get('/' + lang + '/api/channels', {
                 params: {
                     space_project: project
                 }
             }).then(function(response) {
                 if(Array.isArray(response.data.results) && response.data.results.length > 0) {
                     response.data.results.forEach(function(channel) {
-                        promises.push(axios.get('/en/api/parameters', {
+                        promises.push(axios.get('/' + lang + '/api/parameters', {
                             params: {
                                 channel: channel.id,
                                 space_project: project
@@ -164,6 +172,8 @@ export default {
     // TODO: schedule removal
     getMeasurements : function(sessions, usechannels, data) {
         return function(dispatch) {
+            let lang = getCurrentLanguage();
+
             dispatch({
                 type: Enum['Measurements' + RESTState.pending],
                 payload: true
@@ -174,7 +184,7 @@ export default {
 
             sessions.forEach(function(session) {
                 data.forEach(function(param) {
-                    promises.push(axios.get('/en/api/measurements', {
+                    promises.push(axios.get('/' + lang + '/api/measurements', {
                         params: {
                             /* warn: needs proper backend filter */
                             channel: 0, /* << filter still works */
@@ -207,11 +217,13 @@ export default {
 
     /* TODO: rename to getMeasurements afterwards */
     getData : function(project, geo, begin, end, channels, parameters) {
+        let lang = getCurrentLanguage();
+
         let channel_list = channels.length == 0 ? undefined : channels.join(',');
         let parameter_list = parameters.length == 0 ? undefined : parameters.join(',');
 
         return function(dispatch) {
-            makeQuery(dispatch, 'Measurements', '/en/api/data/', {
+            makeQuery(dispatch, 'Measurements', '/' + lang + '/api/data/', {
                 params: {
                     space_project: project,
                     time_begin: begin,

@@ -3,6 +3,7 @@ import { Form, Button, Glyphicon, ButtonGroup } from 'react-bootstrap';
 import ReactSpinner from 'react-spinjs';
 import Tooltip from './Tooltip';
 import Quicklook from './Quicklook';
+import { strings, getCurrentLanguage } from "../localizations/localization";
 
 /* TODO: do you need these shared anywhere? */
 function UnixToISO(unix_ts) {
@@ -32,13 +33,14 @@ class DataSection extends Component {
     }
 
     fetchData() {
+        let lang = getCurrentLanguage();
         let mid = this.props.mid;
 
         if(mid) {
             let src  = '&source=' + this.props.source;
             let time = '&time_start=' + this.props.timelapse.start;
             time    += '&time_end=' + this.props.timelapse.end;
-            this.props.actions.getSingle('/en/api/download/' + mid + '/quicklook?points=100' + src + time, {}, function(resp) {
+            this.props.actions.getSingle('/' + lang + '/api/download/' + mid + '/quicklook?points=100' + src + time, {}, function(resp) {
                 this.setState(function() {
                     return {
                         main: resp.source.name,
@@ -55,6 +57,7 @@ class DataSection extends Component {
 
     /* only ascii for now */
     downloadResult() {
+        let lang = getCurrentLanguage();
         if(this.props.mid) {
             let a = document.createElement('a');
             let src  = '&source=' + this.props.source;
@@ -62,7 +65,7 @@ class DataSection extends Component {
             time    += '&time_end=' + this.props.timelapse.end;
 
             a.download = this.state.main + '.txt';
-            a.href = '/en/api/download/' + this.props.mid + '/data/?format=txt' + src + time;
+            a.href = '/' + lang + '/api/download/' + this.props.mid + '/data/?format=txt' + src + time;
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
@@ -91,13 +94,13 @@ class DataSection extends Component {
         return (
             <div>
             <ButtonGroup>
-                <Tooltip text = 'Quicklook'>
+                <Tooltip text = {strings.tooltipQuicklook}>
                     <Button onClick = {this.showQuicklook} bsSize = 'small'>
                         { this.state.quicklookStatus == true && !this.state.data.length ? (<ReactSpinner config = { {scale: 0.65} }/>) : (null) }
                         <Glyphicon glyph = 'stats' />
                     </Button>
                 </Tooltip>
-                <Tooltip text = 'Download'>
+                <Tooltip text = {strings.tooltipDownload}>
                     <Button onClick = {this.downloadResult} bsSize = 'small'>
                         <Glyphicon glyph = 'download-alt' />
                     </Button>
@@ -181,14 +184,14 @@ export default class SearchResults extends Component {
 
                 return (
                     <div>
-                    <span>Found {results.data.length} result(s)</span>
+                    <span>{strings.found} {results.data.length} {strings.results}</span>
                     <table className = 'table table-hover'>
                         <thead>
                             <tr>
-                                <th>Date from</th>
-                                <th>{ channels ? 'Channel' : 'Parameter' }</th>
-                                <th>Data size (approx)</th>
-                                <th>Actions</th>
+                                <th>{strings.datetimeFrom}</th>
+                                <th>{ channels ? strings.channel : strings.parameter }</th>
+                                <th>{strings.dataSize}</th>
+                                <th>{strings.actions}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -207,7 +210,7 @@ export default class SearchResults extends Component {
                                     return (channels ? (d.url === measurement.channel) : (d.url === measurement.parameter));
                                 });
 
-                                let size = 'size unknown';
+                                let size = strings.sizeUnknown;
 
                                 /* each measurement may have multiple parts defined by the selection array */
                                 return measurement.selection.map(function(selection, index) {
@@ -235,7 +238,7 @@ export default class SearchResults extends Component {
                 )
             } else {
                 return (
-                    <span>Nothing has been found</span>
+                    <span>{strings.notFound}</span>
                 )
             }
         }
