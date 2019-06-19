@@ -57,7 +57,7 @@ class DataSection extends Component {
 
     /* only ascii for now */
     downloadResult() {
-        let lang = getCurrentLanguage()
+        let lang = getCurrentLanguage();
         if(this.props.mid) {
             let a = document.createElement('a');
             let src  = '&source=' + this.props.source;
@@ -66,7 +66,9 @@ class DataSection extends Component {
 
             a.download = this.state.main + '.txt';
             a.href = '/' + lang + '/api/download/' + this.props.mid + '/data/?format=txt' + src + time;
+            document.body.appendChild(a);
             a.click();
+            document.body.removeChild(a);
         }
         // http://localhost:8081/en/api/download/29/data/?format=ascii&source=parameter
     }
