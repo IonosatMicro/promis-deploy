@@ -66,7 +66,9 @@ class DataSection extends Component {
 
             a.download = this.state.main + '.' + this.props.fileformat;
             a.href = '/' + lang + '/api/download/' + this.props.mid + '/data/?format=' + this.props.fileformat + src + time;
+            document.body.appendChild(a);
             a.click();
+            document.body.removeChild(a);
         }
         // http://localhost:8081/en/api/download/29/data/?format=ascii&source=parameter
     }

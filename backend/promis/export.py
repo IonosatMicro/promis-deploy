@@ -21,15 +21,14 @@
 """Export related utilities, output file formats and so on"""
 
 import collections
-import math
 import unix_time
 import itertools
 import numbers
 
-# TODO: currently only one data row
 # TODO: do we need this type or can we just have a tuple?
 # TODO: generalize the header
 ExportEntry = collections.namedtuple("ExportEntry", [ "date", "ut", "lat", "lon", "alt", "data" ])
+
 
 def make_table(data, start_time, end_time, orbit):
     """
@@ -93,38 +92,34 @@ def ascii_export(table, datalabel="Data", dataunits="units"):
     Takes a table generator from above and constructs an ASCII representation.
 
     datalabel and dataunits are used for the data column
-    TODO: currently only one data column supported
-    TODO: orbit no
-    TODO: deduce correct field sizes
+    TODO: deduce correct field sizes ?
 
     Yields successive lines.
     """
     yield "{:^10} {:^10} {:^6} {:^6} {:^6} {:^15}".format("Date", "UT", "Lat.", "Lon.", "Alt.", datalabel)
     yield "{:^10} {:^10} {:^6} {:^6} {:^6} {:^15}".format("(YYYYDDD)", "(ms)", "(deg.)", "(deg.)", "(km)", "(%s)" % dataunits)
     for row in table:
-        if True == isinstance(row.data, numbers.Real):
+        if isinstance(row.data, numbers.Real):
             yield "{:>10} {:>10} {:>6.02f} {:>6.02f} {:>6.02f} {:>15.06f}".format(row.date, row.ut, row.lat, row.lon, row.alt, row.data)
         else:
             yield "{:>10} {:>10} {:>6.02f} {:>6.02f} {:>6.02f}".format(row.date, row.ut, row.lat, row.lon, row.alt) + "".join(" {:>15.06f}".format(data_comp) for data_comp in row.data)
 
+
 def csv_export(table, datalabel="Data", dataunits="units"):
     """
-    Takes a table generator from above and constructs an ASCII representation.
+    Takes a table generator from above and constructs an CSV representation.
 
     datalabel and dataunits are used for the data column
-    TODO: currently only one data column supported
-    TODO: orbit no
-    TODO: deduce correct field sizes
+    TODO: deduce correct field sizes ?
 
     Yields successive lines.
     """
-    yield '"{}","{}","{}","{}","{}","{}"'.format("Date (YYYYDDD)", "UT (ms)", "Longitude (deg)", "Latitude (deg)", "Altitude (km)", datalabel + "(%s)" % dataunits)
+    yield '"{}","{}","{}","{}","{}","{}"'.format("Date (YYYYDDD)", "UT (ms)", "Longitude (deg)", "Latitude (deg)", "Altitude (km)", datalabel + " (%s)" % dataunits)
     for row in table:
-        if True == isinstance(row.data, numbers.Real):
+        if isinstance(row.data, numbers.Real):
             yield ",".join(str(x) for x in [row.date, row.ut, row.lon, row.lat, row.alt, row.data])
         else:
             yield ",".join(str(x) for x in itertools.chain([row.date, row.ut, row.lon, row.lat, row.alt], row.data))
-
 
 
 # TODO: remove after completion
