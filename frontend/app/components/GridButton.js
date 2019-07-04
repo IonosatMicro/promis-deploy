@@ -19,7 +19,7 @@
 // permissions and limitations under the Licence.
 //
 import Papa from 'papaparse';
-import MarchingSquares from 'marchingsquares';
+import * as MarchingSquares from 'marchingsquares';
 import React, { Component } from 'react';
 
 import ToolboxButton from './ToolboxButton';
