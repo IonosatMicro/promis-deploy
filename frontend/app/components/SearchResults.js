@@ -201,6 +201,7 @@ export default class SearchResults extends Component {
                                 componentClass="select" 
                                 placeholder="select" 
                                 style={{width: 50 + '%', float: 'right'}} 
+                                value={this.state.fileformat}
                                 onChange={this.changeFileFormat.bind(this)}>
                                     <option value="txt">text</option>
                                     <option value="csv">csv</option>
