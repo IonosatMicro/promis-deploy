@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Button, Glyphicon, ButtonGroup } from 'react-bootstrap';
+import { Col, Form, Button, FormControl, ButtonGroup, Glyphicon } from 'react-bootstrap';
 import ReactSpinner from 'react-spinjs';
 import Tooltip from './Tooltip';
 import Quicklook from './Quicklook';
@@ -64,8 +64,8 @@ class DataSection extends Component {
             let time = '&time_start=' + this.props.timelapse.start;
             time    += '&time_end=' + this.props.timelapse.end;
 
-            a.download = this.state.main + '.txt';
-            a.href = '/' + lang + '/api/download/' + this.props.mid + '/data/?format=txt' + src + time;
+            a.download = this.state.main + '.' + this.props.fileformat;
+            a.href = '/' + lang + '/api/download/' + this.props.mid + '/data/?format=' + this.props.fileformat + src + time;
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
@@ -126,6 +126,16 @@ class DataSection extends Component {
 export default class SearchResults extends Component {
     constructor(props) {
         super(props);
+
+        this.state = {
+            fileformat: 'txt'
+        };
+
+    }
+
+    changeFileFormat(event) {
+        let fileFormat = event.target.value;
+        this.setState({fileformat: fileFormat})
     }
 
     componentDidUpdate() {
@@ -184,7 +194,23 @@ export default class SearchResults extends Component {
 
                 return (
                     <div>
-                    <span>{strings.found} {results.data.length} {strings.results}</span>
+                        <Form horizontal>
+                            <Col sm = {8}>
+                                {strings.found} {results.data.length} {strings.results}
+                            </Col>
+                            <Col sm = {4}>
+                                <FormControl 
+                                componentClass="select" 
+                                placeholder="select" 
+                                style={{width: 50 + '%', float: 'right'}} 
+                                value={this.state.fileformat}
+                                onChange={this.changeFileFormat.bind(this)}>
+                                    <option value="txt">text</option>
+                                    <option value="csv">csv</option>
+                                    <option value="nc">netcdf</option>
+                                </FormControl>
+                            </Col>
+                        </Form>
                     <table className = 'table table-hover'>
                         <thead>
                             <tr>
@@ -225,6 +251,7 @@ export default class SearchResults extends Component {
                                                     actions = {this.props.actions}
                                                     source = {(channels ? 'channel' : 'parameter')}
                                                     timelapse = { selection }
+                                                    fileformat = {this.state.fileformat}
                                                 />
                                             </td>
                                         </tr>
