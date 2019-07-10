@@ -21,11 +21,16 @@ done
 docker logs api.promis
 
 # Artificial data satellites
-./backend_command loaddata --format json - < test/data/test_set.json
+# TODO: reactivate
+# ./backend_command loaddata --format json - < test/data/test_set.json
 
 # Load the satellite data
 # TODO: use parallel or some other tool like that to have logs store both outputs
-./backend_command check_data_updates 2>&1 > /tmp/fetch_data.log &
+# TODO: reactivate
+# ./backend_command check_data_updates 2>&1 > /tmp/fetch_data.log &
+
+# Keeping the last call of the script happy TODO: remove
+touch /tmp/fetch_data.log
 
 # Bring the web separately as it can be a long thing
 vagrant up web.promis
