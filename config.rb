@@ -48,6 +48,9 @@ if $conf["development_setup"]
   $conf["django_key"] = "8f3@*c8-gz!h(fm_4n$-tc-@9!32#bn5m9mmxj$k38or1&y&%x" unless $user_conf.key?("django_key")
 end
 
+# Disable pycache when code_reload is enabled
+$conf["pycache_disable"] = true if $conf["code_reload"]
+
 # Fix ports for oblivious people
 $conf["port_web"] = 80 if $conf["port_web"] == 443 && $conf["disable_ssl"]
 $conf["port_web"] = 443 if $conf["port_web"] == 80 && !$conf["disable_ssl"]

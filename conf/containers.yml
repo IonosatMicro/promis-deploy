@@ -30,6 +30,9 @@
     SYNC_DIR:           ${conf.sync_api_dir}
     PYTHONUNBUFFERED:   "0"
     YML_PATH:           ${conf.yml_api_dir}
+    # Whether to allow Python to write the *.pyc files for cache
+    # Disabled when code reload is enabled not to pollute the working dir
+    PYTHONDONTWRITEBYTECODE:        ${conf.pycache_disable}
 
 - name:   ${conf.hostname_web}
   build:  ${conf.dir_web}
