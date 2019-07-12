@@ -85,7 +85,7 @@
     "model": "backend_api.devicetranslation",
     "pk": 3,
     "fields": {
-        "name": "Neutral gase parameters sensor (NCP)",
+        "name": "Neutral gas parameters sensor (NCP)",
         "description": "A system of two pressure probes using an inverse-magnetron converter as a sensor. (The device to produce the i/v characteristics from which the ITM team is to obtain the neutral gas density and pressure.)",
         "language_code": "en",
         "master": 2
@@ -328,6 +328,46 @@
     }
 },
 {
+    "model": "backend_api.unittranslation",
+    "pk": 9,
+    "fields": {
+        "short_name": "A, B",
+        "long_name": "\u0410\u043c\u043f\u0435\u0440\u0438 \u0438 \u0412\u043e\u043b\u044c\u0442\u0438 \u0434\u043b\u044f \u0412\u0410\u0425",
+        "language_code": "uk",
+        "master": 5
+    }
+},
+{
+    "model": "backend_api.unittranslation",
+    "pk": 10,
+    "fields": {
+        "short_name": "A, V",
+        "long_name": "Amper and Volt for I-V curve",
+        "language_code": "en",
+        "master": 5
+    }
+},
+{
+    "model": "backend_api.unittranslation",
+    "pk": 11,
+    "fields": {
+        "short_name": "A, \u00b0C",
+        "long_name": "Amper and some temperature unit of DN (NKP) device",
+        "language_code": "en",
+        "master": 6
+    }
+},
+{
+    "model": "backend_api.unittranslation",
+    "pk": 12,
+    "fields": {
+        "short_name": "A, \u00b0C",
+        "long_name": "\u0410\u043c\u043f\u0435\u0440\u0438 \u0442\u0430 \u043e\u0434\u0438\u043d\u0438\u0446\u0456 \u0442\u0435\u043c\u043f\u0435\u0440\u0430\u0442\u0443\u0440\u0438 \u043f\u0440\u0438\u043b\u0430\u0434\u0443 DN (NKP)",
+        "language_code": "uk",
+        "master": 6
+    }
+},
+{
     "model": "backend_api.unit",
     "pk": 1,
     "fields": {}
@@ -345,6 +385,16 @@
 {
     "model": "backend_api.unit",
     "pk": 4,
+    "fields": {}
+},
+{
+    "model": "backend_api.unit",
+    "pk": 5,
+    "fields": {}
+},
+{
+    "model": "backend_api.unit",
+    "pk": 6,
     "fields": {}
 },
 {
@@ -438,6 +488,36 @@
     }
 },
 {
+    "model": "backend_api.valuetranslation",
+    "pk": 10,
+    "fields": {
+        "name": "Current\u2013voltage characteristic",
+        "description": "",
+        "language_code": "en",
+        "master": 6
+    }
+},
+{
+    "model": "backend_api.valuetranslation",
+    "pk": 11,
+    "fields": {
+        "name": "Some for DN #TODO: should be optional for channel",
+        "description": "",
+        "language_code": "en",
+        "master": 7
+    }
+},
+{
+    "model": "backend_api.valuetranslation",
+    "pk": 12,
+    "fields": {
+        "name": "\u0427\u0442\u043e-\u0442\u043e \u043d\u0438\u0437\u043a\u043e\u0443\u0440\u043e\u0432\u043d\u0435\u0432\u043e\u0435 \u043e\u0442 DN",
+        "description": "",
+        "language_code": "uk",
+        "master": 7
+    }
+},
+{
     "model": "backend_api.value",
     "pk": 1,
     "fields": {
@@ -475,6 +555,22 @@
     "fields": {
         "short_name": "j",
         "units": 4
+    }
+},
+{
+    "model": "backend_api.value",
+    "pk": 6,
+    "fields": {
+        "short_name": "I\u2013V curve",
+        "units": 5
+    }
+},
+{
+    "model": "backend_api.value",
+    "pk": 7,
+    "fields": {
+        "short_name": "i1, i2, t1, t2",
+        "units": 6
     }
 },
 {
@@ -628,6 +724,46 @@
     }
 },
 {
+    "model": "backend_api.channeltranslation",
+    "pk": 16,
+    "fields": {
+        "name": "I\u2013V curve (V, i1, i2)",
+        "description": "Current\u2013voltage characteristic with 2 current (2nd - technical) from DE (ITM Langmuir probe)",
+        "language_code": "en",
+        "master": 11
+    }
+},
+{
+    "model": "backend_api.channeltranslation",
+    "pk": 17,
+    "fields": {
+        "name": "\u0412\u0410\u0425 (V, i1, i2)",
+        "description": "\u0412\u043e\u043b\u044c\u0442-\u0430\u043c\u043f\u0435\u0440\u043d\u0430 \u0445\u0430\u0440\u0430\u043a\u0442\u0435\u0440\u0438\u0441\u0442\u0438\u043a\u0430 \u0441 2\u043c\u044f \u0442\u043e\u043a\u0430\u043c\u0438 (2\u0439 - \u0442\u0435\u0445\u043d\u0438\u0447\u0435\u0441\u043a\u0438\u0439), \u043e\u0442\u0440\u0438\u043c\u0430\u043d\u0430 \u0437 DE (\u0437\u043e\u043d\u0434\u0443 \u041b\u0435\u043d\u0433\u043c\u044e\u0440\u0443 \u0432\u0456\u0434 \u0406\u0422\u041c)",
+        "language_code": "uk",
+        "master": 11
+    }
+},
+{
+    "model": "backend_api.channeltranslation",
+    "pk": 18,
+    "fields": {
+        "name": "i1, i2, t1, t2",
+        "description": "Technical values of DN",
+        "language_code": "en",
+        "master": 12
+    }
+},
+{
+    "model": "backend_api.channeltranslation",
+    "pk": 19,
+    "fields": {
+        "name": "i1, i2, t1, t2",
+        "description": "\u0422\u0435\u0445\u043d\u0456\u0447\u043d\u0456 \u0432\u0435\u043b\u0438\u0447\u0438\u043d\u0438 \u0437 DN",
+        "language_code": "uk",
+        "master": 12
+    }
+},
+{
     "model": "backend_api.channel",
     "pk": 1,
     "fields": {
@@ -755,6 +891,32 @@
             "classes.base_data.ScalarValueDifference"
         ],
         "labels": ["FC1=", "FC2="]
+    }
+},
+{
+    "model": "backend_api.channel",
+    "pk": 11,
+    "fields": {
+        "value": 6,
+        "exponent": 0,
+        "device": 3,
+        "klass": [
+            "classes.base_data.CurrentVoltageCurveTwoCurrent"
+        ],
+        "labels": ["pd/ekp/00"]
+    }
+},
+{
+    "model": "backend_api.channel",
+    "pk": 12,
+    "fields": {
+        "value": 7,
+        "exponent": 0,
+        "device": 2,
+        "klass": [
+            "classes.base_data.ValuesFromDNdevice"
+        ],
+        "labels": ["pd/nkp/0/"]
     }
 },
 {
