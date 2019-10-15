@@ -129,6 +129,7 @@ Vagrant.configure("2") do |config|
           end
         end
         docker.name = cfg(container["name"])
+        docker.create_args = ["--restart=always"]
       end
     end
   end
