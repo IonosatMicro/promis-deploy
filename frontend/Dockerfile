@@ -12,7 +12,7 @@ ADD package.json /usr/src/promis/
 
 # Update npm
 # https://github.com/npm/npm/issues/9863
-RUN cd $(npm root -g)/npm     && npm install -g fs-extra     && sed -i -e s/graceful-fs/fs-extra/ -e s/fs.rename/fs.move/ ./lib/utils/rename.js     && npm install -g npm@^6.0.0
+RUN cd $(npm root -g)/npm     && npm install -g fs-extra     && sed -i -e s/graceful-fs/fs-extra/ -e s/fs.rename/fs.move/ ./lib/utils/rename.js     && npm install -g npm@^5.0.0
 
 # Install packages needed
 RUN npm install
