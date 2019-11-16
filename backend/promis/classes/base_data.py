@@ -190,3 +190,19 @@ class ScalarValueDifference(BaseData):
     """
     def quicklook(self, points, selection = slice(None)):
         return
+
+class ObliqueTwoVarTimeSeriesHF(BaseData):
+    """
+    [en]: Two high frequency components in oblique coordinate system
+    [uk]: Дві високочастотні компоненти вектора величини в косоугольній системі координат
+    """
+    def quicklook(self, points, selection = slice(None)):
+        return
+
+class ScalarFourVarPolarization(BaseData):
+    """
+    [en]: Four polarization channels with azimuths of 0°, 90°, 45° and 135°.
+    [uk]: Чотири поляризаційні канали з азимутами 0°, 90°, 45° and 135°.
+    """
+    def quicklook(self, points, selection = slice(None)):
+        return
