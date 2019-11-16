@@ -44,7 +44,7 @@
     "pk": 5,
     "fields": {
         "name": "Aerosol-UA",
-        "description": "",
+        "description": "Space mission Aerosol-UA. Aerosol remote sensing in the terrestrial atmosphere.",
         "master": 3,
         "language_code": "en"
     }
@@ -237,6 +237,16 @@
     }
 },
 {
+    "model": "backend_api.devicetranslation",
+    "pk": 16,
+    "fields": {
+        "name": "MSIP",
+        "description": "MSIP- \u043c\u0443\u043b\u044c\u0442\u0438\u0441\u043f\u0435\u043a\u0442\u0440\u0430\u043b\u044c\u043d\u0438\u0439 \u0448\u0438\u0440\u043e\u043a\u043e\u043a\u0443\u0442\u043d\u0456\u0439 \u0456\u043c\u0435\u0434\u0436\u0435\u0440-\u043f\u043e\u043b\u044f\u0440\u0438\u043c\u0435\u0442\u0440",
+        "master": 10,
+        "language_code": "en"
+    }
+},
+{
     "model": "backend_api.device",
     "pk": 1,
     "fields": {
@@ -295,6 +305,13 @@
 {
     "model": "backend_api.device",
     "pk": 9,
+    "fields": {
+        "space_project": 3
+    }
+},
+{
+    "model": "backend_api.device",
+    "pk": 10,
     "fields": {
         "space_project": 3
     }
@@ -380,6 +397,26 @@
     }
 },
 {
+    "model": "backend_api.unittranslation",
+    "pk": 9,
+    "fields": {
+        "short_name": "A",
+        "long_name": "Amper",
+        "master": 5,
+        "language_code": "en"
+    }
+},
+{
+    "model": "backend_api.unittranslation",
+    "pk": 10,
+    "fields": {
+        "short_name": "\u0410",
+        "long_name": "\u0410\u043c\u043f\u0435\u0440",
+        "master": 5,
+        "language_code": "uk"
+    }
+},
+{
     "model": "backend_api.unit",
     "pk": 1,
     "fields": {}
@@ -397,6 +434,11 @@
 {
     "model": "backend_api.unit",
     "pk": 4,
+    "fields": {}
+},
+{
+    "model": "backend_api.unit",
+    "pk": 5,
     "fields": {}
 },
 {
@@ -490,6 +532,26 @@
     }
 },
 {
+    "model": "backend_api.valuetranslation",
+    "pk": 10,
+    "fields": {
+        "name": "Current",
+        "description": "",
+        "master": 6,
+        "language_code": "en"
+    }
+},
+{
+    "model": "backend_api.valuetranslation",
+    "pk": 11,
+    "fields": {
+        "name": "\u0421\u0442\u0440\u0443\u043c",
+        "description": "",
+        "master": 6,
+        "language_code": "uk"
+    }
+},
+{
     "model": "backend_api.value",
     "pk": 1,
     "fields": {
@@ -527,6 +589,14 @@
     "fields": {
         "short_name": "j",
         "units": 4
+    }
+},
+{
+    "model": "backend_api.value",
+    "pk": 6,
+    "fields": {
+        "short_name": "Current",
+        "units": 5
     }
 },
 {
@@ -690,6 +760,116 @@
     }
 },
 {
+    "model": "backend_api.channeltranslation",
+    "pk": 17,
+    "fields": {
+        "name": "w_410",
+        "description": "The spectral channel is centered on a wavelength of 410 nm",
+        "master": 12,
+        "language_code": "en"
+    }
+},
+{
+    "model": "backend_api.channeltranslation",
+    "pk": 18,
+    "fields": {
+        "name": "w_370",
+        "description": "\u0421\u043f\u0435\u043a\u0442\u0440\u0430\u043b\u044c\u043d\u0438\u0439 \u043a\u0430\u043d\u0430\u043b, \u0449\u043e \u0432\u0456\u0434\u043f\u043e\u0432\u0456\u0434\u0430\u0454 \u0434\u043e\u0432\u0436\u0438\u043d\u0456 \u0445\u0432\u0438\u043b\u0456 370 \u043d\u043c",
+        "master": 11,
+        "language_code": "uk"
+    }
+},
+{
+    "model": "backend_api.channeltranslation",
+    "pk": 19,
+    "fields": {
+        "name": "w_410",
+        "description": "\u0421\u043f\u0435\u043a\u0442\u0440\u0430\u043b\u044c\u043d\u0438\u0439 \u043a\u0430\u043d\u0430\u043b, \u0449\u043e \u0432\u0456\u0434\u043f\u043e\u0432\u0456\u0434\u0430\u0454 \u0434\u043e\u0432\u0436\u0438\u043d\u0456 \u0445\u0432\u0438\u043b\u0456 410 \u043d\u043c",
+        "master": 12,
+        "language_code": "uk"
+    }
+},
+{
+    "model": "backend_api.channeltranslation",
+    "pk": 20,
+    "fields": {
+        "name": "w_555",
+        "description": "The spectral channel is centered on a wavelength of 555 nm",
+        "master": 13,
+        "language_code": "en"
+    }
+},
+{
+    "model": "backend_api.channeltranslation",
+    "pk": 21,
+    "fields": {
+        "name": "w_555",
+        "description": "\u0421\u043f\u0435\u043a\u0442\u0440\u0430\u043b\u044c\u043d\u0438\u0439 \u043a\u0430\u043d\u0430\u043b, \u0449\u043e \u0432\u0456\u0434\u043f\u043e\u0432\u0456\u0434\u0430\u0454 \u0434\u043e\u0432\u0436\u0438\u043d\u0456 \u0445\u0432\u0438\u043b\u0456 555 \u043d\u043c",
+        "master": 13,
+        "language_code": "uk"
+    }
+},
+{
+    "model": "backend_api.channeltranslation",
+    "pk": 22,
+    "fields": {
+        "name": "w_865",
+        "description": "The spectral channel is centered on a wavelength of 865 nm",
+        "master": 14,
+        "language_code": "en"
+    }
+},
+{
+    "model": "backend_api.channeltranslation",
+    "pk": 23,
+    "fields": {
+        "name": "w_865",
+        "description": "\u0421\u043f\u0435\u043a\u0442\u0440\u0430\u043b\u044c\u043d\u0438\u0439 \u043a\u0430\u043d\u0430\u043b, \u0449\u043e \u0432\u0456\u0434\u043f\u043e\u0432\u0456\u0434\u0430\u0454 \u0434\u043e\u0432\u0436\u0438\u043d\u0456 \u0445\u0432\u0438\u043b\u0456 865 \u043d\u043c",
+        "master": 14,
+        "language_code": "uk"
+    }
+},
+{
+    "model": "backend_api.channeltranslation",
+    "pk": 24,
+    "fields": {
+        "name": "w_1378",
+        "description": "The spectral channel is centered on a wavelength of 1378 nm",
+        "master": 15,
+        "language_code": "en"
+    }
+},
+{
+    "model": "backend_api.channeltranslation",
+    "pk": 25,
+    "fields": {
+        "name": "w_1378",
+        "description": "\u0421\u043f\u0435\u043a\u0442\u0440\u0430\u043b\u044c\u043d\u0438\u0439 \u043a\u0430\u043d\u0430\u043b, \u0449\u043e \u0432\u0456\u0434\u043f\u043e\u0432\u0456\u0434\u0430\u0454 \u0434\u043e\u0432\u0436\u0438\u043d\u0456 \u0445\u0432\u0438\u043b\u0456 1378 \u043d\u043c",
+        "master": 15,
+        "language_code": "uk"
+    }
+},
+{
+    "model": "backend_api.channeltranslation",
+    "pk": 26,
+    "fields": {
+        "name": "w_1610",
+        "description": "The spectral channel is centered on a wavelength of 1610 nm",
+        "master": 16,
+        "language_code": "en"
+    }
+},
+{
+    "model": "backend_api.channeltranslation",
+    "pk": 27,
+    "fields": {
+        "name": "w_1610",
+        "description": "\u0421\u043f\u0435\u043a\u0442\u0440\u0430\u043b\u044c\u043d\u0438\u0439 \u043a\u0430\u043d\u0430\u043b, \u0449\u043e \u0432\u0456\u0434\u043f\u043e\u0432\u0456\u0434\u0430\u0454 \u0434\u043e\u0432\u0436\u0438\u043d\u0456 \u0445\u0432\u0438\u043b\u0456 1610 \u043d\u043c",
+        "master": 16,
+        "language_code": "uk"
+    }
+},
+{
     "model": "backend_api.channel",
     "pk": 1,
     "fields": {
@@ -803,11 +983,66 @@
     "model": "backend_api.channel",
     "pk": 11,
     "fields": {
-        "value": 1,
+        "value": 6,
         "exponent": 0,
         "device": 9,
-        "klass": 15,
+        "klass": 8,
         "labels": "[\"w_370_label\"]"
+    }
+},
+{
+    "model": "backend_api.channel",
+    "pk": 12,
+    "fields": {
+        "value": 6,
+        "exponent": 0,
+        "device": 9,
+        "klass": 8,
+        "labels": "[\"w_410_label\"]"
+    }
+},
+{
+    "model": "backend_api.channel",
+    "pk": 13,
+    "fields": {
+        "value": 6,
+        "exponent": 0,
+        "device": 9,
+        "klass": 8,
+        "labels": "[\"w_555_label\"]"
+    }
+},
+{
+    "model": "backend_api.channel",
+    "pk": 14,
+    "fields": {
+        "value": 6,
+        "exponent": 0,
+        "device": 9,
+        "klass": 1,
+        "labels": "[\"w_865_label\"]"
+    }
+},
+{
+    "model": "backend_api.channel",
+    "pk": 15,
+    "fields": {
+        "value": 6,
+        "exponent": 0,
+        "device": 9,
+        "klass": 8,
+        "labels": "[\"w_1378_label\"]"
+    }
+},
+{
+    "model": "backend_api.channel",
+    "pk": 16,
+    "fields": {
+        "value": 6,
+        "exponent": 0,
+        "device": 9,
+        "klass": 8,
+        "labels": "[\"w_1610_label\"]"
     }
 },
 {
