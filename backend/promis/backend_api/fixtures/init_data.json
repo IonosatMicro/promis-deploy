@@ -311,8 +311,8 @@
     "model": "backend_api.unittranslation",
     "pk": 7,
     "fields": {
-        "short_name": "A\u22c5cm\u22122",
-        "long_name": "Amper per square centimetre",
+        "short_name": "\u03bcA\u22c5m\u22122",
+        "long_name": "Microamper per square metre",
         "language_code": "en",
         "master": 4
     }
@@ -321,8 +321,8 @@
     "model": "backend_api.unittranslation",
     "pk": 8,
     "fields": {
-        "short_name": "\u0410\u22c5\u0441\u043c\u22122",
-        "long_name": "\u0410\u043c\u043f\u0435\u0440 \u043d\u0430 \u0441\u0430\u043d\u0442\u0438\u043c\u0435\u0442\u0440 \u043a\u0432\u0430\u0434\u0440\u0430\u0442\u043d\u0438\u0439",
+        "short_name": "\u03bc\u0410\u22c5\u043c\u22122",
+        "long_name": "\u041c\u0456\u043a\u0440\u043e\u0430\u043c\u043f\u0435\u0440 \u043d\u0430 \u043c\u0435\u0442\u0440 \u043a\u0432\u0430\u0434\u0440\u0430\u0442\u043d\u0438\u0439",
         "language_code": "uk",
         "master": 4
     }
@@ -663,7 +663,11 @@
         "klass": [
             "classes.base_data.ObliqueThreeVarTimeSeriesHF"
         ],
-        "labels": ["E1~", "E2~", "E3~"]
+        "labels": ["E1~", "E2~", "E3~"],
+        "calibration": [
+            "classes.base_calibration.CoefficientMultiply"
+        ],
+        "calibration_params": [1]
     }
 },
 {
@@ -676,7 +680,11 @@
         "klass": [
             "classes.base_data.OrthogonalTwoVarTimeSeriesHF"
         ],
-        "labels": ["Bx~", "By~"]
+        "labels": ["Bx~", "By~"],
+        "calibration": [
+            "classes.base_calibration.CoefficientMultiply"
+        ],
+        "calibration_params": [10]
     }
 },
 {
@@ -689,7 +697,11 @@
         "klass": [
             "classes.base_data.OrthogonalTwoVarTimeSeriesHF"
         ],
-        "labels": ["Jxz~", "Jyz~"]
+        "labels": ["Jxz~", "Jyz~"],
+        "calibration": [
+            "classes.base_calibration.CoefficientMultiply"
+        ],
+        "calibration_params": [129.87]
     }
 },
 {
@@ -702,33 +714,45 @@
         "klass": [
             "classes.base_data.ObliqueThreeVarTimeSeriesLF"
         ],
-        "labels": ["E1=", "E2=", "E3="]
+        "labels": ["E1=", "E2=", "E3="],
+        "calibration": [
+            "classes.base_calibration.CoefficientMultiply"
+        ],
+        "calibration_params": [1]
     }
 },
 {
     "model": "backend_api.channel",
     "pk": 7,
     "fields": {
-        "value": 5,
+        "value": 1,
         "exponent": 0,
         "device": 6,
         "klass": [
             "classes.base_data.ScalarValueDifference"
         ],
-        "labels": ["FC1~", "FC2~"]
+        "labels": ["FC1~", "FC2~"],
+        "calibration": [
+            "classes.base_calibration.TwoToOne"
+        ],
+        "calibration_params": [2092]
     }
 },
 {
     "model": "backend_api.channel",
     "pk": 8,
     "fields": {
-        "value": 5,
+        "value": 1,
         "exponent": 0,
         "device": 7,
         "klass": [
             "classes.base_data.SingleVarTimeSeries"
         ],
-        "labels": ["JF~"]
+        "labels": ["JF~"],
+        "calibration": [
+            "classes.base_calibration.CoefficientMultiply"
+        ],
+        "calibration_params": [1.17647]
     }
 },
 {
@@ -748,13 +772,17 @@
     "model": "backend_api.channel",
     "pk": 10,
     "fields": {
-        "value": 5,
+        "value": 1,
         "exponent": 0,
         "device": 6,
         "klass": [
             "classes.base_data.ScalarValueDifference"
         ],
-        "labels": ["FC1=", "FC2="]
+        "labels": ["FC1=", "FC2="],
+        "calibration": [
+            "classes.base_calibration.TwoToOne"
+        ],
+        "calibration_params": [21276]
     }
 },
 {

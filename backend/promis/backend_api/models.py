@@ -178,6 +178,8 @@ class Channel(TranslatableModel):
     device = ForeignKey('Device', related_name = 'channels')  # TODO: <- do we need this?
     klass = ForeignKey('Class', null = True)
     labels = ArrayField(CharField(max_length = 20)) 
+    calibration = ForeignKey('Class', related_name = 'calibration_method', null = True)
+    calibration_params = ArrayField(FloatField(), null = True)
 
     translations = TranslatedFields(
         name = TextField(),
@@ -186,6 +188,9 @@ class Channel(TranslatableModel):
 
     def __str__(self):
         return self.name
+
+    def get_calibration(self):
+        return self.calibration(self.calibration_params) if self.calibration else None
 
     class Meta:
         db_table = "channels"
