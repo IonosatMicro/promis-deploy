@@ -218,3 +218,19 @@ def wkb(_wkb):
         # Reorder lon, lat, alt to lat, lon, alt
         v = struct.unpack(endianness + "ddd", _wkb[offset:offset+8*3])
         yield v[1], v[0], v[2]
+
+
+def aerosol_telemetry(fp):
+    """
+    yield dict of line values from telemetry.csv
+    """
+    keys = fp[0].split(',')
+    for ln in fp[1:]:
+        yield dict(zip(keys, ln.split(',')))
+
+def aerosol_measurement(fp):
+    """
+
+    :param fp:
+    :return:
+    """

@@ -5,8 +5,8 @@
     "fields": {
         "name": "Potential",
         "description": "The space scientific experiment \"Potential\" on the ionosphere aboard the Ukrainian Sich-2 microsatellite (2011-2012)",
-        "language_code": "en",
-        "master": 1
+        "master": 1,
+        "language_code": "en"
     }
 },
 {
@@ -15,8 +15,8 @@
     "fields": {
         "name": "\u041f\u043e\u0442\u0435\u043d\u0446\u0456\u0430\u043b",
         "description": "\u041d\u0430\u0443\u043a\u043e\u0432\u0438\u0439 \u0456\u043e\u043d\u043e\u0441\u0444\u0435\u0440\u043d\u0438\u0439 \u043a\u043e\u0441\u043c\u0456\u0447\u043d\u0438\u0439 \u0435\u043a\u0441\u043f\u0435\u0440\u0438\u043c\u0435\u043d\u0442 \"\u041f\u043e\u0442\u0435\u043d\u0446\u0456\u0430\u043b\" \u043d\u0430 \u0431\u043e\u0440\u0442\u0443 \u0443\u043a\u0440\u0430\u0457\u043d\u0441\u044c\u043a\u043e\u0433\u043e \u043c\u0456\u043a\u0440\u043e\u0441\u0443\u043f\u0443\u0442\u043d\u0438\u043a\u0430 \"\u0421\u0456\u0447-2\" (2011-2012)",
-        "language_code": "uk",
-        "master": 1
+        "master": 1,
+        "language_code": "uk"
     }
 },
 {
@@ -25,8 +25,8 @@
     "fields": {
         "name": "Variant",
         "description": "The space scientific experiment \"Variant\" on the ionosphere aboard the Ukrainian Sich-1M satellite (2004-2005)",
-        "language_code": "en",
-        "master": 2
+        "master": 2,
+        "language_code": "en"
     }
 },
 {
@@ -35,17 +35,35 @@
     "fields": {
         "name": "\u0412\u0430\u0440\u0456\u0430\u043d\u0442",
         "description": "\u041d\u0430\u0443\u043a\u043e\u0432\u0438\u0439 \u0456\u043e\u043d\u043e\u0441\u0444\u0435\u0440\u043d\u0438\u0439 \u043a\u043e\u0441\u043c\u0456\u0447\u043d\u0438\u0439 \u0435\u043a\u0441\u043f\u0435\u0440\u0438\u043c\u0435\u043d\u0442 \"\u0412\u0430\u0440\u0456\u0430\u043d\u0442\" \u043d\u0430 \u0431\u043e\u0440\u0442\u0443 \u0443\u043a\u0440\u0430\u0457\u043d\u0441\u044c\u043a\u043e\u0433\u043e \u0441\u0443\u043f\u0443\u0442\u043d\u0438\u043a\u0430 \"\u0421\u0456\u0447-1\u041c\" (2004-2005)",
-        "language_code": "uk",
-        "master": 2
+        "master": 2,
+        "language_code": "uk"
+    }
+},
+{
+    "model": "backend_api.space_projecttranslation",
+    "pk": 5,
+    "fields": {
+        "name": "Aerosol-UA",
+        "description": "Space mission Aerosol-UA. Aerosol remote sensing in the terrestrial atmosphere.",
+        "master": 3,
+        "language_code": "en"
+    }
+},
+{
+    "model": "backend_api.space_projecttranslation",
+    "pk": 6,
+    "fields": {
+        "name": "\u0410\u0435\u0440\u043e\u0437\u043e\u043b\u044c-UA",
+        "description": "\u041e\u0440\u0431\u0456\u0442\u0430\u043b\u044c\u043d\u0430 \u043c\u0456\u0441\u0456\u044f \u0410\u0435\u0440\u043e\u0437\u043e\u043b\u044c-UA \u0434\u0438\u0441\u0442\u0430\u043d\u0446\u0456\u0439\u043d\u043e\u0433\u043e \u0437\u043e\u043d\u0434\u0443\u0432\u0430\u043d\u043d\u044f \u0430\u0435\u0440\u043e\u0437\u043e\u043b\u0456\u0432 \u0432 \u0430\u0442\u043c\u043e\u0441\u0444\u0435\u0440\u0456 \u0417\u0435\u043c\u043b\u0456",
+        "master": 3,
+        "language_code": "uk"
     }
 },
 {
     "model": "backend_api.space_project",
     "pk": 1,
     "fields": {
-        "klass": [
-            "classes.potential.Potential"
-        ],
+        "klass": 10,
         "date_start": "2011-08-30",
         "date_end": "2012-11-01"
     }
@@ -54,11 +72,18 @@
     "model": "backend_api.space_project",
     "pk": 2,
     "fields": {
-        "klass": [
-            "classes.variant.Variant"
-        ],
+        "klass": 13,
         "date_start": "2005-02-01",
         "date_end": "2005-03-26"
+    }
+},
+{
+    "model": "backend_api.space_project",
+    "pk": 3,
+    "fields": {
+        "klass": 14,
+        "date_start": "2019-11-16",
+        "date_end": "2021-08-31"
     }
 },
 {
@@ -67,8 +92,8 @@
     "fields": {
         "name": "Electric probe (EP)",
         "description": "Electric probes are intended for the measurement of electric field intensity in space plasma with the help of two similar probes placed at a known distance. Potential project used a single probe setup that can be used to measure the spacecraft's own electric potential.",
-        "language_code": "en",
-        "master": 1
+        "master": 1,
+        "language_code": "en"
     }
 },
 {
@@ -77,8 +102,8 @@
     "fields": {
         "name": "\u0415\u043b\u0435\u043a\u0442\u0440\u0438\u0447\u043d\u0438\u0439 \u0437\u043e\u043d\u0434 (EP)",
         "description": "\u0414\u0430\u0432\u0430\u0447 \u0435\u043b\u0435\u043a\u0442\u0440\u0438\u0447\u043d\u043e\u0433\u043e \u043f\u043e\u0442\u0435\u043d\u0446\u0456\u0430\u043b\u0443 \u043f\u0440\u0438\u0437\u043d\u0430\u0447\u0435\u043d\u0438\u0439 \u0434\u043b\u044f \u0432\u0438\u043c\u0456\u0440\u044e\u0432\u0430\u043d\u043d\u044f \u043d\u0430\u043f\u0440\u0443\u0436\u0435\u043d\u043e\u0441\u0442\u0456 \u0437\u043c\u0456\u043d\u043d\u043e\u0433\u043e \u0435\u043b\u0435\u043a\u0442\u0440\u0438\u0447\u043d\u043e\u0433\u043e \u043f\u043e\u043b\u044f \u0443 \u043a\u043e\u0441\u043c\u0456\u0447\u043d\u0456\u0439 \u043f\u043b\u0430\u0437\u043c\u0456 \u0437\u0430 \u0434\u043e\u043f\u043e\u043c\u043e\u0433\u043e\u044e \u0434\u0432\u043e\u0445 \u043f\u043e\u0434\u0456\u0431\u043d\u0438\u0445 \u0434\u0430\u0432\u0430\u0447\u0456\u0432, \u0440\u043e\u0437\u043d\u0435\u0441\u0435\u043d\u0438\u0445 \u043d\u0430 \u0432\u0456\u0434\u043e\u043c\u0443 \u0432\u0456\u0434\u0441\u0442\u0430\u043d\u044c. \u0410\u043b\u0435 \u0432 \u043a\u043e\u0441\u043c\u0456\u0447\u043d\u043e\u043c\u0443 \u0435\u043a\u0441\u043f\u0435\u0440\u0438\u043c\u0435\u043d\u0442\u0456 \u041f\u043e\u0442\u0435\u043d\u0446\u0456\u0430\u043b \u0432\u0456\u043d \u0431\u0443\u0432 \u043e\u0434\u0438\u043d :(",
-        "language_code": "uk",
-        "master": 1
+        "master": 1,
+        "language_code": "uk"
     }
 },
 {
@@ -87,8 +112,8 @@
     "fields": {
         "name": "Neutral gase parameters sensor (NCP)",
         "description": "A system of two pressure probes using an inverse-magnetron converter as a sensor. (The device to produce the i/v characteristics from which the ITM team is to obtain the neutral gas density and pressure.)",
-        "language_code": "en",
-        "master": 2
+        "master": 2,
+        "language_code": "en"
     }
 },
 {
@@ -97,8 +122,8 @@
     "fields": {
         "name": "\u0414\u0430\u0442\u0447\u0438\u043a \u043f\u0430\u0440\u0430\u043c\u0435\u0442\u0440\u0456\u0432 \u043d\u0435\u0439\u0442\u0440\u0430\u043b\u044c\u043d\u043e\u0433\u043e \u0433\u0430\u0437\u0443 \u041d\u041a\u041f",
         "description": "\u041d\u041a\u041f \u0441\u043a\u043b\u0430\u0434\u0430\u0454\u0442\u044c\u0441\u044f \u0437 \u0434\u0432\u043e\u0445 \u0437\u043e\u043d\u0434\u0456\u0432 \u0442\u0438\u0441\u043a\u0443 \u0437 \u0456\u043d\u0432\u0435\u0440\u0441\u043d\u043e-\u043c\u0430\u0433\u043d\u0435\u0442\u0440\u043e\u043d\u043d\u0438\u043c \u043f\u0435\u0440\u0435\u0442\u0432\u043e\u0440\u044e\u0432\u0430\u0447\u0435\u043c \u0432 \u044f\u043a\u043e\u0441\u0442\u0456 \u0447\u0443\u0442\u043b\u0438\u0432\u043e\u0433\u043e \u0435\u043b\u0435\u043c\u0435\u043d\u0442\u0443",
-        "language_code": "uk",
-        "master": 2
+        "master": 2,
+        "language_code": "uk"
     }
 },
 {
@@ -107,8 +132,8 @@
     "fields": {
         "name": "Plasma parameters sensor (ECP)",
         "description": "A single cylindrical Langmiur probe measuring 0.05 cm in radius with 12 cm in length along with a protective electrode measuring 0.2 cm in radius and 12.5 cm in length. (The device to produce the i/v characteristics from which the ITM team is to obtain the plasma density and the electron temperature)",
-        "language_code": "en",
-        "master": 3
+        "master": 3,
+        "language_code": "en"
     }
 },
 {
@@ -117,8 +142,8 @@
     "fields": {
         "name": "\u0414\u0430\u0442\u0447\u0438\u043a \u043f\u0430\u0440\u0430\u043c\u0435\u0442\u0440\u0456\u0432 \u0435\u043b\u0435\u043a\u0442\u0440\u043e\u043d\u043d\u043e\u0457 \u043a\u043e\u043c\u043f\u043e\u043d\u0435\u043d\u0442\u0438 \u043f\u043b\u0430\u0437\u043c\u0438 (\u0415\u041a\u041f)",
         "description": "\u041e\u0434\u0438\u043d\u0438\u0447\u043d\u0438\u0439 \u0446\u0438\u043b\u0456\u043d\u0434\u0440\u0438\u0447\u043d\u0438\u0439 \u0437\u043e\u043d\u0434 \u041b\u0435\u043d\u0433\u043c\u044e\u0440\u0430 \u0440\u0430\u0434\u0456\u0443\u043e\u043c 0,05 \u0441\u043c \u0456 \u0434\u043e\u0432\u0436\u0438\u043d\u043e\u044e 12 \u0441\u043c \u0437 \u043e\u0445\u043e\u0440\u043e\u043d\u043d\u0438\u043c \u0435\u043b\u0435\u043a\u0442\u0440\u043e\u0434\u043e\u043c \u0440\u0430\u0434\u0456\u0443\u0441\u043e\u043c 0,2 \u0441\u043c \u0434\u043e\u0432\u0436\u0438\u043d\u043e\u044e 12,5 \u0441\u043c",
-        "language_code": "uk",
-        "master": 3
+        "master": 3,
+        "language_code": "uk"
     }
 },
 {
@@ -127,8 +152,8 @@
     "fields": {
         "name": "Set of 4 Electric probes (EZ1, EZ2, EZ3, EZ4)",
         "description": "",
-        "language_code": "en",
-        "master": 4
+        "master": 4,
+        "language_code": "en"
     }
 },
 {
@@ -137,8 +162,8 @@
     "fields": {
         "name": "\u041a\u043e\u043c\u043f\u043b\u0435\u043a\u0441 \u0437 4 \u0435\u043b\u0435\u043a\u0442\u0440\u0438\u0447\u043d\u0438\u0445 \u0437\u043e\u043d\u0434\u0456\u0432 (EZ1, EZ2, EZ3, EZ4)",
         "description": "",
-        "language_code": "uk",
-        "master": 4
+        "master": 4,
+        "language_code": "uk"
     }
 },
 {
@@ -147,8 +172,8 @@
     "fields": {
         "name": "\u041a\u043e\u043c\u043f\u043b\u0435\u043a\u0441 \u0437 \u0434\u0432\u043e\u0445 \u0445\u0432\u0438\u043b\u044c\u043e\u0432\u0438\u0445 \u0437\u043e\u043d\u0434\u0456\u0432 (WZ1, WZ2)",
         "description": "\u041a\u043e\u043c\u043f\u043b\u0435\u043a\u0441 \u0437 \u0434\u0432\u043e\u0445 \u0445\u0432\u0438\u043b\u044c\u043e\u0432\u0438\u0445 \u0437\u043e\u043d\u0434\u0456\u0432 (WZ1, WZ2), \u0449\u043e \u0432\u0438\u043c\u0456\u0440\u044e\u044e\u0442\u044c \u0434\u0432\u0456 \u043e\u0440\u0442\u043e\u0433\u043e\u043d\u0430\u043b\u044c\u043d\u0456 \u043a\u043e\u043c\u043f\u043e\u043d\u0435\u043d\u0442\u0438 \u0437\u043c\u0456\u043d\u043d\u043e\u0433\u043e \u043c\u0430\u0433\u043d\u0456\u0442\u043d\u043e\u0433\u043e \u043f\u043e\u043b\u044f (Bx, By) \u0442\u0430 \u0434\u0432\u0456 \u043a\u043e\u043c\u043f\u043e\u043d\u0435\u043d\u0442\u0438 \u0433\u0443\u0441\u0442\u0438\u043d\u0438 \u0437\u043c\u0456\u043d\u043d\u043e\u0433\u043e \u0435\u043b\u0435\u043a\u0442\u0440\u0438\u0447\u043d\u043e\u0433\u043e \u0441\u0442\u0440\u0443\u043c\u0443 (Jxz, Jyz)",
-        "language_code": "uk",
-        "master": 5
+        "master": 5,
+        "language_code": "uk"
     }
 },
 {
@@ -157,8 +182,8 @@
     "fields": {
         "name": "Set of 2 Wave probes (WZ1, WZ2)",
         "description": "A complex of two wave probes (WZ1, WZ2) measuring two orthogonal variable components of the magnetic field (Bx, By) and two variable components of the current electric density (Jxz, Jyz)",
-        "language_code": "en",
-        "master": 5
+        "master": 5,
+        "language_code": "en"
     }
 },
 {
@@ -167,8 +192,8 @@
     "fields": {
         "name": "Faraday cups (FC1, FC2)",
         "description": "",
-        "language_code": "en",
-        "master": 6
+        "master": 6,
+        "language_code": "en"
     }
 },
 {
@@ -177,8 +202,8 @@
     "fields": {
         "name": "Rogowski coil",
         "description": "",
-        "language_code": "en",
-        "master": 7
+        "master": 7,
+        "language_code": "en"
     }
 },
 {
@@ -187,8 +212,28 @@
     "fields": {
         "name": "Fluxgate magnetometer FZM",
         "description": "",
-        "language_code": "en",
-        "master": 8
+        "master": 8,
+        "language_code": "en"
+    }
+},
+{
+    "model": "backend_api.devicetranslation",
+    "pk": 14,
+    "fields": {
+        "name": "ScanPol",
+        "description": "The ScanPol is a multispectral scanning polarimeter with six spectral channels in the near\r\nultraviolet (NUV), visible (VIS) and shortwave infrared (SWIR) spectral channels. The spectral\r\nchannels are centered at the wavelengths 370, 410, 555, 865, 1378, 1610 nm.",
+        "master": 9,
+        "language_code": "en"
+    }
+},
+{
+    "model": "backend_api.devicetranslation",
+    "pk": 15,
+    "fields": {
+        "name": "ScanPol",
+        "description": "ScanPol - \u0446\u0435 \u0431\u0430\u0433\u0430\u0442\u043e\u0441\u043f\u0435\u043a\u0442\u0440\u0430\u043b\u044c\u043d\u0438\u0439 \u0441\u043a\u0430\u043d\u0443\u044e\u0447\u0438\u0439 \u043f\u043e\u043b\u044f\u0440\u0438\u043c\u0435\u0442\u0440 \u0456\u0437 \u0448\u0456\u0441\u0442\u044c\u043c\u0430 \u0441\u043f\u0435\u043a\u0442\u0440\u0430\u043b\u044c\u043d\u0438\u043c\u0438 \u043a\u0430\u043d\u0430\u043b\u0430\u043c\u0438 \u0443 \u0431\u043b\u0438\u0436\u043d\u044c\u043e\u043c\u0443 \u0443\u043b\u044c\u0442\u0440\u0430\u0444\u0456\u043e\u043b\u0435\u0442\u043e\u0432\u043e\u043c\u0443 (NUV), \u0432\u0438\u0434\u0438\u043c\u043e\u043c\u0443 (VIS) \u0442\u0430 \u043a\u043e\u0440\u043e\u0442\u043a\u043e\u0445\u0432\u0438\u043b\u044c\u043e\u0432\u043e\u043c\u0443 \u0456\u043d\u0444\u0440\u0430\u0447\u0435\u0440\u0432\u043e\u043d\u0438\u0445 (SWIR) \u0441\u043f\u0435\u043a\u0442\u0440\u0430\u043b\u044c\u043d\u0438\u0445 \u043a\u0430\u043d\u0430\u043b\u0430\u0445. \u0421\u043f\u0435\u043a\u0442\u0440\u0430\u043b\u044c\u043d\u0456 \u043a\u0430\u043d\u0430\u043b\u0438 \u0437\u043e\u0441\u0435\u0440\u0435\u0434\u0436\u0435\u043d\u0456 \u043d\u0430 \u0434\u043e\u0432\u0436\u0438\u043d\u0430\u0445 \u0445\u0432\u0438\u043b\u044c 370, 410, 555, 865, 1378, 1610 \u043d\u043c.",
+        "master": 9,
+        "language_code": "uk"
     }
 },
 {
@@ -245,6 +290,13 @@
     "pk": 8,
     "fields": {
         "space_project": 2
+    }
+},
+{
+    "model": "backend_api.device",
+    "pk": 9,
+    "fields": {
+        "space_project": 3
     }
 },
 {
@@ -253,8 +305,8 @@
     "fields": {
         "short_name": "V",
         "long_name": "Volts",
-        "language_code": "en",
-        "master": 1
+        "master": 1,
+        "language_code": "en"
     }
 },
 {
@@ -263,8 +315,8 @@
     "fields": {
         "short_name": "\u0412",
         "long_name": "\u0412\u043e\u043b\u044c\u0442\u0438",
-        "language_code": "uk",
-        "master": 1
+        "master": 1,
+        "language_code": "uk"
     }
 },
 {
@@ -273,8 +325,8 @@
     "fields": {
         "short_name": "V\u22c5m\u22121",
         "long_name": "Volts per metre",
-        "language_code": "en",
-        "master": 2
+        "master": 2,
+        "language_code": "en"
     }
 },
 {
@@ -283,8 +335,8 @@
     "fields": {
         "short_name": "\u0412\u22c5\u043c\u22121",
         "long_name": "\u0412\u043e\u043b\u044c\u0442 \u043d\u0430 \u043c\u0435\u0442\u0440",
-        "language_code": "uk",
-        "master": 2
+        "master": 2,
+        "language_code": "uk"
     }
 },
 {
@@ -293,8 +345,8 @@
     "fields": {
         "short_name": "nT",
         "long_name": "Nanotesla",
-        "language_code": "en",
-        "master": 3
+        "master": 3,
+        "language_code": "en"
     }
 },
 {
@@ -303,8 +355,8 @@
     "fields": {
         "short_name": "\u043d\u0422\u043b",
         "long_name": "\u041d\u0430\u043d\u043e\u0442\u0435\u0441\u043b\u0430",
-        "language_code": "uk",
-        "master": 3
+        "master": 3,
+        "language_code": "uk"
     }
 },
 {
@@ -313,8 +365,8 @@
     "fields": {
         "short_name": "A\u22c5cm\u22122",
         "long_name": "Amper per square centimetre",
-        "language_code": "en",
-        "master": 4
+        "master": 4,
+        "language_code": "en"
     }
 },
 {
@@ -323,8 +375,28 @@
     "fields": {
         "short_name": "\u0410\u22c5\u0441\u043c\u22122",
         "long_name": "\u0410\u043c\u043f\u0435\u0440 \u043d\u0430 \u0441\u0430\u043d\u0442\u0438\u043c\u0435\u0442\u0440 \u043a\u0432\u0430\u0434\u0440\u0430\u0442\u043d\u0438\u0439",
-        "language_code": "uk",
-        "master": 4
+        "master": 4,
+        "language_code": "uk"
+    }
+},
+{
+    "model": "backend_api.unittranslation",
+    "pk": 9,
+    "fields": {
+        "short_name": "A",
+        "long_name": "Amper",
+        "master": 5,
+        "language_code": "en"
+    }
+},
+{
+    "model": "backend_api.unittranslation",
+    "pk": 10,
+    "fields": {
+        "short_name": "\u0410",
+        "long_name": "\u0410\u043c\u043f\u0435\u0440",
+        "master": 5,
+        "language_code": "uk"
     }
 },
 {
@@ -345,6 +417,11 @@
 {
     "model": "backend_api.unit",
     "pk": 4,
+    "fields": {}
+},
+{
+    "model": "backend_api.unit",
+    "pk": 5,
     "fields": {}
 },
 {
@@ -353,8 +430,8 @@
     "fields": {
         "name": "Electric potential",
         "description": "Electric field potential",
-        "language_code": "en",
-        "master": 1
+        "master": 1,
+        "language_code": "en"
     }
 },
 {
@@ -363,8 +440,8 @@
     "fields": {
         "name": "\u041f\u043e\u0442\u0435\u043d\u0446\u0456\u0430\u043b \u0435\u043b\u0435\u043a\u0442\u0440\u0438\u0447\u043d\u043e\u0433\u043e \u043f\u043e\u043b\u044f",
         "description": "\u041f\u043e\u0442\u0435\u043d\u0446\u0456\u0430\u043b \u0435\u043b\u0435\u043a\u0442\u0440\u0438\u0447\u043d\u043e\u0433\u043e \u043f\u043e\u043b\u044f (\u0435\u043b\u0435\u043a\u0442\u0440\u043e\u0441\u0442\u0430\u0442\u0438\u0447\u043d\u0438\u0439 \u043f\u043e\u0442\u0435\u043d\u0446\u0456\u0430\u043b)",
-        "language_code": "uk",
-        "master": 1
+        "master": 1,
+        "language_code": "uk"
     }
 },
 {
@@ -373,8 +450,8 @@
     "fields": {
         "name": "Electric potential difference",
         "description": "",
-        "language_code": "en",
-        "master": 2
+        "master": 2,
+        "language_code": "en"
     }
 },
 {
@@ -383,8 +460,8 @@
     "fields": {
         "name": "\u0420\u0456\u0437\u043d\u0438\u0446\u044f \u0435\u043b\u0435\u043a\u0442\u0440\u0438\u0447\u043d\u0438\u0445 \u043f\u043e\u0442\u0435\u043d\u0446\u0456\u0430\u043b\u0456\u0432",
         "description": "",
-        "language_code": "uk",
-        "master": 2
+        "master": 2,
+        "language_code": "uk"
     }
 },
 {
@@ -393,8 +470,8 @@
     "fields": {
         "name": "Electric field",
         "description": "",
-        "language_code": "en",
-        "master": 3
+        "master": 3,
+        "language_code": "en"
     }
 },
 {
@@ -403,8 +480,8 @@
     "fields": {
         "name": "\u0412\u0435\u043a\u0442\u043e\u0440 \u043d\u0430\u043f\u0440\u0443\u0436\u0435\u043d\u043d\u043e\u0441\u0442\u0456 \u0435\u043b\u0435\u043a\u0442\u0440\u0438\u0447\u043d\u043e\u0433\u043e \u043f\u043e\u043b\u044f",
         "description": "",
-        "language_code": "uk",
-        "master": 3
+        "master": 3,
+        "language_code": "uk"
     }
 },
 {
@@ -413,8 +490,8 @@
     "fields": {
         "name": "Magnetic field",
         "description": "",
-        "language_code": "en",
-        "master": 4
+        "master": 4,
+        "language_code": "en"
     }
 },
 {
@@ -423,8 +500,8 @@
     "fields": {
         "name": "\u0412\u0435\u043a\u0442\u043e\u0440 \u0456\u043d\u0434\u0443\u043a\u0446\u0456\u0457 \u043c\u0430\u0433\u043d\u0456\u0442\u043d\u043e\u0433\u043e \u043f\u043e\u043b\u044f",
         "description": "",
-        "language_code": "uk",
-        "master": 4
+        "master": 4,
+        "language_code": "uk"
     }
 },
 {
@@ -433,8 +510,28 @@
     "fields": {
         "name": "Current density",
         "description": "Electric current density",
-        "language_code": "en",
-        "master": 5
+        "master": 5,
+        "language_code": "en"
+    }
+},
+{
+    "model": "backend_api.valuetranslation",
+    "pk": 10,
+    "fields": {
+        "name": "Current",
+        "description": "",
+        "master": 6,
+        "language_code": "en"
+    }
+},
+{
+    "model": "backend_api.valuetranslation",
+    "pk": 11,
+    "fields": {
+        "name": "\u0421\u0442\u0440\u0443\u043c",
+        "description": "",
+        "master": 6,
+        "language_code": "uk"
     }
 },
 {
@@ -478,13 +575,21 @@
     }
 },
 {
+    "model": "backend_api.value",
+    "pk": 6,
+    "fields": {
+        "short_name": "Current",
+        "units": 5
+    }
+},
+{
     "model": "backend_api.channeltranslation",
     "pk": 1,
     "fields": {
         "name": "EZ low-frequency channel",
         "description": "Low-frequency channel of the electric potential measurement (1Hz)",
-        "language_code": "en",
-        "master": 1
+        "master": 1,
+        "language_code": "en"
     }
 },
 {
@@ -493,8 +598,8 @@
     "fields": {
         "name": "EZ \u043d\u0438\u0437\u044c\u043a\u043e\u0447\u0430\u0441\u0442\u043e\u0442\u043d\u0438\u0439 \u043a\u0430\u043d\u0430\u043b",
         "description": "\u041d\u0438\u0437\u044c\u043a\u043e\u0447\u0430\u0441\u0442\u043e\u0442\u043d\u0438\u0439 \u043a\u0430\u043d\u0430\u043b \u0432\u0438\u043c\u0456\u0440\u044e\u0432\u0430\u043d\u043d\u044f \u043f\u043e\u0442\u0435\u043d\u0446\u0456\u0430\u043b\u0443 \u0435\u043b\u0435\u043a\u0442\u0440\u0438\u0447\u043d\u043e\u0433\u043e \u043f\u043e\u043b\u044f  (1 \u0413\u0446)",
-        "language_code": "uk",
-        "master": 1
+        "master": 1,
+        "language_code": "uk"
     }
 },
 {
@@ -503,8 +608,8 @@
     "fields": {
         "name": "EZ high-frequency channel",
         "description": "High-frequency channel of the electric potential measurement (1kHz)",
-        "language_code": "en",
-        "master": 2
+        "master": 2,
+        "language_code": "en"
     }
 },
 {
@@ -513,8 +618,8 @@
     "fields": {
         "name": "EZ \u0432\u0438\u0441\u043e\u043a\u043e\u0447\u0430\u0441\u0442\u043e\u0442\u043d\u0438\u0439 \u043a\u0430\u043d\u0430\u043b",
         "description": "\u0412\u0438\u0441\u043e\u043a\u043e\u0447\u0430\u0441\u0442\u043e\u0442\u043d\u0438\u0439 \u043a\u0430\u043d\u0430\u043b \u0432\u0438\u043c\u0456\u0440\u044e\u0432\u0430\u043d\u043d\u044f \u043f\u043e\u0442\u0435\u043d\u0446\u0456\u0430\u043b\u0443 \u0435\u043b\u0435\u043a\u0442\u0440\u0438\u0447\u043d\u043e\u0433\u043e \u043f\u043e\u043b\u044f  (1 \u043a\u0413\u0446)",
-        "language_code": "uk",
-        "master": 2
+        "master": 2,
+        "language_code": "uk"
     }
 },
 {
@@ -523,8 +628,8 @@
     "fields": {
         "name": "\u0394E1, \u0394E2, \u0394E3",
         "description": "\u0394E1 = EZ1 - EZ4 \r\n\u0394E2 = EZ1 - EZ3\r\n\u0394E3 = EZ1 - EZ3",
-        "language_code": "en",
-        "master": 3
+        "master": 3,
+        "language_code": "en"
     }
 },
 {
@@ -533,8 +638,8 @@
     "fields": {
         "name": "Bx~, By~ (not calibrated)",
         "description": "",
-        "language_code": "en",
-        "master": 4
+        "master": 4,
+        "language_code": "en"
     }
 },
 {
@@ -543,8 +648,8 @@
     "fields": {
         "name": "Jxz~, Jyz~ (not calibrated)",
         "description": "",
-        "language_code": "en",
-        "master": 5
+        "master": 5,
+        "language_code": "en"
     }
 },
 {
@@ -553,8 +658,8 @@
     "fields": {
         "name": "\u0394E1, \u0394E2, \u0394E3",
         "description": "\u0394E1 = EZ1 - EZ4 \r\n\u0394E2 = EZ1 - EZ3\r\n\u0394E3 = EZ1 - EZ3",
-        "language_code": "uk",
-        "master": 3
+        "master": 3,
+        "language_code": "uk"
     }
 },
 {
@@ -563,8 +668,8 @@
     "fields": {
         "name": "Bx~, By~ (\u043d\u0435 \u0442\u0430\u0440\u0438\u0440\u043e\u0432\u0430\u043d\u0456)",
         "description": "",
-        "language_code": "uk",
-        "master": 4
+        "master": 4,
+        "language_code": "uk"
     }
 },
 {
@@ -573,8 +678,8 @@
     "fields": {
         "name": "Jxz~, Jyz~ (\u043d\u0435 \u0442\u0430\u0440\u0438\u0440\u043e\u0432\u0430\u043d\u0456)",
         "description": "",
-        "language_code": "uk",
-        "master": 5
+        "master": 5,
+        "language_code": "uk"
     }
 },
 {
@@ -583,8 +688,8 @@
     "fields": {
         "name": "\u0394E1=, \u0394E2=, \u0394E3=",
         "description": "",
-        "language_code": "en",
-        "master": 6
+        "master": 6,
+        "language_code": "en"
     }
 },
 {
@@ -593,8 +698,8 @@
     "fields": {
         "name": "FC1~, FC2~",
         "description": "",
-        "language_code": "en",
-        "master": 7
+        "master": 7,
+        "language_code": "en"
     }
 },
 {
@@ -603,8 +708,8 @@
     "fields": {
         "name": "JF~",
         "description": "",
-        "language_code": "en",
-        "master": 8
+        "master": 8,
+        "language_code": "en"
     }
 },
 {
@@ -613,8 +718,8 @@
     "fields": {
         "name": "Bx, By, Bz",
         "description": "",
-        "language_code": "en",
-        "master": 9
+        "master": 9,
+        "language_code": "en"
     }
 },
 {
@@ -623,8 +728,128 @@
     "fields": {
         "name": "FC1=, FC2=",
         "description": "",
-        "language_code": "en",
-        "master": 10
+        "master": 10,
+        "language_code": "en"
+    }
+},
+{
+    "model": "backend_api.channeltranslation",
+    "pk": 16,
+    "fields": {
+        "name": "w_370",
+        "description": "The spectral channel is centered on a wavelength of 370 nm",
+        "master": 11,
+        "language_code": "en"
+    }
+},
+{
+    "model": "backend_api.channeltranslation",
+    "pk": 17,
+    "fields": {
+        "name": "w_410",
+        "description": "The spectral channel is centered on a wavelength of 410 nm",
+        "master": 12,
+        "language_code": "en"
+    }
+},
+{
+    "model": "backend_api.channeltranslation",
+    "pk": 18,
+    "fields": {
+        "name": "w_370",
+        "description": "\u0421\u043f\u0435\u043a\u0442\u0440\u0430\u043b\u044c\u043d\u0438\u0439 \u043a\u0430\u043d\u0430\u043b, \u0449\u043e \u0432\u0456\u0434\u043f\u043e\u0432\u0456\u0434\u0430\u0454 \u0434\u043e\u0432\u0436\u0438\u043d\u0456 \u0445\u0432\u0438\u043b\u0456 370 \u043d\u043c",
+        "master": 11,
+        "language_code": "uk"
+    }
+},
+{
+    "model": "backend_api.channeltranslation",
+    "pk": 19,
+    "fields": {
+        "name": "w_410",
+        "description": "\u0421\u043f\u0435\u043a\u0442\u0440\u0430\u043b\u044c\u043d\u0438\u0439 \u043a\u0430\u043d\u0430\u043b, \u0449\u043e \u0432\u0456\u0434\u043f\u043e\u0432\u0456\u0434\u0430\u0454 \u0434\u043e\u0432\u0436\u0438\u043d\u0456 \u0445\u0432\u0438\u043b\u0456 410 \u043d\u043c",
+        "master": 12,
+        "language_code": "uk"
+    }
+},
+{
+    "model": "backend_api.channeltranslation",
+    "pk": 20,
+    "fields": {
+        "name": "w_555",
+        "description": "The spectral channel is centered on a wavelength of 555 nm",
+        "master": 13,
+        "language_code": "en"
+    }
+},
+{
+    "model": "backend_api.channeltranslation",
+    "pk": 21,
+    "fields": {
+        "name": "w_555",
+        "description": "\u0421\u043f\u0435\u043a\u0442\u0440\u0430\u043b\u044c\u043d\u0438\u0439 \u043a\u0430\u043d\u0430\u043b, \u0449\u043e \u0432\u0456\u0434\u043f\u043e\u0432\u0456\u0434\u0430\u0454 \u0434\u043e\u0432\u0436\u0438\u043d\u0456 \u0445\u0432\u0438\u043b\u0456 555 \u043d\u043c",
+        "master": 13,
+        "language_code": "uk"
+    }
+},
+{
+    "model": "backend_api.channeltranslation",
+    "pk": 22,
+    "fields": {
+        "name": "w_865",
+        "description": "The spectral channel is centered on a wavelength of 865 nm",
+        "master": 14,
+        "language_code": "en"
+    }
+},
+{
+    "model": "backend_api.channeltranslation",
+    "pk": 23,
+    "fields": {
+        "name": "w_865",
+        "description": "\u0421\u043f\u0435\u043a\u0442\u0440\u0430\u043b\u044c\u043d\u0438\u0439 \u043a\u0430\u043d\u0430\u043b, \u0449\u043e \u0432\u0456\u0434\u043f\u043e\u0432\u0456\u0434\u0430\u0454 \u0434\u043e\u0432\u0436\u0438\u043d\u0456 \u0445\u0432\u0438\u043b\u0456 865 \u043d\u043c",
+        "master": 14,
+        "language_code": "uk"
+    }
+},
+{
+    "model": "backend_api.channeltranslation",
+    "pk": 24,
+    "fields": {
+        "name": "w_1378",
+        "description": "The spectral channel is centered on a wavelength of 1378 nm",
+        "master": 15,
+        "language_code": "en"
+    }
+},
+{
+    "model": "backend_api.channeltranslation",
+    "pk": 25,
+    "fields": {
+        "name": "w_1378",
+        "description": "\u0421\u043f\u0435\u043a\u0442\u0440\u0430\u043b\u044c\u043d\u0438\u0439 \u043a\u0430\u043d\u0430\u043b, \u0449\u043e \u0432\u0456\u0434\u043f\u043e\u0432\u0456\u0434\u0430\u0454 \u0434\u043e\u0432\u0436\u0438\u043d\u0456 \u0445\u0432\u0438\u043b\u0456 1378 \u043d\u043c",
+        "master": 15,
+        "language_code": "uk"
+    }
+},
+{
+    "model": "backend_api.channeltranslation",
+    "pk": 26,
+    "fields": {
+        "name": "w_1610",
+        "description": "The spectral channel is centered on a wavelength of 1610 nm",
+        "master": 16,
+        "language_code": "en"
+    }
+},
+{
+    "model": "backend_api.channeltranslation",
+    "pk": 27,
+    "fields": {
+        "name": "w_1610",
+        "description": "\u0421\u043f\u0435\u043a\u0442\u0440\u0430\u043b\u044c\u043d\u0438\u0439 \u043a\u0430\u043d\u0430\u043b, \u0449\u043e \u0432\u0456\u0434\u043f\u043e\u0432\u0456\u0434\u0430\u0454 \u0434\u043e\u0432\u0436\u0438\u043d\u0456 \u0445\u0432\u0438\u043b\u0456 1610 \u043d\u043c",
+        "master": 16,
+        "language_code": "uk"
     }
 },
 {
@@ -634,10 +859,8 @@
         "value": 1,
         "exponent": -3,
         "device": 1,
-        "klass": [
-            "classes.base_data.SingleVarTimeSeries"
-        ],
-        "labels": ["ez/lf/0"]
+        "klass": 8,
+        "labels": "[\"ez/lf/0\"]"
     }
 },
 {
@@ -647,10 +870,8 @@
         "value": 1,
         "exponent": -3,
         "device": 1,
-        "klass": [
-            "classes.base_data.SingleVarTimeSeries"
-        ],
-        "labels": ["ez/hf/00"]
+        "klass": 8,
+        "labels": "[\"ez/hf/00\"]"
     }
 },
 {
@@ -660,10 +881,8 @@
         "value": 2,
         "exponent": 0,
         "device": 4,
-        "klass": [
-            "classes.base_data.ObliqueThreeVarTimeSeriesHF"
-        ],
-        "labels": ["E1~", "E2~", "E3~"]
+        "klass": 1,
+        "labels": "[\"E1~\", \"E2~\", \"E3~\"]"
     }
 },
 {
@@ -673,10 +892,8 @@
         "value": 1,
         "exponent": 0,
         "device": 5,
-        "klass": [
-            "classes.base_data.OrthogonalTwoVarTimeSeriesHF"
-        ],
-        "labels": ["Bx~", "By~"]
+        "klass": 6,
+        "labels": "[\"Bx~\", \"By~\"]"
     }
 },
 {
@@ -686,10 +903,8 @@
         "value": 1,
         "exponent": 0,
         "device": 5,
-        "klass": [
-            "classes.base_data.OrthogonalTwoVarTimeSeriesHF"
-        ],
-        "labels": ["Jxz~", "Jyz~"]
+        "klass": 6,
+        "labels": "[\"Jxz~\", \"Jyz~\"]"
     }
 },
 {
@@ -699,10 +914,8 @@
         "value": 2,
         "exponent": 0,
         "device": 4,
-        "klass": [
-            "classes.base_data.ObliqueThreeVarTimeSeriesLF"
-        ],
-        "labels": ["E1=", "E2=", "E3="]
+        "klass": 2,
+        "labels": "[\"E1=\", \"E2=\", \"E3=\"]"
     }
 },
 {
@@ -712,10 +925,8 @@
         "value": 5,
         "exponent": 0,
         "device": 6,
-        "klass": [
-            "classes.base_data.ScalarValueDifference"
-        ],
-        "labels": ["FC1~", "FC2~"]
+        "klass": 7,
+        "labels": "[\"FC1~\", \"FC2~\"]"
     }
 },
 {
@@ -725,10 +936,8 @@
         "value": 5,
         "exponent": 0,
         "device": 7,
-        "klass": [
-            "classes.base_data.SingleVarTimeSeries"
-        ],
-        "labels": ["JF~"]
+        "klass": 8,
+        "labels": "[\"JF~\"]"
     }
 },
 {
@@ -738,10 +947,8 @@
         "value": 4,
         "exponent": 0,
         "device": 8,
-        "klass": [
-            "classes.base_data.OrthogonalThreeVarTimeSeriesLF"
-        ],
-        "labels": ["Bx", "By", "Bz"]
+        "klass": 5,
+        "labels": "[\"Bx\", \"By\", \"Bz\"]"
     }
 },
 {
@@ -751,10 +958,74 @@
         "value": 5,
         "exponent": 0,
         "device": 6,
-        "klass": [
-            "classes.base_data.ScalarValueDifference"
-        ],
-        "labels": ["FC1=", "FC2="]
+        "klass": 7,
+        "labels": "[\"FC1=\", \"FC2=\"]"
+    }
+},
+{
+    "model": "backend_api.channel",
+    "pk": 11,
+    "fields": {
+        "value": 6,
+        "exponent": 0,
+        "device": 9,
+        "klass": 8,
+        "labels": "[\"w_370_label\"]"
+    }
+},
+{
+    "model": "backend_api.channel",
+    "pk": 12,
+    "fields": {
+        "value": 6,
+        "exponent": 0,
+        "device": 9,
+        "klass": 8,
+        "labels": "[\"w_410_label\"]"
+    }
+},
+{
+    "model": "backend_api.channel",
+    "pk": 13,
+    "fields": {
+        "value": 6,
+        "exponent": 0,
+        "device": 9,
+        "klass": 8,
+        "labels": "[\"w_555_label\"]"
+    }
+},
+{
+    "model": "backend_api.channel",
+    "pk": 14,
+    "fields": {
+        "value": 6,
+        "exponent": 0,
+        "device": 9,
+        "klass": 1,
+        "labels": "[\"w_865_label\"]"
+    }
+},
+{
+    "model": "backend_api.channel",
+    "pk": 15,
+    "fields": {
+        "value": 6,
+        "exponent": 0,
+        "device": 9,
+        "klass": 8,
+        "labels": "[\"w_1378_label\"]"
+    }
+},
+{
+    "model": "backend_api.channel",
+    "pk": 16,
+    "fields": {
+        "value": 6,
+        "exponent": 0,
+        "device": 9,
+        "klass": 8,
+        "labels": "[\"w_1610_label\"]"
     }
 },
 {
@@ -763,8 +1034,8 @@
     "fields": {
         "name": "V (electric potential LF Fs = 1 Hz)",
         "description": "Electric potential measured in low frequency (Fs = 1 Hz)",
-        "language_code": "en",
-        "master": 1
+        "master": 1,
+        "language_code": "en"
     }
 },
 {
@@ -773,8 +1044,8 @@
     "fields": {
         "name": "V (\u0435\u043b\u0435\u043a\u0442\u0438\u0447\u043d\u0438\u0439 \u043f\u043e\u0442\u0435\u043d\u0446\u0456\u0430\u043b LF Fs = 1 \u0413\u0446)",
         "description": "\u041d\u0438\u0437\u044c\u043a\u043e\u0447\u0430\u0441\u0442\u043e\u0442\u043d\u0456 \u0432\u0438\u043c\u0456\u0440\u044e\u0432\u0430\u043d\u043d\u044f \u0435\u043b\u0435\u043a\u0442\u0438\u0447\u043d\u043e\u0433\u043e \u043f\u043e\u0442\u0435\u043d\u0446\u0456\u0430\u043b\u0443 (Fs = 1 \u0413\u0446)",
-        "language_code": "uk",
-        "master": 1
+        "master": 1,
+        "language_code": "uk"
     }
 },
 {
@@ -783,8 +1054,8 @@
     "fields": {
         "name": "V (\u0435\u043b\u0435\u043a\u0442\u0438\u0447\u043d\u0438\u0439 \u043f\u043e\u0442\u0435\u043d\u0446\u0456\u0430\u043b HF Fs = 1 \u043a\u0413\u0446)",
         "description": "\u0412\u0438\u0441\u043e\u043a\u043e\u0447\u0430\u0441\u0442\u043e\u0442\u043d\u0456 \u0432\u0438\u043c\u0456\u0440\u044e\u0432\u0430\u043d\u043d\u044f \u0435\u043b\u0435\u043a\u0442\u0438\u0447\u043d\u043e\u0433\u043e \u043f\u043e\u0442\u0435\u043d\u0446\u0456\u0430\u043b\u0443 (Fs = 1 \u043a\u0413\u0446)",
-        "language_code": "uk",
-        "master": 2
+        "master": 2,
+        "language_code": "uk"
     }
 },
 {
@@ -793,8 +1064,8 @@
     "fields": {
         "name": "V (electric potential HF Fs = 1 kHz)",
         "description": "Electric potential measured in high frequency (Fs = 1 kHz)",
-        "language_code": "en",
-        "master": 2
+        "master": 2,
+        "language_code": "en"
     }
 },
 {
@@ -803,8 +1074,8 @@
     "fields": {
         "name": "Ex, Ey, Ez (three components of electric field HF)",
         "description": "",
-        "language_code": "en",
-        "master": 3
+        "master": 3,
+        "language_code": "en"
     }
 },
 {
@@ -813,8 +1084,8 @@
     "fields": {
         "name": "Ex, Ey, Ez (\u0442\u0440\u0438 \u043a\u043e\u043c\u043f\u043e\u043d\u0435\u043d\u0442\u0438 \u0432\u0435\u043a\u0442\u043e\u0440\u0443 \u043d\u0430\u043f\u0440\u0443\u0436\u0435\u043d\u043d\u043e\u0441\u0442\u0456 \u0435\u043b\u0435\u043a\u0442\u0440\u0438\u0447\u043d\u043e\u0433\u043e \u043f\u043e\u043b\u044f HF Fs = 31.25 \u043a\u0413\u0446)",
         "description": "",
-        "language_code": "uk",
-        "master": 3
+        "master": 3,
+        "language_code": "uk"
     }
 },
 {
@@ -823,8 +1094,8 @@
     "fields": {
         "name": "Bx, By (two components of magnetic field HF)",
         "description": "",
-        "language_code": "en",
-        "master": 4
+        "master": 4,
+        "language_code": "en"
     }
 },
 {
@@ -833,8 +1104,8 @@
     "fields": {
         "name": "Bx, By (\u0434\u0432\u0456 \u043a\u043e\u043c\u043f\u043e\u043d\u0435\u043d\u0442\u0438 \u043c\u0430\u0433\u043d\u0456\u0442\u043d\u043e\u0433\u043e \u043f\u043e\u043b\u044f HF Fs = 31,25 \u043a\u0413\u0446)",
         "description": "",
-        "language_code": "uk",
-        "master": 4
+        "master": 4,
+        "language_code": "uk"
     }
 },
 {
@@ -843,8 +1114,8 @@
     "fields": {
         "name": "Jxz, Jyz (two components of current density)",
         "description": "",
-        "language_code": "en",
-        "master": 5
+        "master": 5,
+        "language_code": "en"
     }
 },
 {
@@ -853,8 +1124,8 @@
     "fields": {
         "name": "Jxz, Jyz (\u0434\u0432\u0456 \u043a\u043e\u043c\u043f\u043e\u043d\u0435\u043d\u0442\u0438 \u0433\u0443\u0441\u0442\u0438\u043d\u0438 \u0435\u043b\u0435\u043a\u0442\u0440\u0438\u0447\u043d\u043e\u0433\u043e \u0441\u0442\u0440\u0443\u043c\u0443 Fs = 31.25 \u043a\u0413\u0446)",
         "description": "",
-        "language_code": "uk",
-        "master": 5
+        "master": 5,
+        "language_code": "uk"
     }
 },
 {
@@ -863,8 +1134,8 @@
     "fields": {
         "name": "E1=, E2=, E3= (three components of electric field LF)",
         "description": "",
-        "language_code": "en",
-        "master": 6
+        "master": 6,
+        "language_code": "en"
     }
 },
 {
@@ -873,8 +1144,8 @@
     "fields": {
         "name": "\u0394FC~",
         "description": "",
-        "language_code": "en",
-        "master": 7
+        "master": 7,
+        "language_code": "en"
     }
 },
 {
@@ -883,8 +1154,8 @@
     "fields": {
         "name": "JF~ (current density)",
         "description": "",
-        "language_code": "en",
-        "master": 8
+        "master": 8,
+        "language_code": "en"
     }
 },
 {
@@ -893,8 +1164,8 @@
     "fields": {
         "name": "Bx, By, Bz (three components of magnetic field)",
         "description": "",
-        "language_code": "en",
-        "master": 9
+        "master": 9,
+        "language_code": "en"
     }
 },
 {
@@ -903,8 +1174,8 @@
     "fields": {
         "name": "\u0394FC=",
         "description": "",
-        "language_code": "en",
-        "master": 10
+        "master": 10,
+        "language_code": "en"
     }
 },
 {
@@ -914,9 +1185,7 @@
         "value": 1,
         "exponent": -3,
         "channel": 1,
-        "klass": [
-            "classes.base_data.SingleVarTimeSeries"
-        ]
+        "klass": 8
     }
 },
 {
@@ -926,9 +1195,7 @@
         "value": 1,
         "exponent": -3,
         "channel": 2,
-        "klass": [
-            "classes.base_data.SingleVarTimeSeries"
-        ]
+        "klass": 8
     }
 },
 {
@@ -938,9 +1205,7 @@
         "value": 3,
         "exponent": 0,
         "channel": 3,
-        "klass": [
-            "classes.base_data.ObliqueThreeVarTimeSeriesHF"
-        ]
+        "klass": 1
     }
 },
 {
@@ -950,9 +1215,7 @@
         "value": 4,
         "exponent": 0,
         "channel": 4,
-        "klass": [
-            "classes.base_data.OrthogonalTwoVarTimeSeriesHF"
-        ]
+        "klass": 6
     }
 },
 {
@@ -962,9 +1225,7 @@
         "value": 5,
         "exponent": 0,
         "channel": 5,
-        "klass": [
-            "classes.base_data.OrthogonalTwoVarTimeSeriesHF"
-        ]
+        "klass": 6
     }
 },
 {
@@ -974,9 +1235,7 @@
         "value": 2,
         "exponent": 0,
         "channel": 6,
-        "klass": [
-            "classes.base_data.ObliqueThreeVarTimeSeriesLF"
-        ]
+        "klass": 2
     }
 },
 {
@@ -986,9 +1245,7 @@
         "value": 5,
         "exponent": 0,
         "channel": 7,
-        "klass": [
-            "classes.base_data.ScalarValueDifference"
-        ]
+        "klass": 7
     }
 },
 {
@@ -998,9 +1255,7 @@
         "value": 5,
         "exponent": 0,
         "channel": 8,
-        "klass": [
-            "classes.base_data.SingleVarTimeSeries"
-        ]
+        "klass": 8
     }
 },
 {
@@ -1010,9 +1265,7 @@
         "value": 4,
         "exponent": 0,
         "channel": 9,
-        "klass": [
-            "classes.base_data.OrthogonalThreeVarTimeSeriesLF"
-        ]
+        "klass": 5
     }
 },
 {
@@ -1022,9 +1275,7 @@
         "value": 5,
         "exponent": 0,
         "channel": 10,
-        "klass": [
-            "classes.base_data.ScalarValueDifference"
-        ]
+        "klass": 7
     }
 }
 ]
