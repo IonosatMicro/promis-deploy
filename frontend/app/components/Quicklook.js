@@ -22,7 +22,7 @@ export default class Quicklook extends Component {
         this.data = this.formatData(this.props.data, this.props.time);
     }
 
-    componentDidUpdate() {
+    componentDidMount() {
         /* get rendered SVG graph element */
         if(this.el) {
             this.svg = findDOMNode(this.el).querySelector('svg');
