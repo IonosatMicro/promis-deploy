@@ -1,4 +1,4 @@
-FROM smebberson/alpine-nginx-nodejs
+FROM landswellsong/alpine-nginx-nodejs:12.13.1
 
 # Stream the nginx logs to stdout and stderr
 # Stolen from the author's Dockerfile :)
@@ -9,10 +9,6 @@ RUN ln -sf /dev/stdout /var/log/nginx/access.log && \
 RUN mkdir -p /usr/src/promis/app
 WORKDIR /usr/src/promis
 ADD package.json /usr/src/promis/
-
-# Update npm
-# https://github.com/npm/npm/issues/9863
-RUN cd $(npm root -g)/npm     && npm install -g fs-extra     && sed -i -e s/graceful-fs/fs-extra/ -e s/fs.rename/fs.move/ ./lib/utils/rename.js     && npm install -g npm@^5.0.0
 
 # Install packages needed
 RUN npm install
