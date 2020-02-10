@@ -84,8 +84,8 @@ export function selectionToPolygon(selection) {
     points.push(points[0]);
 
     points.forEach(function(point) {
-        let lat = fixedPoint(point.lat ? point.lat : point[0]);
-        let lng = fixedPoint(point.lng ? point.lng : point[1]);
+        let lat = fixedPoint(selection.type == Types.Polygon ? point[0] : point.lat);
+        let lng = fixedPoint(selection.type == Types.Polygon ? point[1] : point.lng);
 
         coords.push(new Array(lng, lat));
     });
