@@ -60,11 +60,20 @@ export function selectionToPolygon(selection) {
         case Types.Rect:
             let bounds = Leaflet.latLngBounds(selection.data[0], selection.data[1]);
             //let center = bounds.getCenter();
-
             points.push(bounds.getSouthWest());
             points.push(bounds.getSouthEast());
+            // had to add these two intermidiate points to overcome the bug
+            // "Antipodal (180 degrees long) edge detected!"
+            if (selection.data[0][0] == -90 && selection.data[1][0] == 90)
+            {
+                points.push({lat: 0, lng: bounds.getSouthEast().lng})
+            }
             points.push(bounds.getNorthEast());
             points.push(bounds.getNorthWest());
+            if (selection.data[0][0] == -90 && selection.data[1][0] == 90)
+            {
+                points.push({lat: 0, lng: bounds.getNorthWest().lng})
+            }
         break;
 
         case Types.Circle:
