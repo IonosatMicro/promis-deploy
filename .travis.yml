@@ -8,7 +8,7 @@ addons:
       - sourceline: deb http://vagrant-deb.linestarve.com/ any main
         key_url: https://vagrant-deb.linestarve.com/vagrant-deb.asc
     packages:
-      - vagrant
+      - vagrant=1:2.1.0
 before_script:
   - .travis/setup.sh
 script:
