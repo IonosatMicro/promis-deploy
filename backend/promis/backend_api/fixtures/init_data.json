@@ -665,9 +665,11 @@
         ],
         "labels": ["E1~", "E2~", "E3~"],
         "calibration": [
-            "classes.base_calibration.CoefficientMultiply"
+            "classes.base_calibration.CoefficientMatrixMultiply"
         ],
-        "calibration_params": [1]
+        "calibration_params": [0.18607253, -0.19853245, -0.00568404, -0.18550208, 0.0188171,  0.00202993, -0.0393252,  -0.11087313,  0.25190521,
+                               0.01814397, -0.19853245,  0.18607253,  0.16465504, 0.0188171, -0.18550208, -0.10170687, -0.11087313, -0.0393252 ,
+                               10]
     }
 },
 {
@@ -716,9 +718,11 @@
         ],
         "labels": ["E1=", "E2=", "E3="],
         "calibration": [
-            "classes.base_calibration.CoefficientMultiply"
+            "classes.base_calibration.CoefficientMatrixMultiply"
         ],
-        "calibration_params": [1]
+        "calibration_params": [0.18607253, -0.19853245, -0.00568404, -0.18550208, 0.0188171,  0.00202993, -0.0393252,  -0.11087313,  0.25190521,
+                               0.01814397, -0.19853245,  0.18607253,  0.16465504, 0.0188171, -0.18550208, -0.10170687, -0.11087313, -0.0393252 ,
+                               1]
     }
 },
 {

@@ -113,6 +113,7 @@ class Variant(BaseProject):
                            ['FC1~',0], ['FC1=',0], ['FC2~',0], ['FC2=',0], 
                            ['Jyz~',0], ['Bx~',0], ['Jxz~',0], ['By~',0], 
                            ['E1~',0], ['E1=',0], ['E2~',0], ['E2=',0], ['E3~',0], ['E3=',0]]
+            base = "EZ1" # this info is needed for calibration 
             ftp.cwd("..")
             ftp.cwd("Data_Release1/{0}".format(daydir))
             
@@ -129,6 +130,14 @@ class Variant(BaseProject):
                     if len(line.rstrip()) != 0:
                         component_sf[idx][1] = float(line)
                     idx += 1
+
+                for line in fp:
+                    if "EZ1" in line:
+                        base = "EZ1"
+                        break
+                    elif "EZ3" in line:
+                        base = "EZ3"
+                        break
 
             def get_file(name):
                 try:
@@ -187,7 +196,7 @@ class Variant(BaseProject):
                 # coef for JF~: 8.5*10^-2 B*cm^2/nA = 8.5 * 10^-4 * 10^3 B*m^2/mkA = 1.17647 mkA/(m^2*B)
                 calibration_method = chan_obj.get_calibration()
                 if calibration_method:
-                    calibrated_json_data = [calibration_method.calculate(x) for x in json_data]
+                    calibrated_json_data = [calibration_method.calculate(x, base) for x in json_data]
                     calibrated_doc_obj = model.Document.objects.create(json_data = calibrated_json_data )
 
                  #   if len(list_of_components) > 1:
