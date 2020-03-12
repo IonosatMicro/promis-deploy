@@ -19,7 +19,6 @@ class CoefficientMatrixMultiply(BaseCalibration):
     [uk]: множення на матрицю коефіцієнтів (Значення * Коефіцієнт)
     """
 	def calculate(self, data, *args):
-		assert('A' in self.parameters)
 		if 'convert_matrix' in self.parameters:
 			matrix = self.parameters['convert_matrix'][args[0]]
 			data = np.dot(matrix, data)
