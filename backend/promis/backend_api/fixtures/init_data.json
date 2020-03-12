@@ -321,7 +321,7 @@
     "model": "backend_api.unittranslation",
     "pk": 8,
     "fields": {
-        "short_name": "\u03bc\u0410\u22c5\u043c\u22122",
+        "short_name": "\u043c\u043a\u0410\u22c5\u043c\u22122",
         "long_name": "\u041c\u0456\u043a\u0440\u043e\u0430\u043c\u043f\u0435\u0440 \u043d\u0430 \u043c\u0435\u0442\u0440 \u043a\u0432\u0430\u0434\u0440\u0430\u0442\u043d\u0438\u0439",
         "language_code": "uk",
         "master": 4
@@ -667,9 +667,16 @@
         "calibration": [
             "classes.base_calibration.CoefficientMatrixMultiply"
         ],
-        "calibration_params": [0.18607253, -0.19853245, -0.00568404, -0.18550208, 0.0188171,  0.00202993, -0.0393252,  -0.11087313,  0.25190521,
-                               0.01814397, -0.19853245,  0.18607253,  0.16465504, 0.0188171, -0.18550208, -0.10170687, -0.11087313, -0.0393252 ,
-                               10]
+        "calibration_params": {"Kp": 10,
+                               "convert_matrix": 
+                               {"EZ1": [[0.18607253, -0.19853245, -0.00568404], 
+                                        [-0.18550208, 0.0188171,   0.00202993], 
+                                        [-0.0393252,  -0.11087313, 0.25190521]],
+                                "EZ3": [[0.01814397, -0.19853245,  0.18607253],  
+                                        [0.16465504,  0.0188171,  -0.18550208], 
+                                        [-0.10170687, -0.11087313, -0.0393252]]
+                              }
+                            }
     }
 },
 {
@@ -686,7 +693,7 @@
         "calibration": [
             "classes.base_calibration.CoefficientMultiply"
         ],
-        "calibration_params": [10]
+        "calibration_params": {"Kp": 10}
     }
 },
 {
@@ -703,7 +710,7 @@
         "calibration": [
             "classes.base_calibration.CoefficientMultiply"
         ],
-        "calibration_params": [129.87]
+        "calibration_params": {"Kp": 129.87}
     }
 },
 {
@@ -720,9 +727,16 @@
         "calibration": [
             "classes.base_calibration.CoefficientMatrixMultiply"
         ],
-        "calibration_params": [0.18607253, -0.19853245, -0.00568404, -0.18550208, 0.0188171,  0.00202993, -0.0393252,  -0.11087313,  0.25190521,
-                               0.01814397, -0.19853245,  0.18607253,  0.16465504, 0.0188171, -0.18550208, -0.10170687, -0.11087313, -0.0393252 ,
-                               1]
+        "calibration_params":{"Kp": 1,
+                               "convert_matrix": 
+                               {"EZ1": [[0.18607253, -0.19853245, -0.00568404], 
+                                        [-0.18550208, 0.0188171,   0.00202993], 
+                                        [-0.0393252,  -0.11087313, 0.25190521]],
+                                "EZ3": [[0.01814397, -0.19853245,  0.18607253],  
+                                        [0.16465504,  0.0188171,  -0.18550208], 
+                                        [-0.10170687, -0.11087313, -0.0393252]]
+                              }
+                            }
     }
 },
 {
@@ -739,7 +753,7 @@
         "calibration": [
             "classes.base_calibration.TwoToOne"
         ],
-        "calibration_params": [2092]
+        "calibration_params": {"Kp": 0.000478011472}
     }
 },
 {
@@ -756,7 +770,7 @@
         "calibration": [
             "classes.base_calibration.CoefficientMultiply"
         ],
-        "calibration_params": [1.17647]
+        "calibration_params": {"Kp": 1.17647}
     }
 },
 {
@@ -786,7 +800,7 @@
         "calibration": [
             "classes.base_calibration.TwoToOne"
         ],
-        "calibration_params": [21276]
+        "calibration_params": {"Kp": 0.000047001316}
     }
 },
 {

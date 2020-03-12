@@ -1,4 +1,5 @@
 import numbers
+import numpy as np
 
 class BaseCalibration:
 	"""
@@ -18,15 +19,22 @@ class CoefficientMatrixMultiply(BaseCalibration):
     [uk]: множення на матрицю коефіцієнтів (Значення * Коефіцієнт)
     """
 	def calculate(self, data, *args):
-		assert len(self.parameters) > 0
-		if (args[0] == "EZ1"):
-			start_idx = 0
-		else:
-			start_idx = 9
+		assert('A' in self.parameters)
+		if 'convert_matrix' in self.parameters:
+			matrix = self.parameters['convert_matrix'][args[0]]
+			data = np.dot(matrix, data)
+		'''
+		#check matrix
+		res2 = [matrix[0][0]*data[0] + matrix[0][1]*data[1] + matrix[0][2]*data[2],  
+				matrix[1][0]*data[0] + matrix[1][1]*data[1] + matrix[1][2]*data[2],
+				matrix[2][0]*data[0] + matrix[2][1]*data[1] + matrix[2][2]*data[2]]
 
-		return [(self.parameters[start_idx+0]*data[0] + self.parameters[start_idx+1]*data[1] + self.parameters[start_idx+2]*data[2]) * self.parameters[-1],  
-				(self.parameters[start_idx+3]*data[0] + self.parameters[start_idx+4]*data[1] + self.parameters[start_idx+5]*data[2]) * self.parameters[-1],
-				(self.parameters[start_idx+6]*data[0] + self.parameters[start_idx+7]*data[1] + self.parameters[start_idx+8]*data[2]) * self.parameters[-1]]
+		print("matrix 00: ", data[0], " ", res2[0])
+		'''
+		if 'Kp' in self.parameters:
+			data = [self.parameters['Kp'] * x for x in data]
+
+		return data
 
 class CoefficientMultiply(BaseCalibration):
 	"""
@@ -34,11 +42,14 @@ class CoefficientMultiply(BaseCalibration):
     [uk]: множення на коефіцієнт (Значення * Коефіцієнт)
     """
 	def calculate(self, data, *args):
-		assert len(self.parameters) > 0
+		assert('Kp' in self.parameters)
+			
 		if isinstance(data, numbers.Real):
-			return self.parameters[0] * data
+			data = self.parameters['Kp'] * data
 		else:
-			return [self.parameters[0] * x for x in data]
+			data = [self.parameters['Kp'] * x for x in data]
+
+		return data
 
 class TwoToOne(BaseCalibration):
 	"""
@@ -46,7 +57,5 @@ class TwoToOne(BaseCalibration):
     [uk]: перетворення двох каналів в один парметр (канал1-канал2)/коефіцієнт
     """
 	def calculate(self, data, *args):
-		assert len(self.parameters) > 0
-		assert len(data) == 2
-		
-		return (data[0] - data[1]) / self.parameters[0]
+		assert('Kp' in self.parameters)
+		return (data[0] - data[1]) * self.parameters['Kp']

@@ -179,7 +179,7 @@ class Channel(TranslatableModel):
     klass = ForeignKey('Class', null = True)
     labels = ArrayField(CharField(max_length = 20)) 
     calibration = ForeignKey('Class', related_name = 'calibration_method', null = True)
-    calibration_params = ArrayField(FloatField(), null = True)
+    calibration_params = JSONField(null = True)
 
     translations = TranslatedFields(
         name = TextField(),
