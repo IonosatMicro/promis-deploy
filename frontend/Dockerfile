@@ -13,6 +13,7 @@ ADD package.json /usr/src/promis/
 # Install packages needed
 RUN npm install
 ADD webpack.config.js /usr/src/promis/
+RUN npm i canvg
 
 # Add the post install script
 ADD postinstall.sh /usr/src/promis

@@ -6,6 +6,7 @@ import { saveAs } from 'file-saver';
 import { dataURLToBlob } from 'blob-util';
 import Modal from './Modal';
 import { strings } from "../localizations/localization";
+import Canvg from 'canvg';
 
 export default class Quicklook extends Component {
     constructor(props) {
@@ -57,7 +58,6 @@ export default class Quicklook extends Component {
     saveMe() {
         if(this.svg) {
             var canvas = null, context = null;
-            var imageData = null, image = null;
 
             /* setup offscreen canvas */
             canvas = document.createElement('canvas');
@@ -69,23 +69,17 @@ export default class Quicklook extends Component {
             context.fillStyle = 'white'
             context.fillRect(0, 0, canvas.width, canvas.height);
 
-            /* create new image from svg */
-            imageData = 'data:image/svg+xml,' + new XMLSerializer().serializeToString(this.svg);
-            image = new Image();
+            Canvg.from(context, this.svg.parentNode.innerHTML.trim());
+            var dataURL = canvas.toDataURL('image/png');
+            var data = atob(dataURL.substring('data:iamge/png;base64,'.length)), asArray = new Uint8Array(data.length);
 
-            /* draw image callback */
-            image.onload = function() {
-                context.drawImage(image, 0, 0);
+            for (var i = 0, len = data.length; i < len; ++i)
+            {
+                asArray[i] = data.charCodeAt(i);
+            }
 
-                this.makeWatermark(canvas, context);
-
-                dataURLToBlob(canvas.toDataURL('image/png')).then(function(blob) {
-                    saveAs(blob, this.makeFilename());
-                }.bind(this));
-            }.bind(this);
-
-            /* set image data and trigger callback when done */
-            image.src = imageData;
+            var blob = new Blob([asArray.buffer], {type: 'image/png'});
+            saveAs(blob, this.makeFilename());
         } else window.alert(strings.alert);
     }
 
