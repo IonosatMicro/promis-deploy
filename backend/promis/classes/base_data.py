@@ -18,18 +18,19 @@
 # See the Licence for the specific language governing
 # permissions and limitations under the Licence.
 #
-'''Base functionality for object-oriented data model'''
+"""Base functionality for object-oriented data model"""
 
 import unix_time
 
+
 class BaseData:
-    '''
+    """
     Derived classes are expected to implement:
     - self.__len__          -- for sample size
     - self.__getitem___     -- for data access
     - self.data_start       -- UNIX timestamp
     - self.frequency        -- sampling frequency
-    '''
+    """
     def __init__(self, doc, source, measurement):
         self.doc = doc
         self.source = source
@@ -77,32 +78,31 @@ class BaseData:
         return slice(int(start),int(end))
 
 
-# TODO: expand the scope to include multiple variables
 class SingleVarTimeSeries(BaseData):
-    '''
+    """
     [en]: Repeated measurement of a single variable
     [uk]: Періодичне вимірювання єдиної змінної
-    '''
+    """
 
     # Underlying document is a simple list
     # delegate sequence protocol there
 
     # TODO: propagate upwards?
     def quicklook(self, points, selection = slice(None)):
-        '''
+        """
         Generates a quicklook of the time series object sampled at
         given number of points.
-        '''
+        """
 
         def avg_float(l, n, span):
-            '''
+            """
             Computes an average of span elements of the iterable l starting from n.
 
             span may be a float, in such case, the next element is
             summed, multiplied by the remainder span - int(span).
 
             TODO: maybe this needs to be rethinked somehow.
-            '''
+            """
             # Integer part of the sum
             s = sum(l[n:n+int(span)])
 
@@ -143,6 +143,7 @@ class ObliqueThreeVarTimeSeriesHF(BaseData):
     def quicklook(self, points, selection = slice(None)):
         return
 
+
 class OrthogonalThreeVarTimeSeriesHF(BaseData):
     """
     [en]: Three high frequency components in orthogonal coordinate system
@@ -150,6 +151,7 @@ class OrthogonalThreeVarTimeSeriesHF(BaseData):
     """
     def quicklook(self, points, selection = slice(None)):
         return
+
 
 class ObliqueThreeVarTimeSeriesLF(BaseData):
     """
@@ -159,6 +161,7 @@ class ObliqueThreeVarTimeSeriesLF(BaseData):
     def quicklook(self, points, selection = slice(None)):
         return
 
+
 class OrthogonalThreeVarTimeSeriesLF(BaseData):
     """
     [en]: Three low frequency components in orthogonal coordinate system
@@ -166,6 +169,7 @@ class OrthogonalThreeVarTimeSeriesLF(BaseData):
     """
     def quicklook(self, points, selection = slice(None)):
         return
+
 
 class OrthogonalTwoVarTimeSeriesHF(BaseData):
     """
@@ -175,6 +179,7 @@ class OrthogonalTwoVarTimeSeriesHF(BaseData):
     def quicklook(self, points, selection = slice(None)):
         return
 
+
 class ObliqueTwoVarTimeSeriesHF(BaseData):
     """
     [en]: Two high frequency components in oblique coordinate system
@@ -183,10 +188,29 @@ class ObliqueTwoVarTimeSeriesHF(BaseData):
     def quicklook(self, points, selection = slice(None)):
         return
 
+
 class ScalarValueDifference(BaseData):
     """
     [en]: Scalar difference of two values
     [uk]: Скалярна різниця двух змінних
+    """
+    def quicklook(self, points, selection = slice(None)):
+        return
+
+
+class CurrentVoltageCurveTwoCurrent(BaseData):
+    """
+    [en]: Current–voltage characteristic with 2 current (2nd - technical)
+    [uk]: Вольт-амперна характеристика с 2мя токами (2й - технический)
+    """
+    def quicklook(self, points, selection = slice(None)):
+        return
+
+
+class ValuesFromDNdevice(BaseData):
+    """
+    [en]: 4 technical values from DN (NKP)
+    [uk]: Чотири технічні значення з DN (NKP)
     """
     def quicklook(self, points, selection = slice(None)):
         return
