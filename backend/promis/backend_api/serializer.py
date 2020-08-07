@@ -41,16 +41,25 @@ class SpaceProjectsSerializer(TranslatableModelSerializer):
 
 
 class ChannelsSerializer(TranslatableModelSerializer):
+    devicename = serializers.SerializerMethodField()
+
+    def get_devicename(self, obj):
+        return obj.device.name
+
     class Meta(LookupById):
-        fields = ('id', 'url', 'name', 'description')
+        fields = ('id', 'url', 'name', 'description', 'devicename')
         model = models.Channel
 
 
 class ParametersSerializer(TranslatableModelSerializer):
+    devicename = serializers.SerializerMethodField()
     channel = SwaggerHyperlinkedRelatedField(many = False, read_only = True, view_name = 'channel-detail')
 
+    def get_devicename(self, obj):
+        return obj.channel.device.name
+
     class Meta(LookupById):
-        fields = ('id', 'url', 'name', 'description', 'channel')
+        fields = ('id', 'url', 'name', 'description', 'channel', 'devicename')
         model = models.Parameter
 
 
