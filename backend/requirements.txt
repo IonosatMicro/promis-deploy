@@ -12,7 +12,6 @@ dj-database-url==0.4.2
 django-hvad==1.8.0
 djangorestframework-gis==0.11
 djangorestframework-filters==0.9.1
-django-filters==0.2.1
 pytz==2017.2                  # for datetime conversions
 django_loaddata_stdin==0.1.0 # for loading test data from the host
 pytest-django==3.5.1
