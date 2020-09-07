@@ -58,7 +58,7 @@ export default class Quicklook extends Component {
     saveMe() {
         if(this.svg) {
             var canvas = null, context = null;
-
+            var imageData = null, image = null;
             /* setup offscreen canvas */
             canvas = document.createElement('canvas');
             canvas.width = this.props.graphWidth;
@@ -69,17 +69,30 @@ export default class Quicklook extends Component {
             context.fillStyle = 'white'
             context.fillRect(0, 0, canvas.width, canvas.height);
 
-            Canvg.from(context, this.svg.parentNode.innerHTML.trim());
-            var dataURL = canvas.toDataURL('image/png');
-            var data = atob(dataURL.substring('data:iamge/png;base64,'.length)), asArray = new Uint8Array(data.length);
+            /* create new image from svg */
+            imageData = 'data:image/svg+xml,' + new XMLSerializer().serializeToString(this.svg);
+            image = new Image()
 
-            for (var i = 0, len = data.length; i < len; ++i)
-            {
-                asArray[i] = data.charCodeAt(i);
-            }
+             /* draw image callback */
+            image.onload = function() {
+                context.drawImage(image, 0, 0);
+                this.makeWatermark(canvas, context);
 
-            var blob = new Blob([asArray.buffer], {type: 'image/png'});
-            saveAs(blob, this.makeFilename());
+                var dataURL = canvas.toDataURL('image/png');
+                var data = atob(dataURL.substring('data:image/png;base64,'.length)), asArray = new Uint8Array(data.length);
+
+                for (var i = 0, len = data.length; i < len; ++i)
+                {  
+                    asArray[i] = data.charCodeAt(i);
+                }
+
+                var blob = new Blob([asArray.buffer], {type: 'image/png'});
+                saveAs(blob, this.makeFilename());
+            }.bind(this);
+
+            /* set image data and trigger callback when done */
+            image.src = imageData;
+
         } else window.alert(strings.alert);
     }
 
