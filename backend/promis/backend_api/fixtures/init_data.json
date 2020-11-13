@@ -814,6 +814,36 @@
     }
 },
 {
+    "model": "backend_api.channeltranslation",
+    "pk": 22,
+    "fields": {
+        "name": "FC1~, FC2~",
+        "description": "",
+        "master": 7,
+        "language_code": "uk"
+    }
+},
+{
+    "model": "backend_api.channeltranslation",
+    "pk": 23,
+    "fields": {
+        "name": "FC1=, FC2=",
+        "description": "",
+        "master": 10,
+        "language_code": "uk"
+    }
+},
+{
+    "model": "backend_api.channeltranslation",
+    "pk": 24,
+    "fields": {
+        "name": "JF~",
+        "description": "",
+        "master": 8,
+        "language_code": "uk"
+    }
+},
+{
     "model": "backend_api.channel",
     "pk": 1,
     "fields": {
@@ -854,12 +884,12 @@
             "classes.base_calibration.CoefficientMatrixMultiply"
         ],
         "calibration_params": {"Kp": 10,
-                               "convert_matrix": 
-                               {"EZ1": [[0.18607253, -0.19853245, -0.00568404], 
-                                        [-0.18550208, 0.0188171,   0.00202993], 
+                               "convert_matrix":
+                               {"EZ1": [[0.18607253, -0.19853245, -0.00568404],
+                                        [-0.18550208, 0.0188171,   0.00202993],
                                         [-0.0393252,  -0.11087313, 0.25190521]],
-                                "EZ3": [[0.01814397, -0.19853245,  0.18607253],  
-                                        [0.16465504,  0.0188171,  -0.18550208], 
+                                "EZ3": [[0.01814397, -0.19853245,  0.18607253],
+                                        [0.16465504,  0.0188171,  -0.18550208],
                                         [-0.10170687, -0.11087313, -0.0393252]]
                               }
                             }
@@ -914,12 +944,12 @@
             "classes.base_calibration.CoefficientMatrixMultiply"
         ],
         "calibration_params":{"Kp": 1,
-                               "convert_matrix": 
-                               {"EZ1": [[0.18607253, -0.19853245, -0.00568404], 
-                                        [-0.18550208, 0.0188171,   0.00202993], 
+                               "convert_matrix":
+                               {"EZ1": [[0.18607253, -0.19853245, -0.00568404],
+                                        [-0.18550208, 0.0188171,   0.00202993],
                                         [-0.0393252,  -0.11087313, 0.25190521]],
-                                "EZ3": [[0.01814397, -0.19853245,  0.18607253],  
-                                        [0.16465504,  0.0188171,  -0.18550208], 
+                                "EZ3": [[0.01814397, -0.19853245,  0.18607253],
+                                        [0.16465504,  0.0188171,  -0.18550208],
                                         [-0.10170687, -0.11087313, -0.0393252]]
                               }
                             }
