@@ -113,6 +113,7 @@ class Variant(BaseProject):
                            ['FC1~',0], ['FC1=',0], ['FC2~',0], ['FC2=',0], 
                            ['Jyz~',0], ['Bx~',0], ['Jxz~',0], ['By~',0], 
                            ['E1~',0], ['E1=',0], ['E2~',0], ['E2=',0], ['E3~',0], ['E3=',0]]
+            base = "EZ1" # this info is needed for calibration 
             ftp.cwd("..")
             ftp.cwd("Data_Release1/{0}".format(daydir))
             
@@ -129,6 +130,14 @@ class Variant(BaseProject):
                     if len(line.rstrip()) != 0:
                         component_sf[idx][1] = float(line)
                     idx += 1
+
+                for line in fp:
+                    if "EZ1" in line:
+                        base = "EZ1"
+                        break
+                    elif "EZ3" in line:
+                        base = "EZ3"
+                        break
 
             def get_file(name):
                 try:
@@ -176,4 +185,23 @@ class Variant(BaseProject):
                     json_data = [catch_idx_error(list_of_components[0],idx) for idx in range(numValues)]
 
                 doc_obj = model.Document.objects.create(json_data = json_data )
-                meas = model.Measurement.objects.create(session = sess_obj, parameter = par_obj, channel = chan_obj, channel_doc = doc_obj, parameter_doc = doc_obj, sampling_frequency = sampling_frequency, max_frequency = sampling_frequency, min_frequency = sampling_frequency)
+
+                
+                # calibration of channels. Convertng them into prameters data
+                # calibration coefficients exlanation:
+                # coef for Bx~, By~: 100 mB/nT = 0.1 B/nT = 1/0.1 nT/B = 10 nT/B
+                # coef for Jyz~, Jxz~: 7.7 * 10^-2 B*cm^2/nA = 7.7 * 10^-2 * 10^-4 * 10^3 B*m^2/mkA = 7.7 * 10^-3 B*m^2/mkA = 129.87 mkA/(m^2*B)
+                # coef for FC1=, FC2=: 470 mB*cm^2/mkA = 0.47 * 10^-4 B*m^2/mkA = 21276 mkA/(m^2*B)
+                # coef for FC1~, FC2~: 4780 mB*cm^2/mkA = 4.78 * 10^-4 B*m^2/mkA = 2092 mkA/(m^2*B)
+                # coef for JF~: 8.5*10^-2 B*cm^2/nA = 8.5 * 10^-4 * 10^3 B*m^2/mkA = 1.17647 mkA/(m^2*B)
+                calibration_method = chan_obj.get_calibration()
+                if calibration_method:
+                    calibrated_json_data = [calibration_method.calculate(x, base) for x in json_data]
+                    calibrated_doc_obj = model.Document.objects.create(json_data = calibrated_json_data )
+
+                 #   if len(list_of_components) > 1:
+                 #     print("original value: " + str(json_data[100][0]) + ", calibrated value: " + str(calibrated_json_data[100][0]) )
+                else:
+                    calibrated_doc_obj = doc_obj
+                
+                meas = model.Measurement.objects.create(session = sess_obj, parameter = par_obj, channel = chan_obj, channel_doc = doc_obj, parameter_doc = calibrated_doc_obj, sampling_frequency = sampling_frequency, max_frequency = sampling_frequency, min_frequency = sampling_frequency)

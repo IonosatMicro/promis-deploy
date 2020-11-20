@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Col, Button, FormGroup, Checkbox } from 'react-bootstrap';
+import { Col, Button, FormGroup, Checkbox, Tooltip, OverlayTrigger } from 'react-bootstrap';
 import Toggle from 'react-bootstrap-toggle';
 
 import { strings } from "../localizations/localization";
@@ -63,12 +63,14 @@ export default class ChannelParameterPicker extends Component {
                         }
 
                         return (
-                            <div key = {index}>
+                            <div 
+                                key = {index} 
+                                title = {dataElement.description}>
                                 <Checkbox
                                     disabled = {! this.props.active}
                                     checked = {checked}
                                     onClick = {makeChoice}>
-                                    {dataElement.name}
+                                    {dataElement.name} ({dataElement.devicename})
                                 </Checkbox>
                             </div>
                         );

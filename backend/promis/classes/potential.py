@@ -89,6 +89,11 @@ class Potential(BaseProject):
 
                         # still a little bit of hardcode
                         dirs = len(label.split('/'))
+
+                        # temporarily disabling reading of these subfolders
+                        if label.split('/')[0] == 'pd':
+                            continue
+                            
                         freq = label.split('/')[-2]
                         freq_val = 1 if freq == "lf" else 1024
 
