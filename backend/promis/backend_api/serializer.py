@@ -303,6 +303,10 @@ class DataSerializer(serializers.ModelSerializer):
                     # Intersection of search polygon and the orbit
                     isect = obj.session.geo_line.intersection(poly)
 
+                    #django docs say that GEOSGeometry.dims returns -1 for empty GeometryCollection
+                    if isect.dims == -1:
+                        return
+
                     # Making sure isect is a collection of geolines, not a single one
                     if type(isect) is not MultiLineString:
                         isect = [ isect ]

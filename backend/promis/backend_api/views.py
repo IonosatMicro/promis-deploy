@@ -30,6 +30,7 @@ import unix_time
 
 import datetime
 from rest_framework.decorators import permission_classes
+from django.contrib.gis.geos import GEOSGeometry 
 
 class PromisViewSet(viewsets.ReadOnlyModelViewSet):
     '''Collects most commonly used View stuff'''
@@ -297,13 +298,17 @@ class DataView(PromisViewSet):
         if space_project:
             filter_opts['channel__device__space_project'] = int(space_project)
 
-        poly = self.request.query_params.get('polygon')
-
-        if poly:
-            try:
-                filter_opts['session__geo_line__intersects'] = poly
-            except ValueError:
-                raise NotFound("Invalid WKT for polygon selection")
+        # This code doesn't work because poly is a 3d polygon (geography), 
+        # while geo_line is 2d (geometry)
+        # and it seems like it's not needed anyway, 
+        # because this work is already done in DataSerializer.get_selection.
+        #
+        # poly = self.request.query_params.get('polygon')
+        # if poly:
+        #    try:
+        #        filter_opts['session__geo_line__intersects'] = poly
+        #    except ValueError:
+        #        raise NotFound("Invalid WKT for polygon selection")
 
         # Applying the filter
         return models.Measurement.objects.filter(**filter_opts)
